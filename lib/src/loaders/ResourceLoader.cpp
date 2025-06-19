@@ -80,5 +80,13 @@ ResourceLoader::loadResources(const std::filesystem::path& assetDir)
             "Could not load sound: {}", result.error().getMessage()));
     }
 
+    if (auto result = resmgr.loadResourcesFromDirectory<tiled::FiniteMapModel>(
+            assetDir / "levels", loadTiledMap, { ".json" });
+        !result)
+    {
+        throw std::runtime_error(uni::format(
+            "Could not load level: {}", result.error().getMessage()));
+    }
+
     return resmgr;
 }

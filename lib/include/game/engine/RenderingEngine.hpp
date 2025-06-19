@@ -9,11 +9,10 @@ class [[nodiscard]] RenderingEngine final
 public:
     RenderingEngine(dgm::ResourceManager& resmgr, Scene& scene) noexcept
         : scene(scene)
-        , sprite(resmgr.get<sf::Texture>("mrman.png"))
         , text(resmgr.get<sf::Font>("ChunkFive-Regular.ttf"))
+        , sprite(resmgr.get<sf::Texture>("joe.png"))
     {
-        sprite.setOrigin(
-            sf::Vector2f(scene.dummy.animation.getCurrentFrame().size) / 2.f);
+        sprite.setOrigin(sf::Vector2f { sprite.getTexture().getSize() / 2u });
     }
 
     RenderingEngine(RenderingEngine&&) = delete;
@@ -26,7 +25,8 @@ public:
 
 private:
     Scene& scene;
-    sf::Sprite sprite;
     FpsCounter fpsCounter;
     sf::Text text;
+
+    sf::Sprite sprite;
 };

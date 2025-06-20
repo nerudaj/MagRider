@@ -76,6 +76,94 @@ dgm::Camera createFullscreenCamera(
     return dgm::Camera(viewport, desiredResolutionF);
 }
 
+#include "box2d/box2d.h"
+#include "misc/CoordConverter.hpp"
+
+using PhysicsWorld = std::unique_ptr<b2World>;
+using PhysicsBody = b2Body&;
+using PhysicsCollider = b2Fixture;
+
+struct DynamicBodyProperties
+{
+    float density = 1.0f;
+    float friction = 0.5f;
+    float restitution = 0.2f; // Bounciness
+};
+
+namespace box
+{
+    const static inline b2Vec2 GRAVITY = b2Vec2(0.0f, 9.8f);
+
+    static PhysicsWorld createWorld()
+    {
+        return std::make_unique<b2World>(GRAVITY);
+    }
+
+    static PhysicsBody createBody(
+        PhysicsWorld& world, b2Vec2 position, b2BodyType type = b2_staticBody)
+    {
+        b2BodyDef bodyDef;
+        bodyDef.position.Set(position.x, position.y);
+        bodyDef.type = type;
+        return *world->CreateBody(&bodyDef);
+    }
+
+    static PhysicsBody
+    createStaticBox(PhysicsWorld& world, b2Vec2 position, b2Vec2 size)
+    {
+        auto&& body = createBody(world, position);
+        b2PolygonShape boxShape;
+        boxShape.SetAsBox(size.x / 2.0f, size.y / 2.0f);
+        body.CreateFixture(&boxShape, 0.0f);
+        return body;
+    }
+
+    static PhysicsBody
+    createStaticTriangle(PhysicsWorld& world, std::array<b2Vec2, 3> vertices)
+    {
+        auto&& acc =
+            std::ranges::fold_left(vertices, b2Vec2(0.f, 0.f), std::plus {});
+        auto&& center = b2Vec2(
+            acc.x / static_cast<float>(vertices.size()),
+            acc.y / static_cast<float>(vertices.size()));
+        auto&& body = createBody(world, b2Vec2_zero);
+
+        b2PolygonShape shape;
+        shape.Set(vertices.data(), vertices.size());
+        body.CreateFixture(&shape, 0.f);
+        return body;
+    }
+
+    static PhysicsBody createDynamicBall(
+        PhysicsWorld& world,
+        b2Vec2 position,
+        float radius,
+        const DynamicBodyProperties& properties = {})
+    {
+        auto&& body = createBody(world, position, b2_dynamicBody);
+
+        b2CircleShape circleShape;
+        circleShape.m_radius = radius;
+
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &circleShape;
+        fixtureDef.density = properties.density;
+        fixtureDef.friction = properties.friction;
+        fixtureDef.restitution = properties.restitution;
+
+        body.CreateFixture(&fixtureDef);
+        return body;
+    }
+} // namespace box
+
+namespace box
+{
+    static inline void updateWorld(PhysicsWorld& world, const dgm::Time& time)
+    {
+        world->Step(time.getDeltaTime(), 6, 2);
+    }
+} // namespace box
+
 Scene AppStateGame::buildScene(
     const dgm::ResourceManager& resmgr, const dgm::Window& window)
 {
@@ -85,17 +173,20 @@ Scene AppStateGame::buildScene(
         resmgr.get<sf::Texture>("set.png"),
         resmgr.get<dgm::Clip>("set.png.clip"));
 
+    const tiled::TileLayerModel* tileModel;
     for (auto&& layer : map.layers)
     {
         std::visit(
             overloads {
                 [&](const tiled::TileLayerModel& model)
                 {
+                    tileModel = &model;
                     tilemap.build(
                         { map.tilewidth, map.tileheight },
                         model.data
-                            | std::views::transform([&](int tile)
-                                                    { return tile == 0 ? 12 : tile - 1; })
+                            | std::views::transform(
+                                [&](int tile)
+                                { return tile == 0 ? 12 : tile - 1; })
                             | uniranges::to<std::vector>(),
                         { map.width, map.height });
                 },
@@ -110,9 +201,178 @@ Scene AppStateGame::buildScene(
             layer);
     }
 
+    // Somehow build whole box2d world
+    auto world = box::createWorld();
+
+    auto redPositions = std::vector<sf::Vector2f> {};
+    auto bluePositions = std::vector<sf::Vector2f> {};
+    // Create collision boxes
+    for (unsigned y = 0; y < map.height; ++y)
+    {
+        for (unsigned x = 0; x < map.width; ++x)
+        {
+            const unsigned idx = y * map.width + x;
+            if (tileModel->data[idx] == 0) continue;
+
+            const auto tile = tileModel->data[idx] - 1;
+            const float fx = static_cast<float>(x);
+            const float fy = static_cast<float>(y);
+
+            if (tile == 18 || tile == 25 || tile == 30)
+            {
+                if (tile == 18)
+                    redPositions.push_back({ fx + 0.5f, fy + 0.5f });
+                else if (tile == 30)
+                    bluePositions.push_back({ fx + 0.5f, fy + 0.5f });
+
+                box::createStaticBox(
+                    world, b2Vec2(fx + 0.5f, fy + 0.5f), b2Vec2(1.f, 1.f));
+            }
+            else if (tile == 14)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy + 1.f),
+                        b2Vec2(fx + 1.f, fy),
+                        b2Vec2(fx + 1.f, fy + 1.f),
+                    });
+            }
+            // 45 degree triangles
+            else if (tile == 15)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy),
+                        b2Vec2(fx + 1.f, fy + 1.f),
+                        b2Vec2(fx, fy + 1.f),
+                    });
+            }
+            else if (tile == 20)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy),
+                        b2Vec2(fx + 1.f, fy),
+                        b2Vec2(fx + 1.f, fy + 1.f),
+                    });
+            }
+            else if (tile == 21)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy),
+                        b2Vec2(fx + 1.f, fy),
+                        b2Vec2(fx, fy + 1.f),
+                    });
+            }
+            // 60 degree triangles
+            else if (tile == 0)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy + 1.f),
+                        b2Vec2(fx + 2.f, fy),
+                        b2Vec2(fx + 2.f, fy + 1.f),
+                    });
+            }
+            else if (tile == 4)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy + 2.f),
+                        b2Vec2(fx + 1.f, fy),
+                        b2Vec2(fx + 1.f, fy + 2.f),
+                    });
+            }
+            else if (tile == 2)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy),
+                        b2Vec2(fx + 2.f, fy + 1.f),
+                        b2Vec2(fx, fy + 1.f),
+                    });
+            }
+            else if (tile == 5)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy),
+                        b2Vec2(fx + 1.f, fy + 2.f),
+                        b2Vec2(fx, fy + 2.f),
+                    });
+            }
+            else if (tile == 6)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy),
+                        b2Vec2(fx + 2.f, fy),
+                        b2Vec2(fx + 2.f, fy + 1.f),
+                    });
+            }
+            else if (tile == 16)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy),
+                        b2Vec2(fx + 1.f, fy),
+                        b2Vec2(fx + 1.f, fy + 2.f),
+                    });
+            }
+            else if (tile == 8)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy),
+                        b2Vec2(fx + 2.f, fy),
+                        b2Vec2(fx, fy + 1.f),
+                    });
+            }
+            else if (tile == 17)
+            {
+                box::createStaticTriangle(
+                    world,
+                    {
+                        b2Vec2(fx, fy),
+                        b2Vec2(fx + 1.f, fy),
+                        b2Vec2(fx, fy + 2.f),
+                    });
+            }
+        }
+    }
+
+    // Create joe
+    auto& joeBody = box::createDynamicBall(
+        world,
+        CoordConverter::screenToWorld(spawn),
+        0.5f,
+        DynamicBodyProperties {
+            .density = 0.6f,
+            .restitution = 0.4f,
+        });
+
     return Scene {
         .position = spawn,
         .tileMap = std::move(tilemap),
         .camera = createFullscreenCamera(window, { 1280u, 720u }),
+        .hudCamera = dgm::Camera(
+            sf::FloatRect { { 0.f, 0.f }, { 1.f, 1.f } },
+            sf::Vector2f(window.getSize())),
+        .world = std::move(world),
+        .joe = joeBody,
+        .redMagnetPositions = std::move(redPositions),
+        .blueMagnetPositions = std::move(bluePositions),
     };
 }

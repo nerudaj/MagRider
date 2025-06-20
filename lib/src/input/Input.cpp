@@ -13,7 +13,7 @@ void Input::forceRelease(InputKind action)
 
 float Input::getHorizontalVelocity() const
 {
-    return controller.readAnalog(InputKind::Left)
+    return -controller.readAnalog(InputKind::Left)
            + controller.readAnalog(InputKind::Right);
 }
 

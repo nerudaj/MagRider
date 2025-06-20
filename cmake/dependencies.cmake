@@ -9,6 +9,7 @@ set ( TGUI_VERSION "1.x" )
 set ( CATCH2_VERSION "v3.8.0" )
 set ( RANGEV3_VERSION "master" )
 set ( FMTLIB_VERSION "master" )
+set ( BOX2D_VERSION "2.4.2" )
 
 CPMAddPackage("gh:jarro2783/cxxopts#v${CXXOPTS_VERSION}")
 CPMAddPackage("gh:nlohmann/json#v${NLOHMANN_VERSION}")
@@ -35,3 +36,9 @@ if ( "${CMAKE_SYSTEM_NAME}" STREQUAL "Android" )
         GIT_SUBMODULES "test"
     )
 endif ()
+
+option(BOX2D_BUILD_UNIT_TESTS "Build the Box2D unit tests" OFF)
+option(BOX2D_BUILD_TESTBED "Build the Box2D testbed" OFF)
+option(BOX2D_BUILD_DOCS "Build the Box2D documentation" OFF)
+option(BOX2D_USER_SETTINGS "Override Box2D settings with b2UserSettings.h" OFF)
+CPMAddPackage("gh:erincatto/box2d@${BOX2D_VERSION}")

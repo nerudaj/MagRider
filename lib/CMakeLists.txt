@@ -15,6 +15,7 @@ make_static_library ( ${LIB_TARGET_NAME}
         SFML::Audio
         fmt::fmt
         range-v3::range-v3
+        box2d
 )
 else ()
 make_static_library ( ${LIB_TARGET_NAME}
@@ -24,6 +25,7 @@ make_static_library ( ${LIB_TARGET_NAME}
         #fsm::fsm-lib
         TGUI::TGUI
         SFML::Audio
+        box2d
 )
 endif ()
 

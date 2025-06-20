@@ -19,7 +19,7 @@ public:
         , settings(settings)
         , scene(buildScene(dic.resmgr, app.window))
         , gameRulesEngine(gameEvents, scene, dic.input)
-        , renderingEngine(dic.resmgr, scene)
+        , renderingEngine(app.window, dic.resmgr, scene)
         , sound(dic.resmgr.get<sf::SoundBuffer>("land.wav"))
     {
         sound.setVolume(100.f);

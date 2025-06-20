@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <limits>
 
-constexpr float MAX_MAGNET_DISTANCE = 10.f;
-constexpr float LINEAR_FORCE = 20.f;
+constexpr float MAX_MAGNET_DISTANCE = 6.f;
+constexpr float LINEAR_FORCE = 2.f;
 
 sf::Vector2f aggregateMagnetForces(
     const sf::Vector2f& joePos,
@@ -32,6 +32,12 @@ static sf::Vector2f operator-(const b2Vec2& a, sf::Vector2f& b)
 
 void GameRulesEngine::update(const dgm::Time& time)
 {
+    if (!scene.playing)
+    {
+        scene.playing = input.isJumpPressed();
+        return;
+    }
+
     const auto vel = input.getHorizontalVelocity();
     scene.magnetPolarity = vel == 0.f ? 0 : vel < 0.f ? 1 : 2;
 

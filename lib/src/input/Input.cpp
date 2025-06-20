@@ -19,7 +19,7 @@ float Input::getHorizontalVelocity() const
 
 bool Input::isJumpPressed() const
 {
-    return controller.readDigital(InputKind::Jump);
+    return readAndRelease(InputKind::Jump);
 }
 
 NODISCARD_RESULT bool Input::isMenuCycleLeftPressed() const

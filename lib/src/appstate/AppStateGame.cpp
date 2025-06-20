@@ -31,6 +31,11 @@ void AppStateGame::update()
             sound.setBuffer(dic.resmgr.get<sf::SoundBuffer>(e.soundName));
             sound.play();
         });
+
+    if (scene.contactListener->died)
+    {
+        app.popState();
+    }
 }
 
 void AppStateGame::draw()
@@ -108,24 +113,33 @@ namespace box
         return *world->CreateBody(&bodyDef);
     }
 
-    static PhysicsBody
-    createStaticBox(PhysicsWorld& world, b2Vec2 position, b2Vec2 size)
+    static PhysicsBody createStaticBox(
+        PhysicsWorld& world,
+        b2Vec2 position,
+        b2Vec2 size,
+        bool isSensor = false)
     {
         auto&& body = createBody(world, position);
         b2PolygonShape boxShape;
         boxShape.SetAsBox(size.x / 2.0f, size.y / 2.0f);
-        body.CreateFixture(&boxShape, 0.0f);
+        if (!isSensor)
+        {
+
+            body.CreateFixture(&boxShape, 0.0f);
+        }
+        else
+        {
+            b2FixtureDef fixtureDef;
+            fixtureDef.shape = &boxShape;
+            fixtureDef.isSensor = true;
+            body.CreateFixture(&fixtureDef);
+        }
         return body;
     }
 
     static PhysicsBody
     createStaticTriangle(PhysicsWorld& world, std::array<b2Vec2, 3> vertices)
     {
-        auto&& acc =
-            std::ranges::fold_left(vertices, b2Vec2(0.f, 0.f), std::plus {});
-        auto&& center = b2Vec2(
-            acc.x / static_cast<float>(vertices.size()),
-            acc.y / static_cast<float>(vertices.size()));
         auto&& body = createBody(world, b2Vec2_zero);
 
         b2PolygonShape shape;
@@ -350,6 +364,39 @@ Scene AppStateGame::buildScene(
                         b2Vec2(fx, fy + 2.f),
                     });
             }
+            // spikes
+            else if (tile == 19)
+            {
+                box::createStaticBox(
+                    world,
+                    b2Vec2(fx + 0.5f, fy + 0.75f),
+                    b2Vec2(1.f, 0.5f),
+                    "isSensor"_true);
+            }
+            else if (tile == 24)
+            {
+                box::createStaticBox(
+                    world,
+                    b2Vec2(fx + 0.75f, fy + 0.5f),
+                    b2Vec2(0.5f, 1.f),
+                    "isSensor"_true);
+            }
+            else if (tile == 26)
+            {
+                box::createStaticBox(
+                    world,
+                    b2Vec2(fx + 0.25f, fy + 0.5f),
+                    b2Vec2(0.5f, 1.f),
+                    "isSensor"_true);
+            }
+            else if (tile == 31)
+            {
+                box::createStaticBox(
+                    world,
+                    b2Vec2(fx + 0.5f, fy + 0.25f),
+                    b2Vec2(1.f, 0.5f),
+                    "isSensor"_true);
+            }
         }
     }
 
@@ -363,13 +410,17 @@ Scene AppStateGame::buildScene(
             .restitution = 0.4f,
         });
 
+    auto listener = std::make_unique<SpikeContactListener>();
+    world->SetContactListener(listener.get());
+
     return Scene {
         .position = spawn,
         .tileMap = std::move(tilemap),
-        .camera = createFullscreenCamera(window, { 1280u, 720u }),
+        .camera = createFullscreenCamera(window, { 640u, 360u }),
         .hudCamera = dgm::Camera(
             sf::FloatRect { { 0.f, 0.f }, { 1.f, 1.f } },
             sf::Vector2f(window.getSize())),
+        .contactListener = std::move(listener),
         .world = std::move(world),
         .joe = joeBody,
         .redMagnetPositions = std::move(redPositions),

@@ -41,7 +41,7 @@ void RenderingEngine::draw(dgm::Window& _window)
         for (auto&& magnetPos : scene.redMagnetPositions)
         {
             const auto direction = scene.joe.GetPosition() - magnetPos;
-            if (direction.length() < 10.f)
+            if (direction.length() < 6.f)
             {
                 auto vertices = std::array {
                     sf::Vertex { .position = joePos },
@@ -55,7 +55,7 @@ void RenderingEngine::draw(dgm::Window& _window)
         for (auto&& magnetPos : scene.blueMagnetPositions)
         {
             const auto direction = scene.joe.GetPosition() - magnetPos;
-            if (direction.length() < 10.f)
+            if (direction.length() < 6.f)
             {
                 auto vertices = std::array {
                     sf::Vertex { .position = joePos },
@@ -67,10 +67,20 @@ void RenderingEngine::draw(dgm::Window& _window)
         }
     }
 
-    scene.world->DebugDraw();
+    // scene.world->DebugDraw();
 
     window.setViewFromCamera(scene.hudCamera);
 
+    if (!scene.playing)
+    {
+        text.setString("Press SPACE to start");
+        text.setPosition(
+            sf::Vector2f(window.getSize()) / 2.f
+            - text.getGlobalBounds().size / 2.f);
+        window.draw(text);
+    }
+
+    text.setPosition({ 10.f, 10.f });
     text.setString(fpsCounter.getText());
     window.draw(text);
 }

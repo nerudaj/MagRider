@@ -1,8 +1,9 @@
 #pragma once
 
-#include "enums/InputKind.hpp"
+#include "input/InputKind.hpp"
 #include "types/Binding.hpp"
 #include <map>
+#include <nlohmann/json.hpp>
 
 struct [[nodiscard]] BindingsSettings final
 {
@@ -42,3 +43,6 @@ struct [[nodiscard]] BindingsSettings final
           { std::monostate {}, GamepadButton { 5 } } },
     };
 };
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
+    BindingsSettings, ingameBindings, menuBindings);

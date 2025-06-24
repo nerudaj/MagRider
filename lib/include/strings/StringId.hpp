@@ -17,6 +17,8 @@ enum class [[nodiscard]] StringId
     BindingsOptionsTab,
     EnableFullscreen,
     SetResolution,
+    SetUiScale,
+    SetTheme,
     SoundVolume,
     MusicVolume,
     GamepadDeadzone,

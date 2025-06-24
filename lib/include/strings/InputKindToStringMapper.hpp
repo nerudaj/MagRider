@@ -1,8 +1,8 @@
 #pragma once
 
-#include "enums/InputKind.hpp"
-#include "enums/StringId.hpp"
-#include "misc/StringProvider.hpp"
+#include "input/InputKind.hpp"
+#include "strings/StringId.hpp"
+#include "strings/StringProvider.hpp"
 
 class [[nodiscard]] InputKindToStringMapper final
 {

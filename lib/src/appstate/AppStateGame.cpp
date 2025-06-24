@@ -181,7 +181,7 @@ namespace box
 Scene AppStateGame::buildScene(
     const dgm::ResourceManager& resmgr, const dgm::Window& window)
 {
-    const auto& map = resmgr.get<tiled::FiniteMapModel>("mapa1.json");
+    const auto& map = resmgr.get<tiled::FiniteMapModel>("intro.json");
     auto spawn = sf::Vector2f {};
     auto tilemap = dgm::TileMap(
         resmgr.get<sf::Texture>("set.png"),

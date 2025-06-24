@@ -21,7 +21,9 @@ public:
         std::function<void(void)> onClick,
         const std::string& buttonId = "");
 
-    NODISCARD_RESULT tgui::Panel::Ptr build();
+    NODISCARD_RESULT tgui::Container::Ptr build(
+        tgui::HorizontalAlignment alignment =
+            tgui::HorizontalAlignment::Center);
 
 private:
     struct ButtonProps

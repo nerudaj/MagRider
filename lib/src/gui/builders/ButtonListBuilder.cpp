@@ -14,30 +14,29 @@ ButtonListBuilder& ButtonListBuilder::addButton(
     return *this;
 }
 
-tgui::Panel::Ptr ButtonListBuilder::build()
+tgui::Container::Ptr
+ButtonListBuilder::build(tgui::HorizontalAlignment alignment)
 {
-    auto&& outerPanel = WidgetBuilder::createPanel();
+    auto&& outerPanel = WidgetBuilder::createScrollablePanel();
+    auto&& layout = tgui::GrowVerticalLayout::create();
+    layout->setSize({ "50%", "100%" });
 
-    auto&& buttonListHeight =
-        buttonProps.size() * Sizers::getBaseContainerHeight() * 2.1f;
-    auto&& panel = WidgetBuilder::createPanel({ "60%", buttonListHeight });
-    panel->setPosition(
-        { "20%",
-          ("parent.height - " + std::to_string(buttonListHeight)).c_str() });
-    outerPanel->add(panel);
+    if (alignment == tgui::HorizontalAlignment::Left)
+        layout->setPosition({ "0%", "0%" });
+    else if (alignment == tgui::HorizontalAlignment::Center)
+        layout->setPosition({ "25%", "0%" });
+    else
+        layout->setPosition({ "50%", "0%" });
+    layout->getRenderer()->setSpaceBetweenWidgets(Sizers::getBaseFontSize());
+
+    outerPanel->add(layout);
 
     for (auto&& [idx, props] : std::views::enumerate(buttonProps))
     {
-        auto&& button = WidgetBuilder::createButton(props.label, props.onClick);
-        button->setSize({ "100%", Sizers::getBaseContainerHeight() * 1.5f });
-        button->setTextSize(Sizers::getBaseFontSize() * 2u);
-        button->setPosition(
-            { "0%", Sizers::getBaseContainerHeight() * idx * 2.1f });
+        auto&& button =
+            WidgetBuilder::createMenuButton(props.label, props.onClick);
 
-        if (props.buttonId.empty())
-            panel->add(button);
-        else
-            panel->add(button, props.buttonId);
+        layout->add(button, props.buttonId);
     }
 
     return outerPanel;

@@ -2,6 +2,7 @@
 #include "gui/Sizers.hpp"
 #include "gui/TguiHelper.hpp"
 #include "misc/Compatibility.hpp"
+#include "types/SemanticTypes.hpp"
 #include <TGUI/Backend/SFML-Graphics.hpp>
 #include <TGUI/TGUI.hpp>
 #include <ranges>
@@ -80,20 +81,27 @@ tgui::Button::Ptr WidgetBuilder::createButton(
     return button;
 }
 
-NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createSmallerButton(
+NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createMenuButton(
     const Label& label,
     std::function<void(void)> onClick,
     WidgetOptions options)
 {
-    auto&& button = tgui::Button::create(label);
-    button->onClick(onClick);
-    button->setTextSize(Sizers::getBaseFontSize());
-    button->setSize({ "90%", "80%" });
-    button->setPosition({ "5%", "10%" });
-    button->getRenderer()->setRoundedBorderRadius(10.f);
-    button->getRenderer()->setBackgroundColor(tgui::Color::Transparent);
+    const auto scaleFactor = 1.5f;
+    auto button = createButton(label, onClick, options);
+    button->setSize({ "100%", Sizers::getBaseContainerHeight() * scaleFactor });
+    button->setTextSize(Sizers::getBaseFontSize() * scaleFactor);
+    return button;
+}
 
-    applyOptionsToWidget(options, button);
+NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createRowButton(
+    const Label& label,
+    std::function<void(void)> onClick,
+    WidgetOptions options)
+{
+    auto&& button = createButton(label, onClick, options);
+    button->setSize({ "90%", "90%" });
+    button->setPosition({ "5%", "5%" });
+    button->getRenderer()->setBackgroundColor(tgui::Color::Transparent);
 
     return button;
 }
@@ -130,13 +138,10 @@ tgui::Panel::Ptr WidgetBuilder::createSlider(
     gui.add(dummyLabel, "DummyLabel");
     auto size = dummyLabel->getSizeLayout();
 
-    auto&& valueLabel = tgui::Label::create(properties.valueFormatter(value));
-    valueLabel->setTextSize(Sizers::getBaseFontSize());
-    valueLabel->getRenderer()->setTextColor(sf::Color::Black);
+    auto&& valueLabel =
+        createTextLabel(properties.valueFormatter(value), "justify"_true);
     valueLabel->setSize(size.x, "100%");
     valueLabel->setPosition("parent.width" - size.x, "0%");
-    valueLabel->setVerticalAlignment(tgui::VerticalAlignment::Center);
-    valueLabel->setHorizontalAlignment(tgui::HorizontalAlignment::Center);
     result->add(valueLabel, ID);
 
     auto&& slider = tgui::Slider::create(properties.low, properties.high);

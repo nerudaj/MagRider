@@ -39,13 +39,10 @@ FormBuilder& FormBuilder::addSeparator()
     return *this;
 }
 
-tgui::Panel::Ptr FormBuilder::build(tgui::Color backgroundColor)
+tgui::Container::Ptr FormBuilder::build(tgui::Color backgroundColor)
 {
-    auto&& panel = WidgetBuilder::createPanel(
-        { "100%",
-          Sizers::getBaseContainerHeight() * rowsToBuild.size() + 20.f },
-        backgroundColor);
-    panel->getRenderer()->setPadding({ 10.f, 10.f });
+    auto&& verticalLayout = tgui::GrowVerticalLayout::create();
+    verticalLayout->getRenderer()->setPadding({ 10.f, 10.f });
 
     for (auto&& [idx, props] : std::views::enumerate(rowsToBuild))
     {
@@ -55,7 +52,6 @@ tgui::Panel::Ptr FormBuilder::build(tgui::Color backgroundColor)
                 ? createOptionRowWithSubmitButton(
                       props.label, props.widget, props.submitBtn.value())
                 : createOptionRow(props.label, props.widget, props.widgetId);
-        row->setPosition({ "0%", row->getSize().y * idx });
 
         if (props.separator)
         {
@@ -67,10 +63,10 @@ tgui::Panel::Ptr FormBuilder::build(tgui::Color backgroundColor)
                 WidgetBuilder::createTooltip(props.tooltipText.value()));
         }
 
-        panel->add(row);
+        verticalLayout->add(row);
     }
 
-    return panel;
+    return verticalLayout;
 }
 
 tgui::Panel::Ptr FormBuilder::createOptionRow(

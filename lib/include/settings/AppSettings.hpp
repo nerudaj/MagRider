@@ -4,6 +4,7 @@
 #include "settings/BindingsSettings.hpp"
 #include "settings/InputSettings.hpp"
 #include "settings/VideoSettings.hpp"
+#include <nlohmann/json.hpp>
 
 struct [[nodiscard]] AppSettings final
 {
@@ -12,3 +13,5 @@ struct [[nodiscard]] AppSettings final
     InputSettings input;
     BindingsSettings bindings;
 };
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(AppSettings, audio, video, input, bindings);

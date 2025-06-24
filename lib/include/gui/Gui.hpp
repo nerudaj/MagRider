@@ -65,6 +65,11 @@ public:
         gui.setFont(font);
     }
 
+    void setTheme(tgui::Theme::Ptr theme)
+    {
+        tgui::Theme::setDefault(theme);
+    }
+
     void emulateClick(const sf::Vector2f& position)
     {
         gui.handleEvent(sf::Event::MouseButtonPressed {

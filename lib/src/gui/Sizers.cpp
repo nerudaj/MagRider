@@ -1,6 +1,7 @@
 #include "gui/Sizers.hpp"
 
 constexpr float CONTAINER_PADDING_MULTIPLIER = 2.55f;
+static inline float UI_SCALE = 1.f;
 
 #ifdef ANDROID
 
@@ -40,14 +41,15 @@ public:
     [[nodiscard]] unsigned getBaseContainerHeight() const noexcept
     {
         return spToPx(
-            static_cast<unsigned>(ANDROID_BASE_UNSCALED_FONT_SIZE * CONTAINER_PADDING_MULTIPLIER),
+            static_cast<unsigned>(
+                ANDROID_BASE_UNSCALED_FONT_SIZE * CONTAINER_PADDING_MULTIPLIER),
             pixelDensity);
     }
 
 private:
     static unsigned spToPx(unsigned sp, float density)
     {
-        return static_cast<unsigned>(sp * density);
+        return static_cast<unsigned>(sp * density * UI_SCALE);
     }
 
 private:
@@ -69,13 +71,21 @@ unsigned Sizers::getBaseFontSize()
 unsigned Sizers::getBaseContainerHeight()
 {
     const unsigned dpi = GetDpiForSystem();
-    return GetSystemMetricsForDpi(SM_CYCAPTION, dpi)
-           + GetSystemMetricsForDpi(SM_CYSIZEFRAME, dpi)
-           + GetSystemMetricsForDpi(SM_CYEDGE, dpi) * 2;
+    return static_cast<unsigned>(
+        (GetSystemMetricsForDpi(SM_CYCAPTION, dpi)
+         + GetSystemMetricsForDpi(SM_CYSIZEFRAME, dpi)
+         + GetSystemMetricsForDpi(SM_CYEDGE, dpi) * 2)
+        * UI_SCALE);
 }
 
 unsigned Sizers::getBaseFontSize()
 {
-    return static_cast<unsigned>(getBaseContainerHeight() / CONTAINER_PADDING_MULTIPLIER);
+    return static_cast<unsigned>(
+        getBaseContainerHeight() / CONTAINER_PADDING_MULTIPLIER * UI_SCALE);
 }
 #endif
+
+void Sizers::setUiScale(float scale)
+{
+    UI_SCALE = scale;
+}

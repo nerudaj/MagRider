@@ -1,11 +1,11 @@
 #pragma once
 
+#include "filesystem/ResourceLoader.hpp"
 #include "gui/Gui.hpp"
 #include "input/Input.hpp"
 #include "input/VirtualCursor.hpp"
-#include "loaders/ResourceLoader.hpp"
-#include "misc/StringProvider.hpp"
 #include "settings/AppSettings.hpp"
+#include "strings/StringProvider.hpp"
 #include <DGM/dgm.hpp>
 
 struct [[nodiscard]] DependencyContainer final
@@ -34,5 +34,7 @@ struct [[nodiscard]] DependencyContainer final
               resmgr.get<sf::Texture>("cursor.png"))
     {
         gui.setFont(resmgr.get<tgui::Font>("ChunkFive-Regular.ttf"));
+        // NOTE: You can create your own theme file and use it here
+        // gui.setTheme(resmgr.get<tgui::Theme::Ptr>("TransparentGrey.txt"));
     }
 };

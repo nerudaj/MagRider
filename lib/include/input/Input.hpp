@@ -1,6 +1,6 @@
 #pragma once
 
-#include "enums/InputKind.hpp"
+#include "input/InputKind.hpp"
 #include "misc/Compatibility.hpp"
 #include "settings/BindingsSettings.hpp"
 #include <DGM/dgm.hpp>

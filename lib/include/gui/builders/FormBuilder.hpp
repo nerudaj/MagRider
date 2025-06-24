@@ -40,7 +40,7 @@ public:
 
     FormBuilder& addSeparator();
 
-    NODISCARD_RESULT tgui::Panel::Ptr
+    NODISCARD_RESULT tgui::Container::Ptr
     build(tgui::Color backgroundColor = tgui::Color::Transparent);
 
 private:

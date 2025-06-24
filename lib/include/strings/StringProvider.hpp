@@ -1,6 +1,6 @@
 #pragma once
 
-#include "enums/Language.hpp"
+#include "strings/Language.hpp"
 #include "types/StringTypes.hpp"
 #include <string>
 #include <utility>

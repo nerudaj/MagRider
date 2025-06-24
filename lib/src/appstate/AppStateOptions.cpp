@@ -1,8 +1,9 @@
 #include "appstate/AppStateOptions.hpp"
 #include "appstate/CommonHandler.hpp"
 #include "gui/Builders.hpp"
-#include "input/InputKindToStringMapper.hpp"
+#include "gui/Sizers.hpp"
 #include "misc/Compatibility.hpp"
+#include "strings/InputKindToStringMapper.hpp"
 #include "types/Overloads.hpp"
 #include <ranges>
 
@@ -101,6 +102,14 @@ void AppStateOptions::buildLayout()
     buildVideoOptionsLayout();
 }
 
+void AppStateOptions::refresh()
+{
+    // must be recreated, otherwise it disappears for some reason
+    content = WidgetBuilder::createPanel();
+
+    buildLayout();
+}
+
 void AppStateOptions::buildVideoOptionsLayout()
 {
     content->removeAllWidgets();
@@ -125,6 +134,33 @@ void AppStateOptions::buildVideoOptionsLayout()
                     {
                         onResolutionSelected(
                             sf::VideoMode::getFullscreenModes()[idx].size);
+                    }))
+#endif
+            .addOption(
+                dic.strings.getString(StringId::SetUiScale),
+                WidgetBuilder::createSlider(
+                    settings.video.uiScale,
+                    [&](float val)
+                    {
+                        settings.video.uiScale = val;
+                        Sizers::setUiScale(val);
+                        // TODO: should refresh view, but the user should not be
+                        // clicking anything
+                    },
+                    dic.gui,
+                    SliderProperties { .low = 1.f, .high = 2.f, .step = 0.1f }))
+#ifdef _DEBUG
+            .addOption(
+                dic.strings.getString(StringId::SetTheme),
+                WidgetBuilder::createDropdown(
+                    dic.resmgr.getLoadedResourceIds<tgui::Theme::Ptr>().value(),
+                    "",
+                    [&](size_t idx)
+                    {
+                        dic.gui.setTheme(dic.resmgr.get<tgui::Theme::Ptr>(
+                            dic.resmgr.getLoadedResourceIds<tgui::Theme::Ptr>()
+                                .value()[idx]));
+                        refresh();
                     }))
 #endif
             .build(CONTENT_BGCOLOR));
@@ -231,7 +267,7 @@ void AppStateOptions::buildBindingsOptionsLayout()
             tableBuilder.addRow({
                 label,
                 buttonOrNothing(
-                    WidgetBuilder::createSmallerButton(
+                    WidgetBuilder::createRowButton(
                         std::visit(hwInputMapper, kmbBinding),
                         [&]()
                         {
@@ -250,7 +286,7 @@ void AppStateOptions::buildBindingsOptionsLayout()
                                         .enabled = !isEscapeKey }),
                     noKmb),
                 buttonOrNothing(
-                    WidgetBuilder::createSmallerButton(
+                    WidgetBuilder::createRowButton(
                         std::visit(hwInputMapper, gamepadBinding),
                         [&]()
                         {
@@ -303,10 +339,7 @@ void AppStateOptions::onResolutionSelected(const sf::Vector2u& resolution)
     app.window.changeResolution(resolution);
     dic.gui.setWindow(app.window.getSfmlWindowContext());
 
-    // must be recreated, otherwise it disappears for some reason
-    content = WidgetBuilder::createPanel();
-
-    buildLayout();
+    refresh();
 
     // TODO: Open "Are you sure dialog?"
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "enums/StringId.hpp"
+#include "strings/StringId.hpp"
 #include <map>
 #include <string>
 

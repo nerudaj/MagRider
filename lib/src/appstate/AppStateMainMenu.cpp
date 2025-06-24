@@ -4,7 +4,7 @@
 #include "appstate/CommonHandler.hpp"
 #include "gui/Builders.hpp"
 #include "misc/CMakeVars.hpp"
-#include "misc/StringProvider.hpp"
+#include "strings/StringProvider.hpp"
 
 AppStateMainMenu::AppStateMainMenu(
     dgm::App& app, DependencyContainer& dic, AppSettings& settings) noexcept

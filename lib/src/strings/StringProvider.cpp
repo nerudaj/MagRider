@@ -1,4 +1,4 @@
-#include "misc/StringProvider.hpp"
+#include "strings/StringProvider.hpp"
 #include "localization/EnLocalization.hpp"
 #include <ranges>
 

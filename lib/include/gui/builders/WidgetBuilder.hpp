@@ -57,12 +57,21 @@ public:
     static NODISCARD_RESULT tgui::Panel::Ptr
     createRow(tgui::Color bgcolor = tgui::Color::Transparent);
 
+    // Create button with 100% size of the parent (but default font size)
     static NODISCARD_RESULT tgui::Button::Ptr createButton(
         const Label& label,
         std::function<void(void)> onClick,
         WidgetOptions options = WidgetOptions {});
 
-    static NODISCARD_RESULT tgui::Button::Ptr createSmallerButton(
+    // Create a button of fixed size that is good for menus (like back button,
+    // or button list in pause menu).
+    static NODISCARD_RESULT tgui::Button::Ptr createMenuButton(
+        const Label& label,
+        std::function<void(void)> onClick,
+        WidgetOptions options = WidgetOptions {});
+
+    // Create a button that can fit inside an option row
+    static NODISCARD_RESULT tgui::Button::Ptr createRowButton(
         const Label& label,
         std::function<void(void)> onClick,
         WidgetOptions options = WidgetOptions {});

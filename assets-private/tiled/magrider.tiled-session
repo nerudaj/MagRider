@@ -1,0 +1,38 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "levels/intro.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "levels/intro.tmx": {
+            "scale": 1.1202083333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.2678073275061,
+                "y": 319.5834108238795
+            }
+        },
+        "tileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/merickova/Documents/GitHub/MagRider/assets/levels",
+    "last.imagePath": "C:/Users/merickova/Documents/GitHub/MagRider/assets/graphics",
+    "map.lastUsedExportFilter": "Mapové soubory JSON (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "tileset.tsx",
+        "levels/intro.tmx"
+    ],
+    "project": "magrider.tiled-project",
+    "recentFiles": [
+        "tileset.tsx",
+        "levels/intro.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.spacing": 4
+}

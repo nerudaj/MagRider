@@ -1,25 +1,16 @@
 #include <DGM/dgm.hpp>
 #include <appstate/AppStateMainMenu.hpp>
+#include <filesystem/AppStorage.hpp>
 #include <misc/CMakeVars.hpp>
 #include <misc/DependencyContainer.hpp>
 
+const auto SETTINGS_FILE_NAME = std::filesystem::path("settings.json");
+
 int main(int, char*[])
 {
-    // TODO: Resolve appdata folder
-    // TODO: Attept to load settings from appdata
-
     try
     {
-        auto&& settings = AppSettings {
-            .video =
-                VideoSettings {
-#ifdef _DEBUG
-                    .resolution = { 1280, 720 },
-#else
-                    .resolution = sf::VideoMode::getDesktopMode().size,
-#endif
-                },
-        };
+        auto&& settings = ResourceLoader::loadSettings(SETTINGS_FILE_NAME);
 
         auto&& window = dgm::Window(dgm::WindowSettings {
             .resolution = settings.video.resolution,
@@ -34,15 +25,15 @@ int main(int, char*[])
 
         app.pushState<AppStateMainMenu>(dependencies, settings);
         app.run();
+
+        AppStorage::saveFile(
+            SETTINGS_FILE_NAME, nlohmann::json(settings).dump(4));
     }
     catch (const std::exception& ex)
     {
         std::cerr << ex.what() << std::endl;
         return 1;
     }
-
-    // TODO: capture window settings
-    // TODO: store settings in appdata
 
     return 0;
 }

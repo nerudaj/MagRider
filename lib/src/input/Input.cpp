@@ -25,6 +25,11 @@ bool Input::isMagnetizingBlue() const
 
 bool Input::shouldStart() const
 {
+    if (gameInteractPressed)
+    {
+        gameInteractPressed = false;
+        return true;
+    }
     return readAndRelease(InputKind::Jump);
 }
 
@@ -64,6 +69,8 @@ void Input::toggleInput(InputKind i, bool pressed)
         magnetizeRedPressed = pressed;
     else if (i == InputKind::MagnetizeBlue)
         magnetizeBluePressed = pressed;
+    else if (i == InputKind::Jump)
+        gameInteractPressed = pressed;
 }
 
 bool Input::readAndRelease(InputKind i) const

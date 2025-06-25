@@ -43,9 +43,12 @@ void AppStateGame::input()
             auto e = event->getIf<sf::Event::TouchBegan>();
             auto position = e->position;
 
-            const auto action = position.x < app.window.getSize().x / 2.f
-                                    ? InputKind::MagnetizeRed
-                                    : InputKind::MagnetizeBlue;
+            const auto action =
+                position.x < app.window.getSize().x / 3.f
+                    ? InputKind::MagnetizeRed
+                : position.x < 2.f * app.window.getSize().x / 3.f
+                    ? InputKind::Jump
+                    : InputKind ::MagnetizeBlue;
             fingerToAction[e->finger] = action;
 
             dic.input.toggleInput(action, true);

@@ -54,4 +54,5 @@ private:
     mutable dgm::Controller<InputKind> controller;
     bool magnetizeRedPressed = false;
     bool magnetizeBluePressed = false;
+    mutable bool gameInteractPressed = false;
 };

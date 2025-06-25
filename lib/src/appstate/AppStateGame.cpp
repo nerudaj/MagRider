@@ -38,6 +38,23 @@ void AppStateGame::input()
         {
             app.exit();
         }
+        else if (event->is<sf::Event::TouchBegan>())
+        {
+            auto e = event->getIf<sf::Event::TouchBegan>();
+            auto position = e->position;
+
+            const auto action = position.x < app.window.getSize().x / 2.f
+                                    ? InputKind::MagnetizeRed
+                                    : InputKind::MagnetizeBlue;
+            fingerToAction[e->finger] = action;
+
+            dic.input.toggleInput(action, true);
+        }
+        else if (event->is<sf::Event::TouchEnded>())
+        {
+            auto e = event->getIf<sf::Event::TouchBegan>();
+            dic.input.toggleInput(fingerToAction[e->finger], false);
+        }
     }
 }
 

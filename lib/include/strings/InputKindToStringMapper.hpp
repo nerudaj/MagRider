@@ -33,9 +33,9 @@ public:
             return strings.getString(StringId::InputKind_MenuCycleLeft);
         case InputKind::MenuCycleRight:
             return strings.getString(StringId::InputKind_MenuCycleRight);
-        case InputKind::Left:
+        case InputKind::MagnetizeRed:
             return strings.getString(StringId::InputKind_Left);
-        case InputKind::Right:
+        case InputKind::MagnetizeBlue:
             return strings.getString(StringId::InputKind_Right);
         case InputKind::Jump:
             return strings.getString(StringId::InputKind_Jump);

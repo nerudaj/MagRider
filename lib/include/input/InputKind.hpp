@@ -10,7 +10,7 @@ enum class [[nodiscard]] InputKind
     CursorRight,
     MenuCycleLeft,
     MenuCycleRight,
-    Left,
-    Right,
+    MagnetizeRed,
+    MagnetizeBlue,
     Jump,
 };

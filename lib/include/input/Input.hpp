@@ -26,11 +26,11 @@ public:
     /// </summary>
     void forceRelease(InputKind action);
 
-#pragma region For dummy entity, can be removed
-    float getHorizontalVelocity() const;
+    bool isMagnetizingRed() const;
 
-    NODISCARD_RESULT bool isJumpPressed() const;
-#pragma endregion
+    bool isMagnetizingBlue() const;
+
+    bool shouldStart() const;
 
     NODISCARD_RESULT bool isMenuCycleLeftPressed() const;
 
@@ -42,6 +42,8 @@ public:
 
     NODISCARD_RESULT sf::Vector2f getCursorDelta() const;
 
+    void toggleInput(InputKind i, bool pressed);
+
 private:
     bool readAndRelease(InputKind i) const;
 
@@ -50,4 +52,6 @@ private:
 
 private:
     mutable dgm::Controller<InputKind> controller;
+    bool magnetizeRedPressed = false;
+    bool magnetizeBluePressed = false;
 };

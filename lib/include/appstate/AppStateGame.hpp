@@ -38,4 +38,6 @@ private:
     AppSettings& settings;
     Game game;
     sf::Sound sound;
+
+    std::map<unsigned, InputKind> fingerToAction;
 };

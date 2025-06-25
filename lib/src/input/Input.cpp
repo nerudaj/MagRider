@@ -11,15 +11,21 @@ void Input::forceRelease(InputKind action)
     controller.forceRelease(action);
 }
 
-float Input::getHorizontalVelocity() const
+bool Input::isMagnetizingRed() const
 {
-    return -controller.readAnalog(InputKind::Left)
-           + controller.readAnalog(InputKind::Right);
+    return magnetizeRedPressed
+           || controller.readDigital(InputKind::MagnetizeRed);
 }
 
-bool Input::isJumpPressed() const
+bool Input::isMagnetizingBlue() const
 {
-    return controller.readDigital(InputKind::Jump);
+    return magnetizeBluePressed
+           || controller.readDigital(InputKind::MagnetizeBlue);
+}
+
+bool Input::shouldStart() const
+{
+    return readAndRelease(InputKind::Jump);
 }
 
 NODISCARD_RESULT bool Input::isMenuCycleLeftPressed() const
@@ -50,6 +56,14 @@ sf::Vector2f Input::getCursorDelta() const
         -controller.readAnalog(InputKind::CursorUp)
             + controller.readAnalog(InputKind::CursorDown),
     };
+}
+
+void Input::toggleInput(InputKind i, bool pressed)
+{
+    if (i == InputKind::MagnetizeRed)
+        magnetizeRedPressed = pressed;
+    else if (i == InputKind::MagnetizeBlue)
+        magnetizeBluePressed = pressed;
 }
 
 bool Input::readAndRelease(InputKind i) const

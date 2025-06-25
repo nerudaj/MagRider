@@ -8,11 +8,11 @@
 struct [[nodiscard]] BindingsSettings final
 {
     std::map<InputKind, Binding> ingameBindings = {
-        { InputKind::Left,
+        { InputKind::MagnetizeRed,
           Binding {
               sf::Keyboard::Key::A,
               std::pair { sf::Joystick::Axis::X, dgm::AxisHalf::Negative } } },
-        { InputKind::Right,
+        { InputKind::MagnetizeBlue,
           Binding {
               sf::Keyboard::Key::D,
               std::pair { sf::Joystick::Axis::X, dgm::AxisHalf::Positive } } },

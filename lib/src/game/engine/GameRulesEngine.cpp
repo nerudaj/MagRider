@@ -34,12 +34,14 @@ void GameRulesEngine::update(const dgm::Time& time)
 {
     if (!scene.playing)
     {
-        scene.playing = input.isJumpPressed();
+        scene.playing = input.shouldStart();
         return;
     }
 
-    const auto vel = input.getHorizontalVelocity();
-    scene.magnetPolarity = vel == 0.f ? 0 : vel < 0.f ? 1 : 2;
+    if (input.isMagnetizingRed())
+        scene.magnetPolarity = 1;
+    else if (input.isMagnetizingBlue())
+        scene.magnetPolarity = 2;
 
     sf::Vector2f totalForce = {};
     if (scene.magnetPolarity != 0)

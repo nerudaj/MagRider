@@ -44,23 +44,14 @@ void GameRulesEngine::update(const dgm::Time& time)
     sf::Vector2f totalForce = {};
     if (scene.magnetPolarity != 0)
     {
-        for (auto&& magnetPos : scene.redMagnetPositions)
+        for (auto&& magnet : scene.magnets)
         {
-            const auto direction = scene.joe.GetPosition() - magnetPos;
+            const auto direction = scene.joe.GetPosition() - magnet.position;
             if (direction.length() < MAX_MAGNET_DISTANCE)
             {
-                totalForce += direction.normalized() * LINEAR_FORCE
-                              * (scene.magnetPolarity == 1 ? 1.f : -1.f);
-            }
-        }
-
-        for (auto&& magnetPos : scene.blueMagnetPositions)
-        {
-            const auto direction = scene.joe.GetPosition() - magnetPos;
-            if (direction.length() < MAX_MAGNET_DISTANCE)
-            {
-                totalForce += direction.normalized() * LINEAR_FORCE
-                              * (scene.magnetPolarity == 1 ? -1.f : 1.f);
+                totalForce +=
+                    direction.normalized() * LINEAR_FORCE
+                    * (scene.magnetPolarity == magnet.polarity ? -1.f : 1.f);
             }
         }
     }

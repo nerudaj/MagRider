@@ -62,7 +62,7 @@ void AppStateMainMenu::buildLayout()
 
 void AppStateMainMenu::onPlay()
 {
-    app.pushState<AppStateGame>(dic, settings);
+    app.pushState<AppStateGame>(dic, settings, "intro.json");
 }
 
 void AppStateMainMenu::onOptions()

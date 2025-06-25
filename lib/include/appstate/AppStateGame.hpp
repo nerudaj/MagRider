@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/Game.hpp"
 #include "game/Scene.hpp"
 #include "game/engine/GameRulesEngine.hpp"
 #include "game/engine/RenderingEngine.hpp"
@@ -13,17 +14,11 @@
 class [[nodiscard]] AppStateGame : public dgm::AppState
 {
 public:
-    AppStateGame(dgm::App& app, DependencyContainer& dic, AppSettings& settings)
-        : dgm::AppState(app)
-        , dic(dic)
-        , settings(settings)
-        , scene(buildScene(dic.resmgr, app.window))
-        , gameRulesEngine(gameEvents, scene, dic.input)
-        , renderingEngine(app.window, dic.resmgr, scene)
-        , sound(dic.resmgr.get<sf::SoundBuffer>("land.wav"))
-    {
-        sound.setVolume(100.f);
-    }
+    AppStateGame(
+        dgm::App& app,
+        DependencyContainer& dic,
+        AppSettings& settings,
+        const std::string& levelName);
 
 public:
     void input() override;
@@ -41,9 +36,6 @@ private:
 private:
     DependencyContainer& dic;
     AppSettings& settings;
-    Scene scene;
-    EventQueue<GameEvent> gameEvents;
-    GameRulesEngine gameRulesEngine;
-    RenderingEngine renderingEngine;
+    Game game;
     sf::Sound sound;
 };

@@ -42,6 +42,8 @@ void GameRulesEngine::update(const dgm::Time& time)
         scene.magnetPolarity = 1;
     else if (input.isMagnetizingBlue())
         scene.magnetPolarity = 2;
+    else
+        scene.magnetPolarity = 0;
 
     sf::Vector2f totalForce = {};
     if (scene.magnetPolarity != 0)

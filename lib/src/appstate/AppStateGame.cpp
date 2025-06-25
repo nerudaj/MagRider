@@ -55,7 +55,7 @@ void AppStateGame::input()
         }
         else if (event->is<sf::Event::TouchEnded>())
         {
-            auto e = event->getIf<sf::Event::TouchBegan>();
+            auto e = event->getIf<sf::Event::TouchEnded>();
             dic.input.toggleInput(fingerToAction[e->finger], false);
         }
     }

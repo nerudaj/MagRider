@@ -17,13 +17,15 @@ static dgm::Camera createFullscreenCamera(
     if (currentAspectRatio > desiredAspectRatio)
     {
         // Narrow desired into wider current
-        viewport.size.x = desiredResolution.y / currentResolution.y;
+        viewport.size.x =
+            desiredAspectRatio * currentResolution.y / currentResolution.x;
         viewport.position.x = (1.f - viewport.size.x) / 2.f;
     }
     else if (currentAspectRatio < desiredAspectRatio)
     {
         // Wider desired into narrower current
-        viewport.size.y = desiredResolution.x / currentResolution.x;
+        viewport.size.y =
+            currentResolution.x / desiredAspectRatio / currentResolution.y;
         viewport.position.y = (1.f - viewport.size.y) / 2.f;
     }
 

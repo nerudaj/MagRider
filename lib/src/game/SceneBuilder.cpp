@@ -298,7 +298,7 @@ Scene SceneBuilder::buildScene(const TiledLevel& level)
             level.objectLayers.front().positions.front()),
         0.5f,
         DynamicBodyProperties {
-            .density = 0.6f,
+            .density = 0.5f,
             .restitution = 0.4f,
         });
 

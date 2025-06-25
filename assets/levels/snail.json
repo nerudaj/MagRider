@@ -1,0 +1,67 @@
+{ "compressionlevel":-1,
+ "height":13,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26,
+            26, 22, 0, 0, 0, 0, 0, 0, 21, 26, 26,
+            26, 0, 0, 0, 0, 0, 0, 0, 0, 21, 26,
+            26, 0, 0, 0, 0, 0, 0, 0, 0, 25, 26,
+            26, 26, 26, 26, 26, 16, 0, 0, 0, 25, 26,
+            26, 22, 21, 26, 31, 26, 16, 0, 0, 25, 26,
+            26, 0, 0, 21, 26, 31, 26, 0, 0, 25, 26,
+            26, 14, 14, 14, 21, 26, 22, 0, 0, 25, 26,
+            26, 13, 0, 0, 0, 0, 0, 0, 0, 25, 26,
+            26, 13, 13, 13, 13, 13, 13, 13, 13, 25, 19,
+            26, 13, 13, 13, 13, 13, 13, 13, 13, 25, 26,
+            26, 16, 20, 20, 20, 20, 20, 20, 20, 15, 26,
+            26, 26, 26, 26, 26, 26, 19, 26, 26, 26, 26],
+         "height":13,
+         "id":1,
+         "name":"tiles",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":11,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":2,
+         "name":"spawn",
+         "objects":[
+                {
+                 "height":0,
+                 "id":1,
+                 "name":"spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"spawn",
+                 "visible":true,
+                 "width":0,
+                 "x":62.9644783336433,
+                 "y":112.889715454715
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":3,
+ "nextobjectid":2,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.11.2",
+ "tileheight":32,
+ "tilesets":[
+        {
+         "firstgid":1,
+         "source":"..\/..\/assets-private\/tiled\/tileset.tsx"
+        }],
+ "tilewidth":32,
+ "type":"map",
+ "version":"1.10",
+ "width":11
+}

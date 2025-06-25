@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="11" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="2">
+ <editorsettings>
+  <export target="../../../assets/levels/snail.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" source="../tileset.tsx"/>
+ <layer id="1" name="tiles" width="11" height="13">
+  <data encoding="csv">
+26,26,26,26,26,26,26,26,26,26,26,
+26,22,0,0,0,0,0,0,21,26,26,
+26,0,0,0,0,0,0,0,0,21,26,
+26,0,0,0,0,0,0,0,0,25,26,
+26,26,26,26,26,16,0,0,0,25,26,
+26,22,21,26,31,26,16,0,0,25,26,
+26,0,0,21,26,31,26,0,0,25,26,
+26,14,14,14,21,26,22,0,0,25,26,
+26,13,0,0,0,0,0,0,0,25,26,
+26,13,13,13,13,13,13,13,13,25,19,
+26,13,13,13,13,13,13,13,13,25,26,
+26,16,20,20,20,20,20,20,20,15,26,
+26,26,26,26,26,26,19,26,26,26,26
+</data>
+ </layer>
+ <objectgroup id="2" name="spawn">
+  <object id="1" name="spawn" type="spawn" x="62.9645" y="112.89">
+   <point/>
+  </object>
+ </objectgroup>
+</map>

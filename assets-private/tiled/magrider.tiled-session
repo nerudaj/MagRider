@@ -3,11 +3,46 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "levels/intro.tmx",
+    "activeFile": "levels/1.tmx",
     "expandedProjectPaths": [
+        ".",
+        "levels"
     ],
     "fileStates": {
+        "levels/1.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 700,
+                "y": -128
+            }
+        },
+        "levels/_up.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1.1202083333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.2678073275061,
+                "y": 319.5834108238795
+            }
+        },
         "levels/intro.tmx": {
+            "scale": 1.1202083333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.2678073275061,
+                "y": 319.5834108238795
+            }
+        },
+        "levels/snail.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
             "scale": 1.1202083333333333,
             "selectedLayer": 0,
             "viewCenter": {
@@ -26,12 +61,18 @@
     "map.lastUsedFormat": "tmx",
     "openFiles": [
         "tileset.tsx",
-        "levels/intro.tmx"
+        "levels/intro.tmx",
+        "levels/_up.tmx",
+        "levels/snail.tmx",
+        "levels/1.tmx"
     ],
     "project": "magrider.tiled-project",
     "recentFiles": [
         "tileset.tsx",
-        "levels/intro.tmx"
+        "levels/intro.tmx",
+        "levels/_up.tmx",
+        "levels/snail.tmx",
+        "levels/1.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.spacing": 4

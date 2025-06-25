@@ -7,7 +7,8 @@
 class [[nodiscard]] AppStateGameWrapper final : public dgm::AppState
 {
 public:
-    AppStateGameWrapper(dgm::App& app,
+    AppStateGameWrapper(
+        dgm::App& app,
         DependencyContainer& dic,
         AppSettings& settings) noexcept;
 
@@ -22,6 +23,9 @@ private:
     void restoreFocusImpl(const std::string& message = "") override;
 
 private:
-    DependencyContainer& dic; ///< Dependency container for managing dependencies
-    AppSettings& settings;    ///< Application settings for configuration
+    DependencyContainer&
+        dic;               ///< Dependency container for managing dependencies
+    AppSettings& settings; ///< Application settings for configuration
+    std::vector<std::string> levels;
+    size_t currentLevelIdx = 0;
 };

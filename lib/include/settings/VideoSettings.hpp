@@ -21,6 +21,7 @@ struct [[nodiscard]] VideoSettings final
         true;
 #endif
     float uiScale = 1.f;
+    bool renderColliders = false;
 };
 
 namespace sf

@@ -4,6 +4,7 @@
 #include "game/Scene.hpp"
 #include "game/TiledLevel.hpp"
 #include "misc/FpsCounter.hpp"
+#include "settings/VideoSettings.hpp"
 #include <DGM/dgm.hpp>
 
 class [[nodiscard]] RenderingEngine final
@@ -12,6 +13,7 @@ public:
     RenderingEngine(
         dgm::Window& window,
         dgm::ResourceManager& resmgr,
+        const VideoSettings& settings,
         Scene& scene,
         const TiledLevel& level) noexcept;
 
@@ -22,6 +24,7 @@ public:
 
 private:
     dgm::Window& window;
+    const VideoSettings& settings;
     Scene& scene;
     BoxDebugRenderer boxDebugRenderer;
     dgm::Camera worldCamera;

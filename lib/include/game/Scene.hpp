@@ -3,8 +3,8 @@
 #include <DGM/dgm.hpp>
 #include <box2d/box2d.h>
 
-constexpr const unsigned SPIKE = 1;
-constexpr const unsigned FINISH = 2;
+constexpr const uintptr_t SPIKE = 1;
+constexpr const uintptr_t FINISH = 2;
 
 class SpikeContactListener : public b2ContactListener
 {
@@ -14,7 +14,7 @@ public:
         auto a = contact->GetFixtureA();
         auto b = contact->GetFixtureB();
 
-        unsigned userData = 0;
+        uintptr_t userData = 0;
         if (a->IsSensor())
             userData = a->GetUserData().pointer;
         else if (b->IsSensor())

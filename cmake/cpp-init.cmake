@@ -248,6 +248,7 @@ function ( apply_compile_options TARGET )
 			# /wd4251
 			/we4369 # value of enum overflows underlying type
 			/we5205 # Dtor on iface is not virtual
+			/we4099
 		)
 		
 		set_target_properties(

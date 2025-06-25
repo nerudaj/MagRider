@@ -21,6 +21,7 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     { SetResolution, "Resolution" },
     { SetUiScale, "Set UI scale" },
     { SetTheme, "Set theme" },
+    { RenderColliders, "Render box2D colliders" },
     { SoundVolume, "Sound volume" },
     { MusicVolume, "Music volume" },
     { GamepadDeadzone, "Gamepad deadzone" },

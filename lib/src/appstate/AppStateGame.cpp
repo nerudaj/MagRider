@@ -18,7 +18,8 @@ AppStateGame::AppStateGame(
               dic.resmgr.get<tiled::FiniteMapModel>(levelName)),
           dic.input,
           app.window,
-          dic.resmgr)
+          dic.resmgr,
+          settings)
     , sound(dic.resmgr.get<sf::SoundBuffer>("land.wav"))
 {
     sound.setVolume(100.f);
@@ -54,7 +55,11 @@ void AppStateGame::update()
 
     if (game.scene.contactListener->died)
     {
-        app.popState();
+        app.popState(Messaging::serialize<RestartLevel>());
+    }
+    else if (game.scene.contactListener->won)
+    {
+        app.popState(Messaging::serialize<GoToNextLevel>());
     }
 }
 
@@ -67,19 +72,12 @@ void AppStateGame::restoreFocusImpl(const std::string& msg)
 {
     if (auto message = Messaging::deserialize(msg))
     {
-        std::visit([&](PopIfNotMenu&) { app.popState(msg); }, *message);
+        std::visit(
+            overloads {
+                [&](PopIfNotMenu&) { app.popState(msg); },
+                [](RestartLevel) {},
+                [](GoToNextLevel) {},
+            },
+            *message);
     }
 }
-
-/*
-Scene AppStateGame::buildScene(
-    const dgm::ResourceManager& resmgr, const dgm::Window& window)
-{
-    const auto& map = resmgr.get<tiled::FiniteMapModel>("intro.json");
-    auto spawn = sf::Vector2f {};
-    auto tilemap = ;
-
-    return SceneBuilder::buildScene(SceneBuilder::convertToTiledLevel(map));
-}
-
-*/

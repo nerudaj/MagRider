@@ -33,9 +33,11 @@ static dgm::Camera createFullscreenCamera(
 RenderingEngine::RenderingEngine(
     dgm::Window& window,
     dgm::ResourceManager& resmgr,
+    const VideoSettings& settings,
     Scene& scene,
     const TiledLevel& level) noexcept
     : window(window)
+    , settings(settings)
     , scene(scene)
     , boxDebugRenderer(window)
     , worldCamera(createFullscreenCamera(
@@ -117,7 +119,7 @@ void RenderingEngine::draw(dgm::Window& _window)
         }
     }
 
-    scene.world->DebugDraw();
+    if (settings.renderColliders) scene.world->DebugDraw();
 
     window.setViewFromCamera(hudCamera);
 

@@ -162,6 +162,12 @@ void AppStateOptions::buildVideoOptionsLayout()
                                 .value()[idx]));
                         refresh();
                     }))
+            .addOption(
+                dic.strings.getString(StringId::RenderColliders),
+                WidgetBuilder::createCheckbox(
+                    settings.video.renderColliders,
+                    [&](bool value)
+                    { settings.video.renderColliders = value; }))
 #endif
             .build(CONTENT_BGCOLOR));
 }

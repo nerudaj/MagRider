@@ -79,12 +79,12 @@ void SceneBuilder::generateColliders(
             if (tile == Tile::Block || tile == Tile::MagNeg
                 || tile == Tile::MagPlus)
             {
-                box::createStaticBox(
+                Box2D::createStaticBox(
                     world, b2Vec2(fx + 0.5f, fy + 0.5f), b2Vec2(1.f, 1.f));
             }
             else if (tile == Tile::Finish)
             {
-                box::createStaticBox(
+                Box2D::createStaticBox(
                     world,
                     b2Vec2(fx + 0.5f, fy + 0.5f),
                     b2Vec2(0.4f, 0.4f),
@@ -94,7 +94,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::FloorUp45)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy + 1.f),
@@ -104,7 +104,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::FloorDown45)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy),
@@ -114,7 +114,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::CeilDown45)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy),
@@ -124,7 +124,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::CeilUp45)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy),
@@ -135,7 +135,7 @@ void SceneBuilder::generateColliders(
             // 60 degree triangles
             else if (tile == Tile::FloorUp60Small)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy + 1.f),
@@ -145,7 +145,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::FloorUp120Small)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy + 2.f),
@@ -155,7 +155,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::FloorDown60Big)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy),
@@ -165,7 +165,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::FloorDown120Small)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy),
@@ -175,7 +175,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::CeilDown60Small)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy),
@@ -185,7 +185,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::CeilDown120Big)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy),
@@ -195,7 +195,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::CeilUp60Big)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy),
@@ -205,7 +205,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::CeilUp120Big)
             {
-                box::createStaticTriangle(
+                Box2D::createStaticTriangle(
                     world,
                     {
                         b2Vec2(fx, fy),
@@ -216,7 +216,7 @@ void SceneBuilder::generateColliders(
             // spikes
             else if (tile == Tile::SpikeUp)
             {
-                box::createStaticBox(
+                Box2D::createStaticBox(
                     world,
                     b2Vec2(fx + 0.5f, fy + 0.75f),
                     b2Vec2(1.f, 0.5f),
@@ -226,7 +226,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::SpikeLeft)
             {
-                box::createStaticBox(
+                Box2D::createStaticBox(
                     world,
                     b2Vec2(fx + 0.75f, fy + 0.5f),
                     b2Vec2(0.5f, 1.f),
@@ -236,7 +236,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::SpikeRight)
             {
-                box::createStaticBox(
+                Box2D::createStaticBox(
                     world,
                     b2Vec2(fx + 0.25f, fy + 0.5f),
                     b2Vec2(0.5f, 1.f),
@@ -246,7 +246,7 @@ void SceneBuilder::generateColliders(
             }
             else if (tile == Tile::SpikeDown)
             {
-                box::createStaticBox(
+                Box2D::createStaticBox(
                     world,
                     b2Vec2(fx + 0.5f, fy + 0.25f),
                     b2Vec2(1.f, 0.5f),
@@ -289,10 +289,10 @@ std::vector<Magnet> SceneBuilder::getMagnets(const TiledLevel& level)
 
 Scene SceneBuilder::buildScene(const TiledLevel& level)
 {
-    auto world = box::createWorld();
+    auto world = Box2D::createWorld();
     generateColliders(world, level);
 
-    auto& joeBody = box::createDynamicBall(
+    auto& joeBody = Box2D::createDynamicBall(
         world,
         CoordConverter::screenToWorld(
             level.objectLayers.front().positions.front()),

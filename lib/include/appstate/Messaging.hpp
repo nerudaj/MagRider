@@ -9,7 +9,15 @@ struct [[nodiscard]] PopIfNotMenu final
 {
 };
 
-using AppMessage = std::variant<PopIfNotMenu>;
+struct [[nodiscard]] RestartLevel final
+{
+};
+
+struct [[nodiscard]] GoToNextLevel final
+{
+};
+
+using AppMessage = std::variant<PopIfNotMenu, RestartLevel, GoToNextLevel>;
 
 template<class T>
 concept IsAppMessage = std::constructible_from<AppMessage, T>;

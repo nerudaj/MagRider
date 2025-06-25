@@ -6,7 +6,7 @@
 
 namespace tiled
 {
-    class FiniteMapModel;
+    struct FiniteMapModel;
 }
 
 class SceneBuilder

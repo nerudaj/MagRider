@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Paths.hpp"
+#include <filesystem/ResourceLoader.hpp>
 #include <fstream>
-#include <loaders/ResourceLoader.hpp>
 #include <misc/DependencyContainer.hpp>
 
 class Helper final

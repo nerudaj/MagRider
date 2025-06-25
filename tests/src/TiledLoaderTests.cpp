@@ -1,7 +1,7 @@
 #include "Helper.hpp"
 #include "Paths.hpp"
 #include <catch_amalgamated.hpp>
-#include <loaders/TiledLoader.hpp>
+#include <filesystem/TiledLoader.hpp>
 #include <nlohmann/json.hpp>
 
 TEST_CASE("[TiledLoader]")

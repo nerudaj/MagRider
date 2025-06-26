@@ -4,17 +4,17 @@
 #include "filesystem/models/TiledModels.hpp"
 
 AppStateGameWrapper::AppStateGameWrapper(
-    dgm::App& app, DependencyContainer& dic, AppSettings& settings) noexcept
-    : dgm::AppState(app)
-    , dic(dic)
-    , settings(settings)
-    , levels(dic.resmgr.getLoadedResourceIds<tiled::FiniteMapModel>().value())
+    dgm::App& app,
+    DependencyContainer& dic,
+    AppSettings& settings,
+    const std::string& levelId) noexcept
+    : dgm::AppState(app), dic(dic), settings(settings), levelId(levelId)
 {
 }
 
 void AppStateGameWrapper::input()
 {
-    app.pushState<AppStateGame>(dic, settings, levels[currentLevelIdx]);
+    app.pushState<AppStateGame>(dic, settings, levelId);
 }
 
 void AppStateGameWrapper::update()
@@ -30,17 +30,15 @@ void AppStateGameWrapper::draw()
 void AppStateGameWrapper::restoreFocusImpl(const std::string& message)
 {
     auto msg = Messaging::deserialize(message);
-    if (!msg)
+    if (msg)
     {
-        app.popState();
+        std::visit(
+            overloads {
+                [&](RestartLevel) { /* do nothing, next input() will restart*/ },
+                [&](auto) { app.popState(); },
+            },
+            *msg);
     }
-
-    std::visit(
-        overloads {
-            [&](RestartLevel) { /* do nothing, next input() will restart*/ },
-            [&](GoToNextLevel)
-            { currentLevelIdx = (currentLevelIdx + 1) % levels.size(); },
-            [&](PopIfNotMenu) { app.popState(); },
-        },
-        *msg);
+    else
+        app.popState();
 }

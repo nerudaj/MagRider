@@ -2,16 +2,15 @@
 
 #include "misc/DependencyContainer.hpp"
 #include "settings/AppSettings.hpp"
-#include <DGM/classes/AppState.hpp>
+#include <DGM/dgm.hpp>
 
-class [[nodiscard]] AppStateGameWrapper final : public dgm::AppState
+class [[nodiscard]] AppStateLevelSelect final : public dgm::AppState
 {
 public:
-    AppStateGameWrapper(
+    AppStateLevelSelect(
         dgm::App& app,
         DependencyContainer& dic,
-        AppSettings& settings,
-        const std::string& levelId) noexcept;
+        AppSettings& settings) noexcept;
 
 public:
     void input() override;
@@ -23,9 +22,15 @@ public:
 private:
     void restoreFocusImpl(const std::string& message = "") override;
 
+    void buildLayout();
+
+    tgui::Container::Ptr buildContent() const;
+
+    tgui::Container::Ptr buildLevelCard(size_t levelIdx) const;
+
 private:
     DependencyContainer&
         dic;               ///< Dependency container for managing dependencies
     AppSettings& settings; ///< Application settings for configuration
-    std::string levelId;
+    std::vector<std::string> levelIds;
 };

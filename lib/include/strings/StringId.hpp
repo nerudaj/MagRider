@@ -9,6 +9,7 @@ enum class [[nodiscard]] StringId
     PauseTitle,
     ExitButton,
     Back,
+    SelectLevel,
 
     // Options
     VideoOptionsTab,

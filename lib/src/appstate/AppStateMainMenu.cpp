@@ -1,5 +1,5 @@
 #include "appstate/AppStateMainMenu.hpp"
-#include "appstate/AppStateGameWrapper.hpp"
+#include "appstate/AppStateLevelSelect.hpp"
 #include "appstate/AppStateOptions.hpp"
 #include "appstate/CommonHandler.hpp"
 #include "gui/Builders.hpp"
@@ -62,7 +62,7 @@ void AppStateMainMenu::buildLayout()
 
 void AppStateMainMenu::onPlay()
 {
-    app.pushState<AppStateGameWrapper>(dic, settings);
+    app.pushState<AppStateLevelSelect>(dic, settings);
 }
 
 void AppStateMainMenu::onOptions()

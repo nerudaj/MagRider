@@ -11,6 +11,7 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     { PauseTitle, "Game paused" },
     { ExitButton, "Exit" },
     { Back, "Back" },
+    { SelectLevel, "Select level" },
 
     // Options
     { VideoOptionsTab, "Video" },

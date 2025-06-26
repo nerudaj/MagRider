@@ -32,9 +32,14 @@ void AppStateLevelSelect::restoreFocusImpl(const std::string& message)
 {
     auto msg = Messaging::deserialize(message);
     if (msg)
-        std::visit([&](auto) { app.popState(); }, *msg);
+        std::visit(
+            overloads {
+                [](GoToNextLevel) { /*intentionally do nothing*/ },
+                [&](auto) { app.popState(message); },
+            },
+            *msg);
     else
-        app.popState();
+        app.popState(message);
 }
 
 void AppStateLevelSelect::buildLayout()

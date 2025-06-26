@@ -35,10 +35,10 @@ void AppStateGameWrapper::restoreFocusImpl(const std::string& message)
         std::visit(
             overloads {
                 [&](RestartLevel) { /* do nothing, next input() will restart*/ },
-                [&](auto) { app.popState(); },
+                [&](auto) { app.popState(message); },
             },
             *msg);
     }
     else
-        app.popState();
+        app.popState(message);
 }

@@ -1,6 +1,7 @@
 #include "game/engine/RenderingEngine.hpp"
 #include "misc/Compatibility.hpp"
 #include "misc/CoordConverter.hpp"
+#include "misc/Utility.hpp"
 
 static dgm::Camera createFullscreenCamera(
     const sf::Vector2f& currentResolution,
@@ -144,5 +145,13 @@ void RenderingEngine::draw(dgm::Window& _window)
 
     text.setPosition({ 10.f, 10.f });
     text.setString(fpsCounter.getText());
+    window.draw(text);
+
+    text.setString(Utility::formatTime(scene.timer));
+    text.setPosition({
+        static_cast<float>(window.getSize().x) - text.getGlobalBounds().size.x
+            - 10.f,
+        10.f,
+    });
     window.draw(text);
 }

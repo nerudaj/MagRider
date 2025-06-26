@@ -4,6 +4,7 @@
 #include "appstate/Messaging.hpp"
 #include "filesystem/models/TiledModels.hpp"
 #include "gui/Builders.hpp"
+#include "misc/Utility.hpp"
 
 AppStateLevelSelect::AppStateLevelSelect(
     dgm::App& app, DependencyContainer& dic, AppSettings& settings) noexcept
@@ -34,7 +35,7 @@ void AppStateLevelSelect::restoreFocusImpl(const std::string& message)
     if (msg)
         std::visit(
             overloads {
-                [](GoToNextLevel) { /*intentionally do nothing*/ },
+                [&](GoToNextLevel) { buildLayout(); },
                 [&](auto) { app.popState(message); },
             },
             *msg);
@@ -91,20 +92,18 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
     card->add(buttonPanel);
 
     auto&& timeText = std::string("--:--");
-
-    if (settings.save.times.size() > levelIdx)
-    {
-        const auto time = settings.save.times[levelIdx];
-        const auto minutes = time / 60;
-        timeText = std::format("{:02.0f}:{:02.0f}", time / 60, time - minutes);
-    }
+    if (auto time = Utility::getBestTime(settings.save, levelIdx))
+        timeText = Utility::formatTime(time.value());
 
     headerPanel->add(WidgetBuilder::createHeading(std::to_string(levelIdx)));
     timePanel->add(WidgetBuilder::createHeading(timeText, HeadingLevel::H2));
     buttonPanel->add(WidgetBuilder::createButton(
         dic.strings.getString(StringId::PlayButton),
         [&, idx = levelIdx]
-        { app.pushState<AppStateGameWrapper>(dic, settings, levelIds[idx]); }));
+        {
+            app.pushState<AppStateGameWrapper>(
+                dic, settings, idx, levelIds[idx]);
+        }));
 
     return card;
 }

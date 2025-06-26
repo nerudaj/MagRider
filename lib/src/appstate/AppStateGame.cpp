@@ -3,12 +3,14 @@
 #include "appstate/Messaging.hpp"
 #include "filesystem/models/TiledModels.hpp"
 #include "game/SceneBuilder.hpp"
+#include "misc/Utility.hpp"
 #include "types/Overloads.hpp"
 
 AppStateGame::AppStateGame(
     dgm::App& app,
     DependencyContainer& dic,
     AppSettings& settings,
+    size_t levelIdx,
     const std::string& levelName)
     : dgm::AppState(app)
     , dic(dic)
@@ -21,6 +23,7 @@ AppStateGame::AppStateGame(
           dic.resmgr,
           settings)
     , sound(dic.resmgr.get<sf::SoundBuffer>("land.wav"))
+    , levelIdx(levelIdx)
 {
     sound.setVolume(100.f);
 }
@@ -79,6 +82,8 @@ void AppStateGame::update()
     }
     else if (game.scene.contactListener->won)
     {
+        auto& save = settings.save;
+        Utility::setBestTime(save, levelIdx, game.scene.timer);
         app.popState(Messaging::serialize<GoToNextLevel>());
     }
 }

@@ -18,6 +18,7 @@ public:
         dgm::App& app,
         DependencyContainer& dic,
         AppSettings& settings,
+        size_t levelIdx,
         const std::string& levelName);
 
 public:
@@ -39,5 +40,6 @@ private:
     Game game;
     sf::Sound sound;
 
+    size_t levelIdx;
     std::map<unsigned, InputKind> fingerToAction;
 };

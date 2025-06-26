@@ -7,14 +7,19 @@ AppStateGameWrapper::AppStateGameWrapper(
     dgm::App& app,
     DependencyContainer& dic,
     AppSettings& settings,
+    size_t levelIdx,
     const std::string& levelId) noexcept
-    : dgm::AppState(app), dic(dic), settings(settings), levelId(levelId)
+    : dgm::AppState(app)
+    , dic(dic)
+    , settings(settings)
+    , levelIdx(levelIdx)
+    , levelId(levelId)
 {
 }
 
 void AppStateGameWrapper::input()
 {
-    app.pushState<AppStateGame>(dic, settings, levelId);
+    app.pushState<AppStateGame>(dic, settings, levelIdx, levelId);
 }
 
 void AppStateGameWrapper::update()

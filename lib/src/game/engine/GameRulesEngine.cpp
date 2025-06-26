@@ -38,6 +38,9 @@ void GameRulesEngine::update(const dgm::Time& time)
         return;
     }
 
+    if (!scene.contactListener->died && !scene.contactListener->won)
+        scene.timer += time.getDeltaTime();
+
     if (input.isMagnetizingRed())
         scene.magnetPolarity = 1;
     else if (input.isMagnetizingBlue())

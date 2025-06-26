@@ -11,6 +11,7 @@ public:
         dgm::App& app,
         DependencyContainer& dic,
         AppSettings& settings,
+        size_t levelIdx,
         const std::string& levelId) noexcept;
 
 public:
@@ -27,5 +28,6 @@ private:
     DependencyContainer&
         dic;               ///< Dependency container for managing dependencies
     AppSettings& settings; ///< Application settings for configuration
+    size_t levelIdx;
     std::string levelId;
 };

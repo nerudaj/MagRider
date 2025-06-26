@@ -42,4 +42,5 @@ struct [[nodiscard]] Scene final
     std::unique_ptr<SpikeContactListener> contactListener;
     int magnetPolarity = 0; // 0 off, 1 red, 2 blue
     bool playing = false;
+    float timer = 0.f;
 };

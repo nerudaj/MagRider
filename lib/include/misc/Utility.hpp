@@ -1,5 +1,6 @@
 #pragma once
 
+#include "misc/Compatibility.hpp"
 #include <settings/SaveState.hpp>
 
 class [[nodiscard]] Utility final
@@ -8,7 +9,7 @@ public:
     static std::string formatTime(const float value)
     {
         const auto minutes = value / 60.f;
-        return std::format("{:02.0f}:{:02.2f}", minutes, value - minutes);
+        return uni::format("{:02.0f}:{:02.2f}", minutes, value - minutes);
     }
 
     static std::optional<float>

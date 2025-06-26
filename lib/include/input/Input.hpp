@@ -55,4 +55,5 @@ private:
     bool magnetizeRedPressed = false;
     bool magnetizeBluePressed = false;
     mutable bool gameInteractPressed = false;
+    mutable bool backButtonPressed = false;
 };

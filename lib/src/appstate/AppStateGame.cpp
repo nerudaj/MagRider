@@ -6,6 +6,16 @@
 #include "misc/Utility.hpp"
 #include "types/Overloads.hpp"
 
+static dgm::Circle createMagnetButton(const dgm::Window& window, bool left)
+{
+    const auto radius = window.getSize().x / 15.f;
+    auto&& circle = dgm::Circle(
+        { left ? radius : window.getSize().x - radius,
+          window.getSize().y - radius },
+        radius);
+    return circle;
+}
+
 AppStateGame::AppStateGame(
     dgm::App& app,
     DependencyContainer& dic,
@@ -24,6 +34,11 @@ AppStateGame::AppStateGame(
           settings)
     , sound(dic.resmgr.get<sf::SoundBuffer>("land.wav"))
     , levelIdx(levelIdx)
+    , pauseButton(
+          { app.window.getSize().x / 20.f, app.window.getSize().x / 20.f },
+          app.window.getSize().x / 20.f)
+    , redButton(createMagnetButton(app.window, "left"_true))
+    , blueButton(createMagnetButton(app.window, "left"_false))
 {
     sound.setVolume(100.f);
 }
@@ -46,12 +61,17 @@ void AppStateGame::input()
             auto e = event->getIf<sf::Event::TouchBegan>();
             auto position = e->position;
 
-            const auto action =
-                position.x < app.window.getSize().x / 3.f
-                    ? InputKind::MagnetizeRed
-                : position.x < 2.f * app.window.getSize().x / 3.f
-                    ? InputKind::Jump
-                    : InputKind ::MagnetizeBlue;
+            const auto action = [&]
+            {
+                if (dgm::Collision::basic(redButton, e->position))
+                    return InputKind::MagnetizeRed;
+                else if (dgm::Collision::basic(blueButton, e->position))
+                    return InputKind::MagnetizeBlue;
+                else if (dgm::Collision::basic(pauseButton, e->position))
+                    return InputKind::BackButton;
+                return InputKind::Jump;
+            }();
+
             fingerToAction[e->finger] = action;
 
             dic.input.toggleInput(action, true);
@@ -91,6 +111,12 @@ void AppStateGame::update()
 void AppStateGame::draw()
 {
     game.renderingEngine.draw(app.window);
+
+#ifdef _ANDROID
+    pauseButton.debugRender(app.window, sf::Color(96, 96, 96, 128));
+    redButton.debugRender(app.window, sf::Color(255, 0, 0, 128));
+    blueButton.debugRender(app.window, sf::Color(0, 0, 255, 128));
+#endif
 }
 
 void AppStateGame::restoreFocusImpl(const std::string& msg)

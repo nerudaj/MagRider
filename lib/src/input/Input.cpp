@@ -45,6 +45,11 @@ NODISCARD_RESULT bool Input::isMenuCycleRightPressed() const
 
 bool Input::isBackButtonPressed() const
 {
+    if (backButtonPressed)
+    {
+        backButtonPressed = false;
+        return true;
+    }
     return readAndRelease(InputKind::BackButton);
 }
 
@@ -71,6 +76,8 @@ void Input::toggleInput(InputKind i, bool pressed)
         magnetizeBluePressed = pressed;
     else if (i == InputKind::Jump)
         gameInteractPressed = pressed;
+    else if (i == InputKind::BackButton)
+        backButtonPressed = pressed;
 }
 
 bool Input::readAndRelease(InputKind i) const

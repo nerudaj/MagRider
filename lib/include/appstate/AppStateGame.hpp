@@ -42,4 +42,8 @@ private:
 
     size_t levelIdx;
     std::map<unsigned, InputKind> fingerToAction;
+
+    dgm::Circle pauseButton;
+    dgm::Circle redButton;
+    dgm::Circle blueButton;
 };

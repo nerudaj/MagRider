@@ -112,7 +112,7 @@ void AppStateGame::draw()
 {
     game.renderingEngine.draw(app.window);
 
-#ifdef _ANDROID
+#ifdef ANDROID
     pauseButton.debugRender(app.window, sf::Color(96, 96, 96, 128));
     redButton.debugRender(app.window, sf::Color(255, 0, 0, 128));
     blueButton.debugRender(app.window, sf::Color(0, 0, 255, 128));

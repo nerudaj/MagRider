@@ -1,7 +1,9 @@
 #pragma once
 
 #include "game/Game.hpp"
+#include "game/GameConfig.hpp"
 #include "game/Scene.hpp"
+#include "game/TouchControls.hpp"
 #include "game/engine/GameRulesEngine.hpp"
 #include "game/engine/RenderingEngine.hpp"
 #include "game/events/EventQueue.hpp"
@@ -9,6 +11,7 @@
 #include "settings/AppSettings.hpp"
 #include <DGM/dgm.hpp>
 #include <SFML/Audio.hpp>
+#include <optional>
 #include <vector>
 
 class [[nodiscard]] AppStateGame : public dgm::AppState
@@ -18,8 +21,7 @@ public:
         dgm::App& app,
         DependencyContainer& dic,
         AppSettings& settings,
-        size_t levelIdx,
-        const std::string& levelName);
+        const GameConfig& config);
 
 public:
     void input() override;
@@ -31,19 +33,11 @@ public:
 private:
     void restoreFocusImpl(const std::string& msg) override;
 
-    static Scene
-    buildScene(const dgm::ResourceManager& resmgr, const dgm::Window& window);
-
 private:
     DependencyContainer& dic;
     AppSettings& settings;
+    GameConfig config;
+    TouchControls touchControls;
     Game game;
     sf::Sound sound;
-
-    size_t levelIdx;
-    std::map<unsigned, InputKind> fingerToAction;
-
-    dgm::Circle pauseButton;
-    dgm::Circle redButton;
-    dgm::Circle blueButton;
 };

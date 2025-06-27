@@ -102,7 +102,7 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
         [&, idx = levelIdx]
         {
             app.pushState<AppStateGameWrapper>(
-                dic, settings, idx, levelIds[idx]);
+                dic, settings, GameConfig { idx, levelIds[idx] });
         }));
 
     return card;

@@ -7,13 +7,11 @@ AppStateGameWrapper::AppStateGameWrapper(
     dgm::App& app,
     DependencyContainer& dic,
     AppSettings& settings,
-    size_t levelIdx,
-    const std::string& levelId) noexcept
     : dgm::AppState(app)
+    const GameConfig& config) noexcept
     , dic(dic)
     , settings(settings)
-    , levelIdx(levelIdx)
-    , levelId(levelId)
+    , config(config)
 {
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/GameConfig.hpp"
 #include "misc/DependencyContainer.hpp"
 #include "settings/AppSettings.hpp"
 #include <DGM/classes/AppState.hpp>
@@ -11,8 +12,7 @@ public:
         dgm::App& app,
         DependencyContainer& dic,
         AppSettings& settings,
-        size_t levelIdx,
-        const std::string& levelId) noexcept;
+        const GameConfig& config) noexcept;
 
 public:
     void input() override;
@@ -28,6 +28,5 @@ private:
     DependencyContainer&
         dic;               ///< Dependency container for managing dependencies
     AppSettings& settings; ///< Application settings for configuration
-    size_t levelIdx;
-    std::string levelId;
+    GameConfig config;
 };

@@ -1,4 +1,5 @@
 #include "game/engine/RenderingEngine.hpp"
+#include "game/Constants.hpp"
 #include "misc/Compatibility.hpp"
 #include "misc/CoordConverter.hpp"
 #include "misc/Utility.hpp"
@@ -44,7 +45,7 @@ RenderingEngine::RenderingEngine(
     , scene(scene)
     , boxDebugRenderer(window)
     , worldCamera(createFullscreenCamera(
-          sf::Vector2f(window.getSize()), { 640.f, 360.f }))
+          sf::Vector2f(window.getSize()), INTERNAL_RESOLUTION))
     , hudCamera(
           sf::FloatRect { { 0.f, 0.f }, { 1.f, 1.f } },
           sf::Vector2f(window.getSize()))

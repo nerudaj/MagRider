@@ -1,4 +1,5 @@
 #include "appstate/AppStateGame.hpp"
+#include "appstate/AppStateLevelEndTransition.hpp"
 #include "appstate/AppStatePause.hpp"
 #include "appstate/Messaging.hpp"
 #include "filesystem/models/TiledModels.hpp"
@@ -6,39 +7,25 @@
 #include "misc/Utility.hpp"
 #include "types/Overloads.hpp"
 
-static dgm::Circle createMagnetButton(const dgm::Window& window, bool left)
-{
-    const auto radius = window.getSize().x / 15.f;
-    auto&& circle = dgm::Circle(
-        { left ? radius : window.getSize().x - radius,
-          window.getSize().y - radius },
-        radius);
-    return circle;
-}
-
 AppStateGame::AppStateGame(
     dgm::App& app,
     DependencyContainer& dic,
     AppSettings& settings,
-    size_t levelIdx,
-    const std::string& levelName)
+    const GameConfig& config)
     : dgm::AppState(app)
     , dic(dic)
     , settings(settings)
+    , config(config)
+    , touchControls(dic.input, app.window.getSize())
     , game(
           SceneBuilder::convertToTiledLevel(
-              dic.resmgr.get<tiled::FiniteMapModel>(levelName)),
+              dic.resmgr.get<tiled::FiniteMapModel>(config.levelResourceName)),
           dic.input,
           app.window,
           dic.resmgr,
           settings)
     , sound(dic.resmgr.get<sf::SoundBuffer>("land.wav"))
-    , levelIdx(levelIdx)
-    , pauseButton(
-          { app.window.getSize().x / 20.f, app.window.getSize().x / 20.f },
-          app.window.getSize().x / 20.f)
-    , redButton(createMagnetButton(app.window, "left"_true))
-    , blueButton(createMagnetButton(app.window, "left"_false))
+
 {
     sound.setVolume(100.f);
 }
@@ -58,28 +45,11 @@ void AppStateGame::input()
         }
         else if (event->is<sf::Event::TouchBegan>())
         {
-            auto e = event->getIf<sf::Event::TouchBegan>();
-            auto position = e->position;
-
-            const auto action = [&]
-            {
-                if (dgm::Collision::basic(redButton, e->position))
-                    return InputKind::MagnetizeRed;
-                else if (dgm::Collision::basic(blueButton, e->position))
-                    return InputKind::MagnetizeBlue;
-                else if (dgm::Collision::basic(pauseButton, e->position))
-                    return InputKind::BackButton;
-                return InputKind::Jump;
-            }();
-
-            fingerToAction[e->finger] = action;
-
-            dic.input.toggleInput(action, true);
+            touchControls.processEvent(*event->getIf<sf::Event::TouchBegan>());
         }
         else if (event->is<sf::Event::TouchEnded>())
         {
-            auto e = event->getIf<sf::Event::TouchEnded>();
-            dic.input.toggleInput(fingerToAction[e->finger], false);
+            touchControls.processEvent(*event->getIf<sf::Event::TouchEnded>());
         }
     }
 }
@@ -98,37 +68,23 @@ void AppStateGame::update()
 
     if (game.scene.contactListener->died)
     {
-        app.popState(Messaging::serialize<RestartLevel>());
+        app.pushState<AppStateLevelEndTransition>("levelWon"_false);
     }
     else if (game.scene.contactListener->won)
     {
         auto& save = settings.save;
-        Utility::setBestTime(save, levelIdx, game.scene.timer);
-        app.popState(Messaging::serialize<GoToNextLevel>());
+        Utility::setBestTime(save, config.levelIdx, game.scene.timer);
+        app.pushState<AppStateLevelEndTransition>("levelWon"_true);
     }
 }
 
 void AppStateGame::draw()
 {
     game.renderingEngine.draw(app.window);
-
-#ifdef ANDROID
-    pauseButton.debugRender(app.window, sf::Color(96, 96, 96, 128));
-    redButton.debugRender(app.window, sf::Color(255, 0, 0, 128));
-    blueButton.debugRender(app.window, sf::Color(0, 0, 255, 128));
-#endif
+    touchControls.draw(app.window);
 }
 
 void AppStateGame::restoreFocusImpl(const std::string& msg)
 {
-    if (auto message = Messaging::deserialize(msg))
-    {
-        std::visit(
-            overloads {
-                [&](PopIfNotMenu&) { app.popState(msg); },
-                [](RestartLevel) {},
-                [](GoToNextLevel) {},
-            },
-            *message);
-    }
+    app.popState(msg);
 }

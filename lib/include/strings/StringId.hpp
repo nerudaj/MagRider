@@ -44,7 +44,8 @@ enum class [[nodiscard]] StringId
 
     // Pause
     Resume,
-    BackToMenu,
+    Restart,
+    BackToLevelSelect,
 
     MaxId, // Make sure this one is always the last!
 };

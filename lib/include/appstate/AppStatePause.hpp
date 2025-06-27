@@ -32,6 +32,8 @@ private:
 
     void onResume();
 
+    void onRestart();
+
     void onOptions();
 
     void onBackToMenu();

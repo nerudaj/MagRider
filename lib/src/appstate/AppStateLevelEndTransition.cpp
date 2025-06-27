@@ -30,7 +30,7 @@ void AppStateLevelEndTransition::update()
     if (animation.isFinished())
     {
         if (levelWon)
-            app.popState(Messaging::serialize<GoToNextLevel>());
+            app.popState(Messaging::serialize<PopIfNotLevelSelection>());
         else
             app.popState(Messaging::serialize<RestartLevel>());
     }

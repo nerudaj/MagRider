@@ -35,7 +35,7 @@ void AppStateLevelSelect::restoreFocusImpl(const std::string& message)
     if (msg)
         std::visit(
             overloads {
-                [&](GoToNextLevel) { buildLayout(); },
+                [&](PopIfNotLevelSelection) { buildLayout(); },
                 [&](auto) { app.popState(message); },
             },
             *msg);

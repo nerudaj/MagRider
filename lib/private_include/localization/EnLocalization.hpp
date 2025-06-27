@@ -46,5 +46,6 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
 
     // Pause
     { Resume, "Resume game" },
-    { BackToMenu, "Back to main menu" },
+    { Restart, "Restart level" },
+    { BackToLevelSelect, "Back to level selection" },
 };

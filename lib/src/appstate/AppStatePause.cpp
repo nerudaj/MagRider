@@ -24,20 +24,24 @@ void AppStatePause::buildLayout()
             .withNoBackgroundImage()
             .withTitle(
                 dic.strings.getString(StringId::PauseTitle), HeadingLevel::H1)
-            .withContent(ButtonListBuilder()
-                             .addButton(
-                                 dic.strings.getString(StringId::Resume),
-                                 [&] { onResume(); })
-                             .addButton(
-                                 dic.strings.getString(StringId::Options),
-                                 [&] { onOptions(); })
-                             .addButton(
-                                 dic.strings.getString(StringId::BackToMenu),
-                                 [&] { onBackToMenu(); })
-                             .addButton(
-                                 dic.strings.getString(StringId::ExitButton),
-                                 [&] { onExit(); })
-                             .build())
+            .withContent(
+                ButtonListBuilder()
+                    .addButton(
+                        dic.strings.getString(StringId::Resume),
+                        [&] { onResume(); })
+                    .addButton(
+                        dic.strings.getString(StringId::Restart),
+                        [&] { onRestart(); })
+                    .addButton(
+                        dic.strings.getString(StringId::Options),
+                        [&] { onOptions(); })
+                    .addButton(
+                        dic.strings.getString(StringId::BackToLevelSelect),
+                        [&] { onBackToMenu(); })
+                    .addButton(
+                        dic.strings.getString(StringId::ExitButton),
+                        [&] { onExit(); })
+                    .build())
             .withNoBackButton()
             .withNoSubmitButton()
             .build());
@@ -48,6 +52,11 @@ void AppStatePause::onResume()
     app.popState();
 }
 
+void AppStatePause::onRestart()
+{
+    app.popState(Messaging::serialize<RestartLevel>());
+}
+
 void AppStatePause::onOptions()
 {
     app.pushState<AppStateOptions>(dic, settings);
@@ -55,7 +64,7 @@ void AppStatePause::onOptions()
 
 void AppStatePause::onBackToMenu()
 {
-    app.popState(Messaging::serialize<PopIfNotMenu>());
+    app.popState(Messaging::serialize<PopIfNotLevelSelection>());
 }
 
 void AppStatePause::onExit()

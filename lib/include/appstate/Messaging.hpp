@@ -13,11 +13,12 @@ struct [[nodiscard]] RestartLevel final
 {
 };
 
-struct [[nodiscard]] GoToNextLevel final
+struct [[nodiscard]] PopIfNotLevelSelection final
 {
 };
 
-using AppMessage = std::variant<PopIfNotMenu, RestartLevel, GoToNextLevel>;
+using AppMessage =
+    std::variant<PopIfNotMenu, RestartLevel, PopIfNotLevelSelection>;
 
 template<class T>
 concept IsAppMessage = std::constructible_from<AppMessage, T>;

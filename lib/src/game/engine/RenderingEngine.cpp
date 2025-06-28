@@ -139,6 +139,15 @@ void RenderingEngine::RenderHUD()
     text.setString(fpsCounter.getText());
     window.draw(text);
 
+    if (!scene.playing)
+    {
+        text.setString("press space to start");
+        text.setPosition(
+            sf::Vector2f(window.getSize()) / 2.f
+            - text.getGlobalBounds().size / 2.f);
+        window.draw(text);
+    }
+
     text.setString(Utility::formatTime(scene.timer));
     text.setPosition({
         static_cast<float>(window.getSize().x) - text.getGlobalBounds().size.x

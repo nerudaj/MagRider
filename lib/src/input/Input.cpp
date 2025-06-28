@@ -80,6 +80,14 @@ void Input::toggleInput(InputKind i, bool pressed)
         backButtonPressed = pressed;
 }
 
+void Input::reset()
+{
+    magnetizeRedPressed = false;
+    magnetizeBluePressed = false;
+    gameInteractPressed = false;
+    backButtonPressed = false;
+}
+
 bool Input::readAndRelease(InputKind i) const
 {
     return controller.readDigital(i, dgm::DigitalReadKind::OnPress);

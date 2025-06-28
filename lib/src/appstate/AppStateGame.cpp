@@ -28,6 +28,7 @@ AppStateGame::AppStateGame(
 
 {
     sound.setVolume(100.f);
+    dic.input.reset();
 }
 
 void AppStateGame::input()

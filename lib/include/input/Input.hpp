@@ -44,6 +44,8 @@ public:
 
     void toggleInput(InputKind i, bool pressed);
 
+    void reset();
+
 private:
     bool readAndRelease(InputKind i) const;
 

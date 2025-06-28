@@ -89,5 +89,6 @@ void AppStateGame::draw()
 
 void AppStateGame::restoreFocusImpl(const std::string& msg)
 {
-    app.popState(msg);
+    // Empty message means returning from pause menu
+    if (!msg.empty()) app.popState(msg);
 }

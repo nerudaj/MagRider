@@ -49,7 +49,7 @@ RenderingEngine::RenderingEngine(
     , hudCamera(
           sf::FloatRect { { 0.f, 0.f }, { 1.f, 1.f } },
           sf::Vector2f(window.getSize()))
-    , text(resmgr.get<sf::Font>("ChunkFive-Regular.ttf"))
+    , text(resmgr.get<sf::Font>("pico-8.ttf"))
     , tileMap(dgm::TileMap(
           resmgr.get<sf::Texture>("set.png"),
           resmgr.get<dgm::Clip>("set.png.clip")))
@@ -86,6 +86,15 @@ static sf::Vector2f operator-(const b2Vec2& a, sf::Vector2f& b)
 
 void RenderingEngine::draw(dgm::Window& _window)
 {
+    window.setViewFromCamera(worldCamera);
+    RenderWorld();
+
+    window.setViewFromCamera(hudCamera);
+    RenderHUD();
+}
+
+void RenderingEngine::RenderWorld()
+{
     auto joePos = CoordConverter::worldToScreen(scene.joe.GetPosition());
 
     worldCamera.setPosition(joePos);
@@ -99,8 +108,6 @@ void RenderingEngine::draw(dgm::Window& _window)
         spriteOutline.setOutlineColor(sf::Color::Red);
     else if (scene.magnetPolarity == 2)
         spriteOutline.setOutlineColor(sf::Color::Blue);
-
-    window.setViewFromCamera(worldCamera);
 
     window.draw(tileMap);
     window.draw(spriteOutline);
@@ -124,26 +131,10 @@ void RenderingEngine::draw(dgm::Window& _window)
     }
 
     if (settings.renderColliders) scene.world->DebugDraw();
+}
 
-    window.setViewFromCamera(hudCamera);
-
-    if (!scene.playing)
-    {
-        text.setString("Press SPACE to start");
-        text.setPosition(
-            sf::Vector2f(window.getSize()) / 2.f
-            - text.getGlobalBounds().size / 2.f);
-        window.draw(text);
-    }
-    else if (scene.contactListener->won)
-    {
-        text.setString("You won!");
-        text.setPosition(
-            sf::Vector2f(window.getSize()) / 2.f
-            - text.getGlobalBounds().size / 2.f);
-        window.draw(text);
-    }
-
+void RenderingEngine::RenderHUD()
+{
     text.setPosition({ 10.f, 10.f });
     text.setString(fpsCounter.getText());
     window.draw(text);

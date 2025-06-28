@@ -33,7 +33,7 @@ struct [[nodiscard]] DependencyContainer final
               input,
               resmgr.get<sf::Texture>("cursor.png"))
     {
-        gui.setFont(resmgr.get<tgui::Font>("ChunkFive-Regular.ttf"));
+        gui.setFont(resmgr.get<tgui::Font>("pico-8.ttf"));
         // NOTE: You can create your own theme file and use it here
         gui.setTheme(resmgr.get<tgui::Theme::Ptr>("Pico8.txt"));
     }

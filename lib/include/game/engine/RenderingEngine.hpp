@@ -22,6 +22,10 @@ public:
 
     void draw(dgm::Window& window);
 
+    void RenderWorld();
+
+    void RenderHUD();
+
 private:
     dgm::Window& window;
     const VideoSettings& settings;

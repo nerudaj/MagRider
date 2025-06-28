@@ -3,6 +3,7 @@
 #include "appstate/CommonHandler.hpp"
 #include "appstate/Messaging.hpp"
 #include "filesystem/models/TiledModels.hpp"
+#include "game/Constants.hpp"
 #include "gui/Builders.hpp"
 #include "misc/Utility.hpp"
 
@@ -79,8 +80,12 @@ tgui::Container::Ptr AppStateLevelSelect::buildContent() const
 
 tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
 {
-    auto&& card =
-        WidgetBuilder::createPanel({ "16%", "30%" }, sf::Color::White);
+    const auto&& bestTime = Utility::getBestTime(settings.save, levelIdx);
+
+    auto&& card = WidgetBuilder::createPanel(
+        { "16%", "30%" }, bestTime ? COLOR_ORANGE : COLOR_DARK_GREY);
+    card->getRenderer()->setBorders({ 2.f });
+    card->getRenderer()->setBorderColor(COLOR_YELLOW);
     auto&& headerPanel = WidgetBuilder::createPanel({ "100%", "40%" });
     auto&& timePanel = WidgetBuilder::createPanel({ "100%", "30%" });
     timePanel->setPosition({ "0%", "40%" });
@@ -92,12 +97,17 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
     card->add(buttonPanel);
 
     auto&& timeText = std::string("--:--");
-    if (auto time = Utility::getBestTime(settings.save, levelIdx))
-        timeText = Utility::formatTime(time.value());
+    if (bestTime) timeText = Utility::formatTime(bestTime.value());
 
-    headerPanel->add(
-        WidgetBuilder::createHeading(std::to_string(levelIdx + 1)));
-    timePanel->add(WidgetBuilder::createHeading(timeText, HeadingLevel::H2));
+    auto&& createLabel = [&](const std::string& str)
+    {
+        auto&& label = WidgetBuilder::createTextLabel(str, "justify"_true);
+        label->getRenderer()->setTextColor(COLOR_DARK_GREY);
+        return label;
+    };
+
+    headerPanel->add(createLabel(std::to_string(levelIdx + 1)));
+    timePanel->add(createLabel(timeText));
     buttonPanel->add(WidgetBuilder::createButton(
         dic.strings.getString(StringId::PlayButton),
         [&, idx = levelIdx]

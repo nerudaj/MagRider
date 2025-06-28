@@ -72,6 +72,9 @@ void AppStateGame::update()
     }
     else if (game.scene.contactListener->won)
     {
+        sound.setBuffer(dic.resmgr.get<sf::SoundBuffer>("fanfare.wav"));
+        sound.play();
+
         auto& save = settings.save;
         Utility::setBestTime(save, config.levelIdx, game.scene.timer);
         app.pushState<AppStateLevelEndTransition>("levelWon"_true);

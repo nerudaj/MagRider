@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "levels/1.tmx",
+    "activeFile": "levels/9.tmx",
     "expandedProjectPaths": [
         ".",
         "levels"
@@ -55,6 +55,36 @@
                 "y": 319.5834108238795
             }
         },
+        "levels/7.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1.1202083333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.2678073275061,
+                "y": 319.5834108238795
+            }
+        },
+        "levels/8.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 481.81818181818176,
+                "y": 827.2727272727271
+            }
+        },
+        "levels/9.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 521.3333333333334,
+                "y": 227.99999999999994
+            }
+        },
         "levels/_up.tmx": {
             "expandedObjectLayers": [
                 2
@@ -92,21 +122,32 @@
     },
     "last.exportedFilePath": "C:/Users/merickova/Documents/GitHub/MagRider/assets/levels",
     "last.imagePath": "C:/Users/merickova/Documents/GitHub/MagRider/assets/graphics",
+    "map.height": 60,
     "map.lastUsedExportFilter": "Mapové soubory JSON (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
+    "map.width": 60,
     "openFiles": [
-        "tileset.tsx",
-        "levels/intro.tmx",
-        "levels/_up.tmx",
-        "levels/snail.tmx",
-        "levels/1.tmx"
+        "levels/1.tmx",
+        "levels/2.tmx",
+        "levels/4.tmx",
+        "levels/5.tmx",
+        "levels/6.tmx",
+        "levels/7.tmx",
+        "levels/8.tmx",
+        "levels/9.tmx"
     ],
     "project": "magrider.tiled-project",
     "recentFiles": [
+        "levels/1.tmx",
+        "levels/2.tmx",
+        "levels/4.tmx",
+        "levels/5.tmx",
+        "levels/6.tmx",
+        "levels/7.tmx",
+        "levels/8.tmx",
+        "levels/9.tmx",
         "tileset.tsx",
         "levels/intro.tmx",
-        "levels/6.tmx",
-        "levels/1.tmx",
         "levels/snail.tmx",
         "levels/_up.tmx"
     ],

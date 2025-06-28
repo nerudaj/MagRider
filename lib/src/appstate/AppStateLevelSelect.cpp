@@ -95,7 +95,8 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
     if (auto time = Utility::getBestTime(settings.save, levelIdx))
         timeText = Utility::formatTime(time.value());
 
-    headerPanel->add(WidgetBuilder::createHeading(std::to_string(levelIdx)));
+    headerPanel->add(
+        WidgetBuilder::createHeading(std::to_string(levelIdx + 1)));
     timePanel->add(WidgetBuilder::createHeading(timeText, HeadingLevel::H2));
     buttonPanel->add(WidgetBuilder::createButton(
         dic.strings.getString(StringId::PlayButton),

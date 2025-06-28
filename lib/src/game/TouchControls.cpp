@@ -46,8 +46,8 @@ void TouchControls::processEvent(const sf::Event::TouchEnded& e)
 void TouchControls::draw(dgm::Window& window)
 {
 #ifdef ANDROID
-    pauseButton.debugRender(app.window, sf::Color(96, 96, 96, 128));
-    redButton.debugRender(app.window, sf::Color(255, 0, 0, 128));
-    blueButton.debugRender(app.window, sf::Color(0, 0, 255, 128));
+    pauseButton.debugRender(window, sf::Color(96, 96, 96, 128));
+    redButton.debugRender(window, sf::Color(255, 0, 0, 128));
+    blueButton.debugRender(window, sf::Color(0, 0, 255, 128));
 #endif
 }

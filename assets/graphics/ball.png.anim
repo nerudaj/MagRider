@@ -1,0 +1,64 @@
+{
+    "defaults": {
+        "frame": {
+            "width": 32,
+            "height": 32
+        },
+        "spacing": {
+            "horizontal": 32,
+            "vertical": 32
+        }
+    },
+    "states": [
+        {
+            "name": "metal_joe_blink",
+            "bounds": {
+                "left": 2,
+                "top": 2,
+                "width": 212,
+                "height": 32
+            },
+            "nframes": 6
+        },
+        {
+            "name": "base_joe_blink",
+            "bounds": {
+                "left": 2,
+                "top": 38,
+                "width": 176,
+                "height": 32
+            },
+            "nframes": 5
+        },
+        {
+            "name": "base_joe_idle",
+            "bounds": {
+                "left": 182,
+                "top": 38,
+                "width": 32,
+                "height": 32
+            },
+            "nframes": 1
+        },
+        {
+            "name": "___leave_out",
+            "bounds": {
+                "left": 2,
+                "top": 74,
+                "width": 68,
+                "height": 32
+            },
+            "nframes": 2
+        },
+        {
+            "name": "metal_joe_idle",
+            "bounds": {
+                "left": 74,
+                "top": 74,
+                "width": 32,
+                "height": 32
+            },
+            "nframes": 1
+        }
+    ]
+}

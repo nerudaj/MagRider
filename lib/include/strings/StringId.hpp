@@ -47,5 +47,9 @@ enum class [[nodiscard]] StringId
     Restart,
     BackToLevelSelect,
 
+    // Game
+    TouchToStart,
+    SpaceToStart,
+
     MaxId, // Make sure this one is always the last!
 };

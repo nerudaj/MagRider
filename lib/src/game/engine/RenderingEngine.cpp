@@ -38,10 +38,12 @@ RenderingEngine::RenderingEngine(
     dgm::Window& window,
     dgm::ResourceManager& resmgr,
     const VideoSettings& settings,
+    const StringProvider& strings,
     Scene& scene,
     const TiledLevel& level) noexcept
     : window(window)
     , settings(settings)
+    , strings(strings)
     , scene(scene)
     , boxDebugRenderer(window)
     , worldCamera(createFullscreenCamera(
@@ -149,7 +151,11 @@ void RenderingEngine::RenderHUD()
 
     if (!scene.playing)
     {
-        text.setString("press space to start");
+#ifdef ANDROID
+        text.setString(strings.getString(StringId::TouchToStart));
+#else
+        text.setString(strings.getString(StringId::SpaceToStart));
+#endif
         text.setPosition(
             sf::Vector2f(window.getSize()) / 2.f
             - text.getGlobalBounds().size / 2.f);

@@ -48,4 +48,8 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     { Resume, "resume game" },
     { Restart, "restart level" },
     { BackToLevelSelect, "back to level selection" },
+
+    // Game
+    { TouchToStart, "touch screen to start" },
+    { SpaceToStart, "press space to start" },
 };

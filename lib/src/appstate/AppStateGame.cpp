@@ -23,7 +23,8 @@ AppStateGame::AppStateGame(
           dic.input,
           app.window,
           dic.resmgr,
-          settings)
+          settings,
+          dic.strings)
     , sound(dic.resmgr.get<sf::SoundBuffer>("land.wav"))
 
 {

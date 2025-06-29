@@ -17,10 +17,11 @@ public:
         Input& input,
         dgm::Window& window,
         dgm::ResourceManager& resmgr,
-        const AppSettings& settings)
+        const AppSettings& settings,
+        const StringProvider& strings)
         : scene(SceneBuilder::buildScene(level))
         , gameRulesEngine(gameEvents, scene, input)
-        , renderingEngine(window, resmgr, settings.video, scene, level)
+        , renderingEngine(window, resmgr, settings.video, strings, scene, level)
     {
     }
 

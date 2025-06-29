@@ -27,7 +27,6 @@ ButtonListBuilder::build(tgui::HorizontalAlignment alignment)
         layout->setPosition({ "25%", "0%" });
     else
         layout->setPosition({ "50%", "0%" });
-    layout->getRenderer()->setSpaceBetweenWidgets(Sizers::getBaseFontSize());
 
     outerPanel->add(layout);
 
@@ -38,6 +37,10 @@ ButtonListBuilder::build(tgui::HorizontalAlignment alignment)
 
         layout->add(button, props.buttonId);
     }
+
+#ifndef ANDROID
+    layout->getRenderer()->setSpaceBetweenWidgets(Sizers::getBaseFontSize());
+#endif
 
     return outerPanel;
 }

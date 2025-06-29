@@ -77,7 +77,9 @@ void SceneBuilder::generateColliders(
             const float fy = static_cast<float>(y);
 
             if (tile == Tile::Block || tile == Tile::MagNeg
-                || tile == Tile::MagPlus)
+                || tile == Tile::MagPlus || tile == Tile::Block2
+                || tile == Tile::Block3 || tile == Tile::Block4
+                || tile == Tile::Block5 || tile == Tile::Block6)
             {
                 Box2D::createStaticBox(
                     world, b2Vec2(fx + 0.5f, fy + 0.5f), b2Vec2(1.f, 1.f));

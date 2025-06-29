@@ -38,5 +38,7 @@ private:
 
     dgm::TileMap tileMap;
     sf::Sprite sprite;
+    dgm::AnimationStates ballStates;
     sf::CircleShape spriteOutline;
+    sf::Sprite background;
 };

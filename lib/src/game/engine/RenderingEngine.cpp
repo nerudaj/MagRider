@@ -53,7 +53,9 @@ RenderingEngine::RenderingEngine(
     , tileMap(dgm::TileMap(
           resmgr.get<sf::Texture>("set.png"),
           resmgr.get<dgm::Clip>("set.png.clip")))
-    , sprite(resmgr.get<sf::Texture>("joe.png"))
+    , sprite(resmgr.get<sf::Texture>("ball.png"))
+    , ballStates(resmgr.get<dgm::AnimationStates>("ball.png.anim"))
+    , background(resmgr.get<sf::Texture>("background-forest.png"))
 {
     tileMap.build(
         { level.tileWidth, level.tileHeight },
@@ -63,12 +65,16 @@ RenderingEngine::RenderingEngine(
             | uniranges::to<std::vector>(),
         { level.width, level.height });
 
-    sprite.setOrigin(sf::Vector2f { sprite.getTexture().getSize() / 2u });
+    sprite.setTextureRect(ballStates["base_joe_idle"].getFrame(0));
+    sprite.setOrigin(
+        sf::Vector2f { ballStates["base_joe_idle"].getFrameSize() / 2u });
     spriteOutline.setRadius(sprite.getOrigin().x);
     spriteOutline.setOrigin(sprite.getOrigin());
     spriteOutline.setOutlineThickness(3.f);
     scene.world->SetDebugDraw(&boxDebugRenderer);
     boxDebugRenderer.SetFlags(b2Draw::e_shapeBit);
+
+    background.setOrigin(INTERNAL_RESOLUTION / 2.f);
 }
 
 void RenderingEngine::update(const dgm::Time& time)
@@ -98,6 +104,7 @@ void RenderingEngine::RenderWorld()
     auto joePos = CoordConverter::worldToScreen(scene.joe.GetPosition());
 
     worldCamera.setPosition(joePos);
+    background.setPosition(joePos);
     sprite.setPosition(joePos);
     sprite.setRotation(sf::radians(scene.joe.GetAngle()));
     spriteOutline.setPosition(joePos);
@@ -109,6 +116,7 @@ void RenderingEngine::RenderWorld()
     else if (scene.magnetPolarity == 2)
         spriteOutline.setOutlineColor(sf::Color::Blue);
 
+    window.draw(background);
     window.draw(tileMap);
     window.draw(spriteOutline);
     window.draw(sprite);

@@ -118,7 +118,7 @@ void RenderingEngine::RenderWorld()
     else if (scene.magnetPolarity == 2)
         spriteOutline.setOutlineColor(sf::Color::Blue);
 
-    window.draw(background);
+    // window.draw(background);
     window.draw(tileMap);
     window.draw(spriteOutline);
     window.draw(sprite);

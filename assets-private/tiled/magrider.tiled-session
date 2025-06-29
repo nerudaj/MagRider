@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "levels/10.tmx",
+    "activeFile": "levels/9.tmx",
     "expandedProjectPaths": [
-        "levels",
-        "."
+        ".",
+        "levels"
     ],
     "fileStates": {
         "levels/1.tmx": {
@@ -105,12 +105,15 @@
             }
         },
         "levels/9.tmx": {
-            "scale": 0.75,
+            "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 672,
-                "y": 352.6666666666667
+                "x": 602,
+                "y": 130
             }
+        },
+        "levels/MagriderTileset.tsx": {
+            "scaleInDock": 1
         },
         "levels/_up.tmx": {
             "expandedObjectLayers": [
@@ -163,7 +166,8 @@
         "levels/8.tmx",
         "levels/9.tmx",
         "levels/10.tmx",
-        "levels/11.tmx"
+        "levels/11.tmx",
+        "levels/3.tmx"
     ],
     "project": "magrider.tiled-project",
     "recentFiles": [
@@ -174,11 +178,11 @@
         "levels/6.tmx",
         "levels/7.tmx",
         "levels/8.tmx",
-        "levels/9.tmx",
+        "levels/3.tmx",
         "levels/11.tmx",
         "levels/10.tmx",
-        "tileset.tsx",
-        "levels/intro.tmx"
+        "levels/9.tmx",
+        "tileset.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.spacing": 4

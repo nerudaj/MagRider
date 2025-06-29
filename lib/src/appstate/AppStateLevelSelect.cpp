@@ -14,6 +14,7 @@ AppStateLevelSelect::AppStateLevelSelect(
     , settings(settings)
     , levelIds(dic.resmgr.getLoadedResourceIds<tiled::FiniteMapModel>().value())
 {
+    std::ranges::sort(levelIds);
     buildLayout();
 }
 

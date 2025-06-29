@@ -14,26 +14,26 @@ public:
     {
         if (sf::Keyboard::Key::A <= key && key <= sf::Keyboard::Key::Z)
             return std::string(
-                1, static_cast<char>('A' + std::to_underlying(key)));
+                1, static_cast<char>('a' + std::to_underlying(key)));
         else if (key == sf::Keyboard::Key::Space)
-            return "Space";
+            return "space";
         else if (key == sf::Keyboard::Key::Enter)
-            return "Enter";
+            return "enter";
         else if (key == sf::Keyboard::Key::Escape)
-            return "Escape";
+            return "escape";
         else if (key == sf::Keyboard::Key::Tab)
-            return "Tab";
+            return "tab";
         else if (key == sf::Keyboard::Key::Backspace)
-            return "Backspace";
+            return "backspace";
         return uni::format("key {}", std::to_underlying(key));
     }
 
     NODISCARD_RESULT StringType operator()(sf::Mouse::Button btn)
     {
         if (btn == sf::Mouse::Button::Left)
-            return "LMB";
+            return "lmb";
         else if (btn == sf::Mouse::Button::Right)
-            return "RMB";
+            return "rmb";
         return uni::format("mouse {}", std::to_underlying(btn));
     }
 
@@ -50,21 +50,21 @@ public:
             switch (a)
             {
             case sf::Joystick::Axis::X:
-                return "X";
+                return "x";
             case sf::Joystick::Axis::Y:
-                return "Y";
+                return "y";
             case sf::Joystick::Axis::Z:
-                return "Z";
+                return "z";
             case sf::Joystick::Axis::R:
-                return "R";
+                return "r";
             case sf::Joystick::Axis::U:
-                return "U";
+                return "u";
             case sf::Joystick::Axis::V:
-                return "V";
+                return "v";
             case sf::Joystick::Axis::PovX:
-                return "PovX";
+                return "povx";
             case sf::Joystick::Axis::PovY:
-                return "PovY";
+                return "povx";
             };
 
             return uni::format("Axis {}", std::to_underlying(a));

@@ -66,6 +66,30 @@ TiledLevel SceneBuilder::convertToTiledLevel(const tiled::FiniteMapModel& map)
 void SceneBuilder::generateColliders(
     PhysicsWorld& world, const TiledLevel& level)
 {
+    auto&& isWholeBlock = [](Tile tile)
+    {
+        return tile == Tile::Block || tile == Tile::MagNeg
+               || tile == Tile::MagPlus || tile == Tile::Block2
+               || tile == Tile::Block3 || tile == Tile::Block4
+               || tile == Tile::Block5 || tile == Tile::Block6;
+    };
+
+    unsigned wholeBlockSequenceLength = 0;
+
+    auto&& buildOptimizedSolidBlock =
+        [&wholeBlockSequenceLength](unsigned x, unsigned y, PhysicsWorld& world)
+    {
+        const float length = static_cast<float>(wholeBlockSequenceLength);
+        const float fx = static_cast<float>(x);
+        const float fy = static_cast<float>(y);
+        Box2D::createStaticBox(
+            world,
+            b2Vec2(fx - length + length / 2.f, fy + 0.5f),
+            b2Vec2(length, 1.f));
+
+        wholeBlockSequenceLength = 0;
+    };
+
     // Create collision boxes
     for (unsigned y = 0; y < level.height; ++y)
     {
@@ -76,15 +100,16 @@ void SceneBuilder::generateColliders(
             const float fx = static_cast<float>(x);
             const float fy = static_cast<float>(y);
 
-            if (tile == Tile::Block || tile == Tile::MagNeg
-                || tile == Tile::MagPlus || tile == Tile::Block2
-                || tile == Tile::Block3 || tile == Tile::Block4
-                || tile == Tile::Block5 || tile == Tile::Block6)
+            if (isWholeBlock(tile))
             {
-                Box2D::createStaticBox(
-                    world, b2Vec2(fx + 0.5f, fy + 0.5f), b2Vec2(1.f, 1.f));
+                ++wholeBlockSequenceLength;
             }
-            else if (tile == Tile::Finish)
+            else if (wholeBlockSequenceLength > 0)
+            {
+                buildOptimizedSolidBlock(x, y, world);
+            }
+
+            if (tile == Tile::Finish)
             {
                 Box2D::createStaticBox(
                     world,
@@ -256,6 +281,11 @@ void SceneBuilder::generateColliders(
                         .value = SPIKE,
                     });
             }
+        }
+
+        if (wholeBlockSequenceLength > 0)
+        {
+            buildOptimizedSolidBlock(level.width, y, world);
         }
     }
 }

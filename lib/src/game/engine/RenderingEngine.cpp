@@ -104,8 +104,9 @@ void RenderingEngine::draw(dgm::Window& _window)
 void RenderingEngine::RenderWorld()
 {
     auto joePos = CoordConverter::worldToScreen(scene.joe.GetPosition());
+    auto roundedJoePos = sf::Vector2f(sf::Vector2i(joePos));
 
-    worldCamera.setPosition(joePos);
+    worldCamera.setPosition(roundedJoePos);
     background.setPosition(joePos);
     sprite.setPosition(joePos);
     sprite.setRotation(sf::radians(scene.joe.GetAngle()));
@@ -118,7 +119,7 @@ void RenderingEngine::RenderWorld()
     else if (scene.magnetPolarity == 2)
         spriteOutline.setOutlineColor(sf::Color::Blue);
 
-    // window.draw(background);
+    window.draw(background);
     window.draw(tileMap);
     window.draw(spriteOutline);
     window.draw(sprite);

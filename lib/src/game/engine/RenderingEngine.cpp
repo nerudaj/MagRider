@@ -167,29 +167,30 @@ void RenderingEngine::RenderWorld()
             const auto direction = scene.joe.GetPosition() - magnet.position;
             if (direction.length() < 6.f)
             {
-                const auto screenMagnetPos = magnet.position * 32.f;
-                line.setPosition(joePos);
-                line.setRotation(
-                    dgm::Math::cartesianToPolar(screenMagnetPos - joePos)
-                        .angle);
-                line.setScale({ (direction.length() * 32.f) / 48.f, 1.f });
-                line.setTextureRect(magnetLineAnimationStates
-                                        [magnet.polarity == 2 ? "red" : "blue"]
-                                            .getFrame(animation.getFrame()));
-
-                /* auto vertices = std::array {
-                                    sf::Vertex { .position = joePos },
-                                    sf::Vertex {},
-                                };
-                                window.getSfmlWindowContext().draw(
-                                    vertices.data(), 2u,
-                   sf::PrimitiveType::Lines);*/
-                window.draw(line);
+                renderMagnetLine(magnet, joePos, direction);
             }
         }
     }
 
     if (settings.renderColliders) scene.world->DebugDraw();
+}
+
+void RenderingEngine::renderMagnetLine(
+    Magnet& magnet,
+    const sf::Vector2f& joeScreenPos,
+    const sf::Vector2f& direction)
+{
+    line.setPosition(joeScreenPos);
+    line.setRotation(
+        dgm::Math::cartesianToPolar(
+            CoordConverter::worldToScreen(magnet.position) - joeScreenPos)
+            .angle);
+    line.setScale(
+        { CoordConverter::worldToScreen(direction.length()) / 48.f, 1.f });
+    line.setTextureRect(
+        magnetLineAnimationStates[magnet.polarity == 2 ? "red" : "blue"]
+            .getFrame(animation.getFrame()));
+    window.draw(line);
 }
 
 void RenderingEngine::RenderHUD()

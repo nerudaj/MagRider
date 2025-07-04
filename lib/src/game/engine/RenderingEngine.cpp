@@ -120,7 +120,7 @@ void RenderingEngine::update(const dgm::Time& time)
     fpsCounter.update(time.getDeltaTime());
 }
 
-static sf::Vector2f operator-(const b2Vec2& a, sf::Vector2f& b)
+static sf::Vector2f operator-(const sf::Vector2f& a, const b2Vec2& b)
 {
     return {
         a.x - b.x,
@@ -165,7 +165,7 @@ void RenderingEngine::RenderWorld()
     {
         for (auto&& magnet : scene.magnets)
         {
-            const auto direction = scene.joe.GetPosition() - magnet.position;
+            const auto direction = magnet.position - scene.joe.GetPosition();
             if (direction.length() < 6.f)
             {
                 renderMagnetLine(magnet, joePos, direction);
@@ -182,14 +182,11 @@ void RenderingEngine::renderMagnetLine(
     const sf::Vector2f& direction)
 {
     line.setPosition(joeScreenPos);
-    line.setRotation(
-        dgm::Math::cartesianToPolar(
-            CoordConverter::worldToScreen(magnet.position) - joeScreenPos)
-            .angle);
+    line.setRotation(dgm::Math::cartesianToPolar(direction).angle);
     line.setScale(
         { CoordConverter::worldToScreen(direction.length()) / 48.f, 1.f });
     line.setTextureRect(
-        magnetLineAnimationStates[magnet.polarity == 2 ? "red" : "blue"]
+        magnetLineAnimationStates[scene.magnetPolarity == 1 ? "red" : "blue"]
             .getFrame(animation.getFrame()));
     window.draw(line);
 }

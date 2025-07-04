@@ -57,6 +57,11 @@ public:
 
     void RenderWorld();
 
+    void renderMagnetLine(
+        Magnet& magnet,
+        const sf::Vector2f& joePos,
+        const sf::Vector2f& direction);
+
     void RenderHUD();
 
 private:
@@ -70,6 +75,7 @@ private:
     dgm::Clip tileset;
 
     BoxDebugRenderer boxDebugRenderer;
+    dgm::Camera backgroundCamera;
     dgm::Camera worldCamera;
     dgm::Camera hudCamera;
     FpsCounter fpsCounter;

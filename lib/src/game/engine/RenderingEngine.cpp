@@ -78,6 +78,8 @@ RenderingEngine::RenderingEngine(
           resmgr.get<dgm::Clip>("set.png.clip")))
     // Non-drawables
     , boxDebugRenderer(window)
+    , backgroundCamera(createFullscreenCamera(
+          sf::Vector2f(window.getSize()), INTERNAL_RESOLUTION))
     , worldCamera(createFullscreenCamera(
           sf::Vector2f(window.getSize()), INTERNAL_RESOLUTION))
     , hudCamera(
@@ -109,8 +111,6 @@ RenderingEngine::RenderingEngine(
     scene.world->SetDebugDraw(&boxDebugRenderer);
     boxDebugRenderer.SetFlags(b2Draw::e_shapeBit);
 
-    background.setOrigin(INTERNAL_RESOLUTION / 2.f);
-
     line.setOrigin({ 0.f, 12.f });
 }
 
@@ -130,6 +130,9 @@ static sf::Vector2f operator-(const b2Vec2& a, sf::Vector2f& b)
 
 void RenderingEngine::draw(dgm::Window& _window)
 {
+    window.setViewFromCamera(backgroundCamera);
+    window.draw(background);
+
     window.setViewFromCamera(worldCamera);
     RenderWorld();
 
@@ -143,7 +146,6 @@ void RenderingEngine::RenderWorld()
     auto roundedJoePos = sf::Vector2f(sf::Vector2i(joePos));
 
     worldCamera.setPosition(roundedJoePos);
-    background.setPosition(joePos);
     sprite.setPosition(joePos);
     sprite.setRotation(sf::radians(scene.joe.GetAngle()));
     spriteOutline.setPosition(joePos);
@@ -155,7 +157,6 @@ void RenderingEngine::RenderWorld()
     else if (scene.magnetPolarity == 2)
         spriteOutline.setOutlineColor(sf::Color::Blue);
 
-    window.draw(background);
     window.draw(tileMap);
     window.draw(spriteOutline);
     window.draw(sprite);

@@ -3,6 +3,7 @@
 #include <filesystem/AppStorage.hpp>
 #include <misc/CMakeVars.hpp>
 #include <misc/DependencyContainer.hpp>
+#include <SFML/System/Err.hpp>
 
 const auto SETTINGS_FILE_NAME = std::filesystem::path("settings.json");
 
@@ -31,7 +32,7 @@ int main(int, char*[])
     }
     catch (const std::exception& ex)
     {
-        std::cerr << ex.what() << std::endl;
+        sf::err() << ex.what() << std::endl;
         return 1;
     }
 

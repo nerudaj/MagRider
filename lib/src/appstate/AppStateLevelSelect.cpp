@@ -33,6 +33,7 @@ void AppStateLevelSelect::draw()
 
 void AppStateLevelSelect::restoreFocusImpl(const std::string& message)
 {
+    dic.jukebox.playTitleTrack();
     auto msg = Messaging::deserialize(message);
     if (msg)
         std::visit(
@@ -118,6 +119,7 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
         dic.strings.getString(StringId::PlayButton),
         [&, idx = levelIdx]
         {
+            dic.jukebox.playIngameTrack();
             app.pushState<AppStateGameWrapper>(
                 dic, settings, GameConfig { idx, levelIds[idx] });
         }));

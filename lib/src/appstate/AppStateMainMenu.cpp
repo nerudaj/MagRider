@@ -11,6 +11,7 @@ AppStateMainMenu::AppStateMainMenu(
     : dgm::AppState(app), dic(dic), settings(settings)
 {
     buildLayout();
+    dic.jukebox.playTitleTrack();
 }
 
 void AppStateMainMenu::input()

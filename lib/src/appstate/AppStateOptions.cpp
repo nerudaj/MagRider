@@ -77,7 +77,12 @@ void AppStateOptions::buildLayout()
         DefaultLayoutBuilder()
             .withNoBackgroundImage()
             .withTitle(
-                dic.strings.getString(StringId::Options), HeadingLevel::H1)
+                dic.strings.getString(StringId::Options),
+#ifdef ANDROID
+                HeadingLevel::H2)
+#else
+                HeadingLevel::H1)
+#endif
             .withContent(
                 NavbarLayoutBuilder()
                     .withNavbarWidget(WidgetBuilder::createTabbedContent(

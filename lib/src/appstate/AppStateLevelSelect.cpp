@@ -51,7 +51,12 @@ void AppStateLevelSelect::buildLayout()
         DefaultLayoutBuilder()
             .withNoBackgroundImage()
             .withTitle(
-                dic.strings.getString(StringId::SelectLevel), HeadingLevel::H1)
+                dic.strings.getString(StringId::SelectLevel),
+#ifdef ANDROID
+                HeadingLevel::H2)
+#else
+                HeadingLevel::H1)
+#endif
             .withContent(buildContent())
             .withBackButton(WidgetBuilder::createButton(
                 dic.strings.getString(StringId::Back), [&] { app.popState(); }))

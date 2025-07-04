@@ -19,6 +19,30 @@ void AppStatePause::draw()
 
 void AppStatePause::buildLayout()
 {
+#ifdef ANDROID
+    dic.gui.rebuildWith(
+        DefaultLayoutBuilder()
+            .withNoBackgroundImage()
+            .withTitle(
+                dic.strings.getString(StringId::PauseTitle), HeadingLevel::H2)
+            .withContent(
+                ButtonListBuilder()
+                    .addButton(
+                        dic.strings.getString(StringId::BackToLevelSelect),
+                        [&] { onBackToMenu(); })
+                    .addButton(
+                        dic.strings.getString(StringId::Options),
+                        [&] { onOptions(); })
+                    .addButton(
+                        dic.strings.getString(StringId::ExitButton),
+                        [&] { onExit(); })
+                    .build())
+            .withBackButton(WidgetBuilder::createButton(
+                dic.strings.getString(StringId::Restart), [&] { onRestart(); }))
+            .withSubmitButton(WidgetBuilder::createButton(
+                dic.strings.getString(StringId::Resume), [&] { onResume(); }))
+            .build());
+#else
     dic.gui.rebuildWith(
         DefaultLayoutBuilder()
             .withNoBackgroundImage()
@@ -33,11 +57,11 @@ void AppStatePause::buildLayout()
                         dic.strings.getString(StringId::Restart),
                         [&] { onRestart(); })
                     .addButton(
-                        dic.strings.getString(StringId::Options),
-                        [&] { onOptions(); })
-                    .addButton(
                         dic.strings.getString(StringId::BackToLevelSelect),
                         [&] { onBackToMenu(); })
+                    .addButton(
+                        dic.strings.getString(StringId::Options),
+                        [&] { onOptions(); })
                     .addButton(
                         dic.strings.getString(StringId::ExitButton),
                         [&] { onExit(); })
@@ -45,6 +69,7 @@ void AppStatePause::buildLayout()
             .withNoBackButton()
             .withNoSubmitButton()
             .build());
+#endif
 }
 
 void AppStatePause::onResume()

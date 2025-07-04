@@ -10,7 +10,7 @@ AppStateLevelEndTransition::AppStateLevelEndTransition(
           static_cast<float>(app.window.getSize().x),
           sf::seconds(1.f),
           levelWon ? sf::Color::White : sf::Color::Red,
-          INTERNAL_RESOLUTION)
+          sf::Vector2f(app.window.getSize() / 2u))
     , levelWon(levelWon)
 {
 }

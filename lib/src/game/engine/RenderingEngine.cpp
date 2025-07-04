@@ -34,6 +34,22 @@ static dgm::Camera createFullscreenCamera(
     return dgm::Camera(viewport, sf::Vector2f(desiredResolution));
 }
 
+static auto setAndGetSpritesheet(
+    dgm::TextureAtlas& atlas,
+    const sf::Texture& texture,
+    const dgm::AnimationStates& states)
+{
+    auto locator = atlas.addSpritesheet(texture, states);
+    return atlas.getAnimationStates(locator.value());
+}
+
+static auto setAndGetTileset(
+    dgm::TextureAtlas& atlas, const sf::Texture& texture, const dgm::Clip& clip)
+{
+    auto locator = atlas.addTileset(texture, clip);
+    return atlas.getClip(locator.value());
+}
+
 RenderingEngine::RenderingEngine(
     dgm::Window& window,
     dgm::ResourceManager& resmgr,
@@ -41,22 +57,39 @@ RenderingEngine::RenderingEngine(
     const StringProvider& strings,
     Scene& scene,
     const TiledLevel& level) noexcept
+    // Dependencies
     : window(window)
     , settings(settings)
     , strings(strings)
     , scene(scene)
+    // Atlas properties
+    , atlas(1024, 1024)
+    , ballAnimationStates(setAndGetSpritesheet(
+          atlas,
+          resmgr.get<sf::Texture>("ball.png"),
+          resmgr.get<dgm::AnimationStates>("ball.png.anim")))
+    , magnetLineAnimationStates(setAndGetSpritesheet(
+          atlas,
+          resmgr.get<sf::Texture>("lines.png"),
+          resmgr.get<dgm::AnimationStates>("lines.png.anim")))
+    , tileset(setAndGetTileset(
+          atlas,
+          resmgr.get<sf::Texture>("set.png"),
+          resmgr.get<dgm::Clip>("set.png.clip")))
+    // Non-drawables
     , boxDebugRenderer(window)
     , worldCamera(createFullscreenCamera(
           sf::Vector2f(window.getSize()), INTERNAL_RESOLUTION))
     , hudCamera(
           sf::FloatRect { { 0.f, 0.f }, { 1.f, 1.f } },
           sf::Vector2f(window.getSize()))
+    , animation(2, 10)
+
+    // Drawables
     , text(resmgr.get<sf::Font>("pico-8.ttf"))
-    , tileMap(dgm::TileMap(
-          resmgr.get<sf::Texture>("set.png"),
-          resmgr.get<dgm::Clip>("set.png.clip")))
-    , sprite(resmgr.get<sf::Texture>("ball.png"))
-    , ballStates(resmgr.get<dgm::AnimationStates>("ball.png.anim"))
+    , tileMap(dgm::TileMap(atlas.getTexture(), tileset))
+    , sprite(atlas.getTexture())
+    , line(atlas.getTexture())
     , background(resmgr.get<sf::Texture>("background-forest.png"))
 {
     tileMap.build(
@@ -67,9 +100,9 @@ RenderingEngine::RenderingEngine(
             | uniranges::to<std::vector>(),
         { level.width, level.height });
 
-    sprite.setTextureRect(ballStates["base_joe_idle"].getFrame(0));
-    sprite.setOrigin(
-        sf::Vector2f { ballStates["base_joe_idle"].getFrameSize() / 2u });
+    sprite.setTextureRect(ballAnimationStates["base_joe_idle"].getFrame(0));
+    sprite.setOrigin(sf::Vector2f {
+        ballAnimationStates["base_joe_idle"].getFrameSize() / 2u });
     spriteOutline.setRadius(sprite.getOrigin().x);
     spriteOutline.setOrigin(sprite.getOrigin());
     spriteOutline.setOutlineThickness(3.f);
@@ -77,10 +110,13 @@ RenderingEngine::RenderingEngine(
     boxDebugRenderer.SetFlags(b2Draw::e_shapeBit);
 
     background.setOrigin(INTERNAL_RESOLUTION / 2.f);
+
+    line.setOrigin({ 0.f, 12.f });
 }
 
 void RenderingEngine::update(const dgm::Time& time)
 {
+    animation.update(time);
     fpsCounter.update(time.getDeltaTime());
 }
 
@@ -131,12 +167,24 @@ void RenderingEngine::RenderWorld()
             const auto direction = scene.joe.GetPosition() - magnet.position;
             if (direction.length() < 6.f)
             {
-                auto vertices = std::array {
-                    sf::Vertex { .position = joePos },
-                    sf::Vertex { magnet.position * 32.f },
-                };
-                window.getSfmlWindowContext().draw(
-                    vertices.data(), 2u, sf::PrimitiveType::Lines);
+                const auto screenMagnetPos = magnet.position * 32.f;
+                line.setPosition(joePos);
+                line.setRotation(
+                    dgm::Math::cartesianToPolar(screenMagnetPos - joePos)
+                        .angle);
+                line.setScale({ (direction.length() * 32.f) / 48.f, 1.f });
+                line.setTextureRect(magnetLineAnimationStates
+                                        [magnet.polarity == 2 ? "red" : "blue"]
+                                            .getFrame(animation.getFrame()));
+
+                /* auto vertices = std::array {
+                                    sf::Vertex { .position = joePos },
+                                    sf::Vertex {},
+                                };
+                                window.getSfmlWindowContext().draw(
+                                    vertices.data(), 2u,
+                   sf::PrimitiveType::Lines);*/
+                window.draw(line);
             }
         }
     }

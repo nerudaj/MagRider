@@ -1,0 +1,34 @@
+{
+    "defaults": {
+        "frame": {
+            "width": 48,
+            "height": 24
+        },
+        "spacing": {
+            "horizontal": 4,
+            "vertical": 4
+        }
+    },
+    "states": [
+        {
+            "name": "red",
+            "bounds": {
+                "left": 0,
+                "top": 0,
+                "width": 100,
+                "height": 24
+            },
+            "nframes": 2
+        },
+        {
+            "name": "blue",
+            "bounds": {
+                "left": 0,
+                "top": 28,
+                "width": 100,
+                "height": 24
+            },
+            "nframes": 2
+        }
+    ]
+}

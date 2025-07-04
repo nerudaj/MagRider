@@ -1,9 +1,9 @@
 #include <DGM/dgm.hpp>
+#include <SFML/System/Err.hpp>
 #include <appstate/AppStateMainMenu.hpp>
 #include <filesystem/AppStorage.hpp>
 #include <misc/CMakeVars.hpp>
 #include <misc/DependencyContainer.hpp>
-#include <SFML/System/Err.hpp>
 
 const auto SETTINGS_FILE_NAME = std::filesystem::path("settings.json");
 
@@ -33,7 +33,12 @@ int main(int, char*[])
     catch (const std::exception& ex)
     {
         sf::err() << ex.what() << std::endl;
+
+#ifndef _DEBUG
         return 1;
+#else
+        throw;
+#endif
     }
 
     return 0;

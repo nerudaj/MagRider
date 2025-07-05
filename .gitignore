@@ -11,3 +11,5 @@ bin-android/app/.cxx
 bin-android/app/build
 bin-android/.idea
 bin-android/.gradle
+
+assets-private\tiled\magrider.tiled-session

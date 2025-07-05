@@ -8,3 +8,5 @@ List of tasks and tests that need to be performed before a release
 
 * [ ] Fullscreen checkbox is hidden from Options->Display
 * [ ] Resolution dropdown is hidden from Options->Display
+* [ ] Settings / progress are saved
+* [ ] No text is bleeding out of its boundaries (notably pause menu and level select)

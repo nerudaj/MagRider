@@ -1,5 +1,6 @@
 #include "game/SceneBuilder.hpp"
 #include "filesystem/models/TiledModels.hpp"
+#include "game/Constants.hpp"
 #include "misc/Compatibility.hpp"
 #include "misc/CoordConverter.hpp"
 #include "types/SemanticTypes.hpp"
@@ -306,12 +307,12 @@ std::vector<Magnet> SceneBuilder::getMagnets(const TiledLevel& level)
             if (tile == Tile::MagNeg)
                 magnets.push_back(Magnet {
                     .position = { fx, fy },
-                    .polarity = 1,
+                    .polarity = MAGNET_POLARITY_BLUE,
                 });
             else if (tile == Tile::MagPlus)
                 magnets.push_back(Magnet {
                     .position = { fx, fy },
-                    .polarity = 2,
+                    .polarity = MAGNET_POLARITY_RED,
                 });
         }
     }
@@ -330,8 +331,9 @@ Scene SceneBuilder::buildScene(const TiledLevel& level)
             level.objectLayers.front().positions.front()),
         0.5f,
         DynamicBodyProperties {
-            .density = 0.5f,
-            .restitution = 0.4f,
+            .density = JOE_DENSITY,
+            .friction = JOE_FRICTION,
+            .restitution = JOE_RESTITUTION,
         });
 
     auto listener = std::make_unique<SpikeContactListener>();

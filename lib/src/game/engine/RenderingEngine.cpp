@@ -150,11 +150,11 @@ void RenderingEngine::RenderWorld()
     sprite.setRotation(sf::radians(scene.joe.GetAngle()));
     spriteOutline.setPosition(joePos);
 
-    if (scene.magnetPolarity == 0)
+    if (scene.magnetPolarity == MAGNET_POLARITY_NONE)
         spriteOutline.setOutlineColor(sf::Color::Transparent);
-    else if (scene.magnetPolarity == 1)
+    else if (scene.magnetPolarity == MAGNET_POLARITY_RED)
         spriteOutline.setOutlineColor(sf::Color::Red);
-    else if (scene.magnetPolarity == 2)
+    else if (scene.magnetPolarity == MAGNET_POLARITY_BLUE)
         spriteOutline.setOutlineColor(sf::Color::Blue);
 
     window.draw(tileMap);
@@ -166,7 +166,7 @@ void RenderingEngine::RenderWorld()
         for (auto&& magnet : scene.magnets)
         {
             const auto direction = magnet.position - scene.joe.GetPosition();
-            if (direction.length() < 6.f)
+            if (direction.length() < MAGNET_RANGE)
             {
                 renderMagnetLine(magnet, joePos, direction);
             }
@@ -186,8 +186,9 @@ void RenderingEngine::renderMagnetLine(
     line.setScale(
         { CoordConverter::worldToScreen(direction.length()) / 48.f, 1.f });
     line.setTextureRect(
-        magnetLineAnimationStates[scene.magnetPolarity == 1 ? "red" : "blue"]
-            .getFrame(animation.getFrame()));
+        magnetLineAnimationStates
+            [scene.magnetPolarity == MAGNET_POLARITY_RED ? "red" : "blue"]
+                .getFrame(animation.getFrame()));
     window.draw(line);
 }
 

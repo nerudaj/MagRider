@@ -3,6 +3,28 @@
 #include "appstate/CommonHandler.hpp"
 #include "appstate/Messaging.hpp"
 #include "gui/Builders.hpp"
+#include "gui/Icon.hpp"
+#include "gui/Sizers.hpp"
+
+sf::Image createMask(const sf::Vector2u& size)
+{
+    auto&& image = sf::Image(size, sf::Color(255, 255, 255, 96));
+    return image;
+}
+
+AppStatePause::AppStatePause(
+    dgm::App& app, DependencyContainer& dic, AppSettings& settings) noexcept
+    : dgm::AppState(
+          app,
+          dgm::AppStateConfig {
+              .shouldDrawUnderlyingState = true,
+          })
+    , dic(dic)
+    , settings(settings)
+{
+    std::ignore = background.loadFromImage(createMask(app.window.getSize()));
+    buildLayout();
+}
 
 void AppStatePause::input()
 {
@@ -19,10 +41,13 @@ void AppStatePause::draw()
 
 void AppStatePause::buildLayout()
 {
+    auto&& texture = dic.resmgr.get<sf::Texture>("pixel-ui-icons.png");
+    auto&& clip = dic.resmgr.get<dgm::Clip>("pixel-ui-icons.png.clip");
+
 #ifdef ANDROID
     dic.gui.rebuildWith(
         DefaultLayoutBuilder()
-            .withNoBackgroundImage()
+            .withBackgroundImage(background)
             .withTitle(
                 dic.strings.getString(StringId::PauseTitle), HeadingLevel::H2)
             .withContent(
@@ -31,25 +56,28 @@ void AppStatePause::buildLayout()
                         dic.strings.getString(StringId::BackToLevelSelect),
                         [&] { onBackToMenu(); })
                     .addButton(
-                        dic.strings.getString(StringId::Options),
-                        [&] { onOptions(); })
-                    .addButton(
                         dic.strings.getString(StringId::ExitButton),
                         [&] { onExit(); })
                     .build())
-            .withBackButton(WidgetBuilder::createButton(
-                dic.strings.getString(StringId::Restart), [&] { onRestart(); }))
-            .withSubmitButton(WidgetBuilder::createButton(
-                dic.strings.getString(StringId::Resume), [&] { onResume(); }))
+            .withTopLeftButton(WidgetBuilder::createTexturedButton(
+                texture, clip.getFrame(Icon::PlayFill), [&] { onResume(); }))
+            .withTopRightButton(WidgetBuilder::createTexturedButton(
+                texture,
+                clip.getFrame(Icon::SettingsFill),
+                [&] { onOptions(); }))
+            .withBottomLeftButton(WidgetBuilder::createTexturedButton(
+                texture, clip.getFrame(Icon::Restart), [&] { onRestart(); }))
+            .withNoBottomRightButton()
             .build());
 #else
     dic.gui.rebuildWith(
         DefaultLayoutBuilder()
-            .withNoBackgroundImage()
+            .withBackgroundImage(background)
             .withTitle(
                 dic.strings.getString(StringId::PauseTitle), HeadingLevel::H1)
             .withContent(
                 ButtonListBuilder()
+
                     .addButton(
                         dic.strings.getString(StringId::Resume),
                         [&] { onResume(); })
@@ -66,8 +94,15 @@ void AppStatePause::buildLayout()
                         dic.strings.getString(StringId::ExitButton),
                         [&] { onExit(); })
                     .build())
-            .withNoBackButton()
-            .withNoSubmitButton()
+            .withTopLeftButton(WidgetBuilder::createTexturedButton(
+                texture, clip.getFrame(Icon::PlayFill), [&] { onResume(); }))
+            .withTopRightButton(WidgetBuilder::createTexturedButton(
+                texture,
+                clip.getFrame(Icon::SettingsFill),
+                [&] { onOptions(); }))
+            .withBottomLeftButton(WidgetBuilder::createTexturedButton(
+                texture, clip.getFrame(Icon::Restart), [&] { onRestart(); }))
+            .withNoBottomRightButton()
             .build());
 #endif
 }

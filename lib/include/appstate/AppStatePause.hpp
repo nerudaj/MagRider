@@ -8,17 +8,9 @@ class [[nodiscard]] AppStatePause final : public dgm::AppState
 {
 public:
     AppStatePause(
-        dgm::App& app, DependencyContainer& dic, AppSettings& settings) noexcept
-        : dgm::AppState(
-              app,
-              dgm::AppStateConfig {
-                  .shouldDrawUnderlyingState = true,
-              })
-        , dic(dic)
-        , settings(settings)
-    {
-        buildLayout();
-    }
+        dgm::App& app,
+        DependencyContainer& dic,
+        AppSettings& settings) noexcept;
 
 public:
     void input() override;
@@ -45,4 +37,5 @@ private:
 private:
     DependencyContainer& dic;
     AppSettings& settings;
+    sf::Texture background;
 };

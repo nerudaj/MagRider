@@ -25,7 +25,7 @@ bool Input::isMagnetizingBlue() const
 
 bool Input::shouldStart() const
 {
-    if (gameInteractPressed)
+    if (gameInteractPressed || magnetizeBluePressed || magnetizeRedPressed)
     {
         gameInteractPressed = false;
         return true;

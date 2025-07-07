@@ -19,14 +19,14 @@ ButtonListBuilder::build(tgui::HorizontalAlignment alignment)
 {
     auto&& outerPanel = WidgetBuilder::createScrollablePanel();
     auto&& layout = tgui::GrowVerticalLayout::create();
-    layout->setSize({ "50%", "100%" });
+    layout->setWidth("50%");
 
     if (alignment == tgui::HorizontalAlignment::Left)
-        layout->setPosition({ "0%", "0%" });
+        layout->setPosition({ "0%", "parent.height - height" });
     else if (alignment == tgui::HorizontalAlignment::Center)
-        layout->setPosition({ "25%", "0%" });
+        layout->setPosition({ "25%", "parent.height - height" });
     else
-        layout->setPosition({ "50%", "0%" });
+        layout->setPosition({ "50%", "parent.height - height" });
 
     outerPanel->add(layout);
 

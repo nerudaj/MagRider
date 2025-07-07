@@ -1,4 +1,5 @@
 #include "gui/builders/WidgetBuilder.hpp"
+#include "game/Constants.hpp"
 #include "gui/Sizers.hpp"
 #include "gui/TguiHelper.hpp"
 #include "misc/Compatibility.hpp"
@@ -104,6 +105,39 @@ NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createRowButton(
     button->getRenderer()->setBackgroundColor(tgui::Color::Transparent);
 
     return button;
+}
+
+NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createTexturedButton(
+    const sf::Texture& texture,
+    const sf::IntRect& textureRect,
+    std::function<void(void)> onClick,
+    WidgetOptions options)
+{
+    auto btn = tgui::Button::create();
+    btn->getRenderer()->setBorders({ 0.f });
+
+    auto tguiTexture = tgui::Texture(
+        texture,
+        tgui::UIntRect(
+            textureRect.position.x,
+            textureRect.position.y,
+            textureRect.size.x,
+            textureRect.size.y));
+
+    tguiTexture.setColor(COLOR_DARK_PURPLE);
+    btn->getRenderer()->setTexture(tguiTexture);
+
+    tguiTexture.setColor(COLOR_PINK);
+    btn->getRenderer()->setTextureHover(tguiTexture);
+
+    tguiTexture.setColor(COLOR_LAVENDER);
+    btn->getRenderer()->setTextureDown(tguiTexture);
+
+    btn->onClick(onClick);
+    btn->setSize({ "100%", "100%" });
+
+    applyOptionsToWidget(options, btn);
+    return btn;
 }
 
 tgui::CheckBox::Ptr WidgetBuilder::createCheckbox(

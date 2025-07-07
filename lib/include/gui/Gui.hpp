@@ -10,7 +10,10 @@
 class [[nodiscard]] Gui final
 {
 public:
-    Gui(dgm::Window& window) noexcept : gui(window.getSfmlWindowContext()) {}
+    Gui(dgm::Window& window) noexcept : gui(window.getSfmlWindowContext())
+    {
+        tgui::Texture::setDefaultSmooth(false);
+    }
 
 public:
     template<class T>

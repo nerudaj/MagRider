@@ -59,9 +59,11 @@ void AppStateLevelSelect::buildLayout()
                 HeadingLevel::H1)
 #endif
             .withContent(buildContent())
-            .withBackButton(WidgetBuilder::createButton(
+            .withNoTopLeftButton()
+            .withNoTopRightButton()
+            .withBottomLeftButton(WidgetBuilder::createButton(
                 dic.strings.getString(StringId::Back), [&] { app.popState(); }))
-            .withNoSubmitButton()
+            .withNoBottomRightButton()
             .build());
 }
 

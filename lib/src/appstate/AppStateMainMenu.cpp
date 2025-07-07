@@ -56,9 +56,11 @@ void AppStateMainMenu::buildLayout()
                                  [&] { onExit(); },
                                  "MainMenu_Button_Exit")
                              .build())
-            .withNoBackButton()
-            .withNoSubmitButton()
+            .withNoCornerButtons()
             .build());
+
+    auto clip = dic.resmgr.get<dgm::Clip>("ui-icons.png.clip");
+    auto rect = clip.getFrame(0);
 }
 
 void AppStateMainMenu::onPlay()

@@ -108,6 +108,7 @@ RenderingEngine::RenderingEngine(
     spriteOutline.setRadius(sprite.getOrigin().x);
     spriteOutline.setOrigin(sprite.getOrigin());
     spriteOutline.setOutlineThickness(3.f);
+    spriteOutline.setFillColor(sf::Color::Transparent);
     scene.world->SetDebugDraw(&boxDebugRenderer);
     boxDebugRenderer.SetFlags(b2Draw::e_shapeBit);
 

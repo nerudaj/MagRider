@@ -13,8 +13,8 @@
         {
             "name": "metal_joe_blink",
             "bounds": {
-                "left": 0,
-                "top": 0,
+                "left": 2,
+                "top": 2,
                 "width": 212,
                 "height": 32
             },
@@ -23,8 +23,8 @@
         {
             "name": "base_joe_blink",
             "bounds": {
-                "left": 0,
-                "top": 36,
+                "left": 2,
+                "top": 38,
                 "width": 176,
                 "height": 32
             },
@@ -33,8 +33,8 @@
         {
             "name": "base_joe_idle",
             "bounds": {
-                "left": 180,
-                "top": 36,
+                "left": 182,
+                "top": 38,
                 "width": 32,
                 "height": 32
             },
@@ -43,8 +43,8 @@
         {
             "name": "___leave_out",
             "bounds": {
-                "left": 0,
-                "top": 72,
+                "left": 2,
+                "top": 74,
                 "width": 68,
                 "height": 32
             },
@@ -53,8 +53,8 @@
         {
             "name": "metal_joe_idle",
             "bounds": {
-                "left": 72,
-                "top": 72,
+                "left": 74,
+                "top": 74,
                 "width": 32,
                 "height": 32
             },

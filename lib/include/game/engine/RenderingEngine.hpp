@@ -55,14 +55,14 @@ public:
 
     void draw(dgm::Window& window);
 
-    void RenderWorld();
+    void renderWorld();
 
-    void renderMagnetLine(
-        Magnet& magnet,
-        const sf::Vector2f& joePos,
-        const sf::Vector2f& direction);
+    void
+    renderMagnetLine(const sf::Vector2f& joePos, const sf::Vector2f& direction);
 
-    void RenderHUD();
+    void renderHUD();
+
+    void setJoeIdleState();
 
 private:
     dgm::Window& window;
@@ -88,5 +88,6 @@ private:
     sf::CircleShape spriteOutline;
     sf::Sprite background;
 
-    size_t tick = 0;
+    sf::Time timeToBlink = sf::Time::Zero;
+    dgm::Animation joeAnimation;
 };

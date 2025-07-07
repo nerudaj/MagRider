@@ -3,6 +3,7 @@
 #include "misc/Compatibility.hpp"
 #include "misc/CoordConverter.hpp"
 #include "misc/Utility.hpp"
+#include "types/SemanticTypes.hpp"
 
 static dgm::Camera createFullscreenCamera(
     const sf::Vector2f& currentResolution,
@@ -93,6 +94,7 @@ RenderingEngine::RenderingEngine(
     , sprite(atlas.getTexture())
     , line(atlas.getTexture())
     , background(resmgr.get<sf::Texture>("background-forest.png"))
+    , joeAnimation(ballAnimationStates, 15)
 {
     tileMap.build(
         { level.tileWidth, level.tileHeight },
@@ -102,9 +104,10 @@ RenderingEngine::RenderingEngine(
             | uniranges::to<std::vector>(),
         { level.width, level.height });
 
-    sprite.setTextureRect(ballAnimationStates["base_joe_idle"].getFrame(0));
+    setJoeIdleState();
+
     sprite.setOrigin(sf::Vector2f {
-        ballAnimationStates["base_joe_idle"].getFrameSize() / 2u });
+        ballAnimationStates.begin()->second.getFrameSize() / 2u });
     spriteOutline.setRadius(sprite.getOrigin().x);
     spriteOutline.setOrigin(sprite.getOrigin());
     spriteOutline.setOutlineThickness(3.f);
@@ -118,7 +121,19 @@ RenderingEngine::RenderingEngine(
 void RenderingEngine::update(const dgm::Time& time)
 {
     animation.update(time);
+
+    if (joeAnimation.update(time) == dgm::Animation::PlaybackStatus::Finished)
+    {
+        setJoeIdleState();
+    }
+
     fpsCounter.update(time.getDeltaTime());
+
+    timeToBlink -= time.getElapsed();
+    if (timeToBlink < sf::Time::Zero)
+    {
+        joeAnimation.setState("base_joe_blink", "looping"_false);
+    }
 }
 
 static sf::Vector2f operator-(const sf::Vector2f& a, const b2Vec2& b)
@@ -135,18 +150,19 @@ void RenderingEngine::draw(dgm::Window& _window)
     window.draw(background);
 
     window.setViewFromCamera(worldCamera);
-    RenderWorld();
+    renderWorld();
 
     window.setViewFromCamera(hudCamera);
-    RenderHUD();
+    renderHUD();
 }
 
-void RenderingEngine::RenderWorld()
+void RenderingEngine::renderWorld()
 {
     auto joePos = CoordConverter::worldToScreen(scene.joe.GetPosition());
     auto roundedJoePos = sf::Vector2f(sf::Vector2i(joePos));
 
     worldCamera.setPosition(roundedJoePos);
+    sprite.setTextureRect(joeAnimation.getCurrentFrame());
     sprite.setPosition(joePos);
     sprite.setRotation(sf::radians(scene.joe.GetAngle()));
     spriteOutline.setPosition(joePos);
@@ -169,7 +185,7 @@ void RenderingEngine::RenderWorld()
             const auto direction = magnet.position - scene.joe.GetPosition();
             if (direction.length() < MAGNET_RANGE)
             {
-                renderMagnetLine(magnet, joePos, direction);
+                renderMagnetLine(joePos, direction);
             }
         }
     }
@@ -178,9 +194,7 @@ void RenderingEngine::RenderWorld()
 }
 
 void RenderingEngine::renderMagnetLine(
-    Magnet& magnet,
-    const sf::Vector2f& joeScreenPos,
-    const sf::Vector2f& direction)
+    const sf::Vector2f& joeScreenPos, const sf::Vector2f& direction)
 {
     line.setPosition(joeScreenPos);
     line.setRotation(dgm::Math::cartesianToPolar(direction).angle);
@@ -193,7 +207,7 @@ void RenderingEngine::renderMagnetLine(
     window.draw(line);
 }
 
-void RenderingEngine::RenderHUD()
+void RenderingEngine::renderHUD()
 {
     text.setPosition({ 10.f, 10.f });
     text.setString(fpsCounter.getText());
@@ -219,4 +233,10 @@ void RenderingEngine::RenderHUD()
         10.f,
     });
     window.draw(text);
+}
+
+void RenderingEngine::setJoeIdleState()
+{
+    joeAnimation.setState("base_joe_idle", "looping"_true);
+    timeToBlink = sf::seconds(static_cast<float>(rand() % 5));
 }

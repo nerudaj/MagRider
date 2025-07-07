@@ -2,6 +2,7 @@
 
 #include "settings/AudioSettings.hpp"
 #include "settings/BindingsSettings.hpp"
+#include "settings/FeatureFlags.hpp"
 #include "settings/InputSettings.hpp"
 #include "settings/SaveState.hpp"
 #include "settings/VideoSettings.hpp"
@@ -14,7 +15,8 @@ struct [[nodiscard]] AppSettings final
     InputSettings input;
     BindingsSettings bindings;
     SaveState save;
+    FeatureFlags features;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    AppSettings, audio, video, input, bindings, save);
+    AppSettings, audio, video, input, bindings, save, features);

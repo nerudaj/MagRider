@@ -73,6 +73,20 @@ void AppStateOptions::draw()
 
 void AppStateOptions::buildLayout()
 {
+    auto tabLabels = std::vector<std::string> {
+        dic.strings.getString(StringId::VideoOptionsTab),
+        dic.strings.getString(StringId::AudioOptionsTab),
+    };
+
+    if (settings.features.showInputSettings)
+    {
+        tabLabels.insert_range(
+            tabLabels.end(),
+            std::vector<std::string> {
+                dic.strings.getString(StringId::InputOptionsTab),
+                dic.strings.getString(StringId::BindingsOptionsTab) });
+    }
+
     dic.gui.rebuildWith(
         DefaultLayoutBuilder()
             .withNoBackgroundImage()
@@ -86,12 +100,7 @@ void AppStateOptions::buildLayout()
             .withContent(
                 NavbarLayoutBuilder()
                     .withNavbarWidget(WidgetBuilder::createTabbedContent(
-                        {
-                            dic.strings.getString(StringId::VideoOptionsTab),
-                            dic.strings.getString(StringId::AudioOptionsTab),
-                            dic.strings.getString(StringId::InputOptionsTab),
-                            dic.strings.getString(StringId::BindingsOptionsTab),
-                        },
+                        tabLabels,
                         [&](const tgui::String& tabName)
                         { onTabClicked(tabName); },
                         WidgetOptions {

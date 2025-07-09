@@ -41,10 +41,10 @@ void AppStatePause::draw()
 
 void AppStatePause::buildLayout()
 {
+#ifdef ANDROID
     auto&& texture = dic.resmgr.get<sf::Texture>("pixel-ui-icons.png");
     auto&& clip = dic.resmgr.get<dgm::Clip>("pixel-ui-icons.png.clip");
 
-#ifdef ANDROID
     dic.gui.rebuildWith(
         DefaultLayoutBuilder()
             .withBackgroundImage(background)

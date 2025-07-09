@@ -17,22 +17,24 @@ namespace priv
             align != tgui::HorizontalAlignment::Center
             && valign != tgui::VerticalAlignment::Center);
 
+        const auto isTexturedButton = button->getText().empty();
+
         auto&& panel = WidgetBuilder::createPanel(
-            { props.cornerButtonDimension, props.cornerButtonDimension });
+            isTexturedButton ? tgui::Layout2d { props.cornerButtonDimension,
+                                                props.cornerButtonDimension }
+                             : tgui::Layout2d { props.cornerButtonDimension * 2,
+                                                props.cornerButtonDimension });
         panel->setPosition({
             (align == tgui::HorizontalAlignment::Left
                  ? uni::format("{}", props.cornerButtonPadding)
                  : uni::format(
-                       "100% - {} - {}",
-                       props.cornerButtonPadding,
-                       props.cornerButtonDimension))
+                       "parent.width - width - {}", props.cornerButtonPadding))
                 .c_str(),
             (valign == tgui::VerticalAlignment::Top
                  ? uni::format("{}", props.cornerButtonPadding)
                  : uni::format(
-                       "100% - {} - {}",
-                       props.cornerButtonPadding,
-                       props.cornerButtonDimension))
+                       "parent.height - height - {}",
+                       props.cornerButtonPadding))
                 .c_str(),
         });
         panel->add(button);

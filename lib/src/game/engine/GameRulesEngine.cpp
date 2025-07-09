@@ -44,9 +44,15 @@ void GameRulesEngine::update(const dgm::Time& time)
         scene.timer += time.getDeltaTime();
 
     if (input.isMagnetizingRed())
+    {
         scene.magnetPolarity = MAGNET_POLARITY_RED;
+        audioEventQueue.pushEvent<JoeMagnetizedToRedAudioEvent>();
+    }
     else if (input.isMagnetizingBlue())
+    {
         scene.magnetPolarity = MAGNET_POLARITY_BLUE;
+        audioEventQueue.pushEvent<JoeMagnetizedToBlueAudioEvent>();
+    }
     else
         scene.magnetPolarity = MAGNET_POLARITY_NONE;
 

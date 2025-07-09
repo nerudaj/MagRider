@@ -5,10 +5,21 @@
 #include "settings/AppSettings.hpp"
 #include <DGM/classes/AppState.hpp>
 
+struct [[nodiscard]] EndLevelState final
+{
+    bool levelWon = false;
+    size_t levelIdx = 0;
+    float levelTime = 0.f;
+};
+
 class [[nodiscard]] AppStateLevelEndTransition final : public dgm::AppState
 {
 public:
-    AppStateLevelEndTransition(dgm::App& app, bool levelWon);
+    AppStateLevelEndTransition(
+        dgm::App& app,
+        DependencyContainer& dic,
+        AppSettings& settings,
+        const EndLevelState& state);
 
 public:
     void input() override;
@@ -18,6 +29,11 @@ public:
     void draw() override;
 
 private:
+    void restoreFocusImpl(const std::string& message) override;
+
+private:
+    DependencyContainer& dic;
+    AppSettings& settings;
+    const EndLevelState state;
     TransitionAnimation animation;
-    bool levelWon;
 };

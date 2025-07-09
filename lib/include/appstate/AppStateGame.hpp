@@ -39,5 +39,4 @@ private:
     GameConfig config;
     TouchControls touchControls;
     Game game;
-    sf::Sound sound;
 };

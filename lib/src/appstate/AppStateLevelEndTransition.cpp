@@ -1,17 +1,23 @@
 #include "appstate/AppStateLevelEndTransition.hpp"
+#include "appstate/AppStateLevelEnd.hpp"
 #include "appstate/Messaging.hpp"
 #include "game/Constants.hpp"
 
 AppStateLevelEndTransition::AppStateLevelEndTransition(
-    dgm::App& app, bool levelWon)
+    dgm::App& app,
+    DependencyContainer& dic,
+    AppSettings& settings,
+    const EndLevelState& state)
     : dgm::AppState(
           app, dgm::AppStateConfig { .shouldDrawUnderlyingState = true })
+    , dic(dic)
+    , settings(settings)
+    , state(state)
     , animation(
           static_cast<float>(app.window.getSize().x),
           sf::seconds(1.f),
-          levelWon ? sf::Color::White : sf::Color::Red,
+          state.levelWon ? sf::Color::White : sf::Color::Red,
           sf::Vector2f(app.window.getSize() / 2u))
-    , levelWon(levelWon)
 {
 }
 
@@ -29,8 +35,9 @@ void AppStateLevelEndTransition::update()
 
     if (animation.isFinished())
     {
-        if (levelWon)
-            app.popState(Messaging::serialize<PopIfNotLevelSelection>());
+        if (state.levelWon)
+            app.pushState<AppStateLevelEnd>(
+                dic, settings, state.levelIdx, state.levelTime);
         else
             app.popState(Messaging::serialize<RestartLevel>());
     }
@@ -39,4 +46,9 @@ void AppStateLevelEndTransition::update()
 void AppStateLevelEndTransition::draw()
 {
     app.window.draw(animation.getDrawable());
+}
+
+void AppStateLevelEndTransition::restoreFocusImpl(const std::string& message)
+{
+    app.popState(message);
 }

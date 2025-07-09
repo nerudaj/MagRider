@@ -25,7 +25,10 @@ public:
                    : std::make_optional(save.times[levelIdx]);
     }
 
-    static void
+    /// <summary>
+    /// Returns true when new best time was set
+    /// </summary>
+    static bool
     setBestTime(SaveState& save, const size_t levelIdx, const float time)
     {
         if (save.times.size() <= levelIdx)
@@ -34,6 +37,11 @@ public:
         }
 
         if (save.times[levelIdx] == 0.f || save.times[levelIdx] > time)
+        {
             save.times[levelIdx] = time;
+            return true;
+        }
+
+        return false;
     }
 };

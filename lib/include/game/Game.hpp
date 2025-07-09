@@ -2,6 +2,7 @@
 
 #include "game/SceneBuilder.hpp"
 #include "game/TiledLevel.hpp"
+#include "game/engine/AudioEngine.hpp"
 #include "game/engine/GameRulesEngine.hpp"
 #include "game/engine/RenderingEngine.hpp"
 #include "game/events/EventQueue.hpp"
@@ -20,14 +21,17 @@ public:
         const AppSettings& settings,
         const StringProvider& strings)
         : scene(SceneBuilder::buildScene(level))
-        , gameRulesEngine(gameEvents, scene, input)
+        , gameRulesEngine(gameEvents, audioEvents, scene, input)
         , renderingEngine(window, resmgr, settings.video, strings, scene, level)
+        , audioEngine(resmgr)
     {
     }
 
 public:
     Scene scene;
     EventQueue<GameEvent> gameEvents;
+    EventQueue<AudioEvent> audioEvents;
     GameRulesEngine gameRulesEngine;
     RenderingEngine renderingEngine;
+    AudioEngine audioEngine;
 };

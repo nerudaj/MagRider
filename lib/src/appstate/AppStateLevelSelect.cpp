@@ -50,7 +50,8 @@ void AppStateLevelSelect::buildLayout()
 {
     dic.gui.rebuildWith(
         DefaultLayoutBuilder()
-            .withNoBackgroundImage()
+            .withBackgroundImage(
+                dic.resmgr.get<sf::Texture>("menu-background.png"))
             .withTitle(
                 dic.strings.getString(StringId::SelectLevel),
 #ifdef ANDROID

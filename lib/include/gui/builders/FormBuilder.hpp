@@ -40,8 +40,7 @@ public:
 
     FormBuilder& addSeparator();
 
-    NODISCARD_RESULT tgui::Container::Ptr
-    build(tgui::Color backgroundColor = tgui::Color::Transparent);
+    NODISCARD_RESULT tgui::Container::Ptr build();
 
 private:
     static NODISCARD_RESULT tgui::Panel::Ptr createOptionRow(

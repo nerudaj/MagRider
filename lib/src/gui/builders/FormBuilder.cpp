@@ -39,7 +39,7 @@ FormBuilder& FormBuilder::addSeparator()
     return *this;
 }
 
-tgui::Container::Ptr FormBuilder::build(tgui::Color backgroundColor)
+tgui::Container::Ptr FormBuilder::build()
 {
     auto&& verticalLayout = tgui::GrowVerticalLayout::create();
     verticalLayout->getRenderer()->setPadding({ 10.f, 10.f });

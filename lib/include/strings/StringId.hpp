@@ -10,6 +10,9 @@ enum class [[nodiscard]] StringId
     ExitButton,
     Back,
     SelectLevel,
+    LevelFinished,
+    Continue,
+    Retry,
 
     // Options
     VideoOptionsTab,
@@ -50,6 +53,10 @@ enum class [[nodiscard]] StringId
     // Game
     TouchToStart,
     SpaceToStart,
+
+    // End Screen
+    YourTime,
+    NewBest,
 
     MaxId, // Make sure this one is always the last!
 };

@@ -42,7 +42,7 @@ void AppStateMainMenu::buildLayout()
 {
     dic.gui.rebuildWith(
         DefaultLayoutBuilder::withBackgroundImage(
-            dic.resmgr.get<sf::Texture>("placeholder-background.png"))
+            dic.resmgr.get<sf::Texture>("menu-background.png"))
             .withTitle(CMakeVars::TITLE, HeadingLevel::H1)
             .withContent(ButtonListBuilder()
                              .addButton(

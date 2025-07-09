@@ -25,10 +25,7 @@ AppStateGame::AppStateGame(
           dic.resmgr,
           settings,
           dic.strings)
-    , sound(dic.resmgr.get<sf::SoundBuffer>("land.wav"))
-
 {
-    sound.setVolume(100.f);
     dic.input.reset();
 }
 
@@ -61,25 +58,32 @@ void AppStateGame::update()
     game.gameRulesEngine.update(app.time);
     game.renderingEngine.update(app.time);
 
-    game.gameEvents.processEvents(
-        [&](const DummyGameEvent& e)
-        {
-            sound.setBuffer(dic.resmgr.get<sf::SoundBuffer>(e.soundName));
-            sound.play();
-        });
+    if (game.scene.contactListener->won)
+    {
+        game.audioEvents.pushEvent<JoeWonAudioEvent>();
+    }
+
+    game.audioEvents.processEvents(game.audioEngine);
 
     if (game.scene.contactListener->died)
     {
-        app.pushState<AppStateLevelEndTransition>("levelWon"_false);
+        app.pushState<AppStateLevelEndTransition>(
+            dic,
+            settings,
+            EndLevelState {
+                .levelWon = false,
+            });
     }
     else if (game.scene.contactListener->won)
     {
-        sound.setBuffer(dic.resmgr.get<sf::SoundBuffer>("fanfare.wav"));
-        sound.play();
-
-        auto& save = settings.save;
-        Utility::setBestTime(save, config.levelIdx, game.scene.timer);
-        app.pushState<AppStateLevelEndTransition>("levelWon"_true);
+        app.pushState<AppStateLevelEndTransition>(
+            dic,
+            settings,
+            EndLevelState {
+                .levelWon = true,
+                .levelIdx = config.levelIdx,
+                .levelTime = game.scene.timer,
+            });
     }
 }
 

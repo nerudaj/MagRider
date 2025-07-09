@@ -12,6 +12,9 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     { ExitButton, "exit" },
     { Back, "back" },
     { SelectLevel, "select level" },
+    { LevelFinished, "level finished" },
+    { Continue, "continue" },
+    { Retry, "retry" },
 
     // Options
     { VideoOptionsTab, "video" },
@@ -52,4 +55,8 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     // Game
     { TouchToStart, "touch screen to start" },
     { SpaceToStart, "press space to start" },
+
+    // End Screen
+    { YourTime, "your time" },
+    { NewBest, "new best" },
 };

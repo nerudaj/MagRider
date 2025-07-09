@@ -1,5 +1,6 @@
 #include "appstate/AppStateOptions.hpp"
 #include "appstate/CommonHandler.hpp"
+#include "game/Constants.hpp"
 #include "gui/Builders.hpp"
 #include "gui/Sizers.hpp"
 #include "misc/Compatibility.hpp"
@@ -7,7 +8,6 @@
 #include "types/Overloads.hpp"
 #include <ranges>
 
-const tgui::Color CONTENT_BGCOLOR = tgui::Color(255, 255, 255, 64);
 constexpr const char* TABS_ID = "Options_Tabs";
 
 std::string resolutionToString(const sf::Vector2u& vec)
@@ -89,7 +89,8 @@ void AppStateOptions::buildLayout()
 
     dic.gui.rebuildWith(
         DefaultLayoutBuilder()
-            .withNoBackgroundImage()
+            .withBackgroundImage(
+                dic.resmgr.get<sf::Texture>("menu-background.png"))
             .withTitle(
                 dic.strings.getString(StringId::Options),
 #ifdef ANDROID
@@ -185,7 +186,7 @@ void AppStateOptions::buildVideoOptionsLayout()
                     [&](bool value)
                     { settings.video.renderColliders = value; }))
 #endif
-            .build(CONTENT_BGCOLOR));
+            .build());
 }
 
 void AppStateOptions::buildAudioOptionsLayout()
@@ -213,7 +214,7 @@ void AppStateOptions::buildAudioOptionsLayout()
                                        .low = 0.f,
                                        .high = 100.f,
                                        .step = 1.f }))
-            .build(CONTENT_BGCOLOR));
+            .build());
 }
 
 void AppStateOptions::buildInputOptionsLayout()
@@ -241,7 +242,7 @@ void AppStateOptions::buildInputOptionsLayout()
                                        .low = 100.f,
                                        .high = 1000.f,
                                        .step = 10.f }))
-            .build(CONTENT_BGCOLOR));
+            .build());
 }
 
 template<class V, class T>

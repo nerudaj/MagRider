@@ -14,6 +14,16 @@ public:
 
     void playIngameTrack();
 
+    void pause()
+    {
+        song.pause();
+    }
+
+    void resume()
+    {
+        song.play();
+    }
+
 private:
     std::filesystem::path getSongPath(const std::string& songName) const;
 

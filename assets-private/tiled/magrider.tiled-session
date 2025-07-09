@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "levels/9.tmx",
+    "activeFile": "levels/2.tmx",
     "expandedProjectPaths": [
-        "levels",
-        "."
+        ".",
+        "levels"
     ],
     "fileStates": {
         "levels/1.tmx": {
@@ -16,8 +16,8 @@
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 480,
-                "y": 159
+                "x": 480.5,
+                "y": 159.5
             }
         },
         "levels/10.tmx": {
@@ -57,19 +57,22 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 472,
-                "y": 642
+                "x": 592,
+                "y": 239
             }
         },
         "levels/14.tmx": {
             "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1316,
-                "y": 791.9999999999999
+                "x": 960,
+                "y": 960.6666666666665
             }
         },
         "levels/15.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
@@ -78,11 +81,14 @@
             }
         },
         "levels/16.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 461,
-                "y": 61
+                "x": 320,
+                "y": 175.5
             }
         },
         "levels/17.tmx": {
@@ -92,24 +98,24 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": -148,
-                "y": 318
+                "x": 480,
+                "y": 367
             }
         },
         "levels/2.tmx": {
-            "scale": 0.908277027027027,
+            "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 591.2293100241772,
-                "y": 740.9633624697788
+                "x": 654.6666666666665,
+                "y": 32
             }
         },
         "levels/3.tmx": {
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 434,
-                "y": 277
+                "x": 320.5,
+                "y": 113.5
             }
         },
         "levels/4.tmx": {
@@ -165,8 +171,8 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 672,
-                "y": 352
+                "x": 673,
+                "y": 353
             }
         },
         "levels/MagriderTileset.tsx": {
@@ -227,22 +233,25 @@
         "levels/3.tmx",
         "levels/12.tmx",
         "levels/13.tmx",
-        "levels/14.tmx"
+        "levels/14.tmx",
+        "levels/15.tmx",
+        "levels/16.tmx",
+        "levels/17.tmx"
     ],
     "project": "magrider.tiled-project",
     "recentFiles": [
         "levels/1.tmx",
-        "levels/2.tmx",
-        "levels/4.tmx",
-        "levels/5.tmx",
-        "levels/6.tmx",
-        "levels/7.tmx",
-        "levels/8.tmx",
+        "levels/17.tmx",
+        "levels/16.tmx",
+        "levels/15.tmx",
         "levels/14.tmx",
         "levels/13.tmx",
         "levels/12.tmx",
         "levels/3.tmx",
-        "levels/11.tmx"
+        "levels/11.tmx",
+        "levels/10.tmx",
+        "levels/9.tmx",
+        "levels/8.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.spacing": 4

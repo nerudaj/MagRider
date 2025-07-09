@@ -80,11 +80,12 @@ void AppStateOptions::buildLayout()
 
     if (settings.features.showInputSettings)
     {
-        tabLabels.insert_range(
-            tabLabels.end(),
-            std::vector<std::string> {
-                dic.strings.getString(StringId::InputOptionsTab),
-                dic.strings.getString(StringId::BindingsOptionsTab) });
+        const auto extraLabels = std::vector<std::string> {
+            dic.strings.getString(StringId::InputOptionsTab),
+            dic.strings.getString(StringId::BindingsOptionsTab)
+        };
+        tabLabels.insert(
+            tabLabels.end(), extraLabels.begin(), extraLabels.end());
     }
 
     dic.gui.rebuildWith(

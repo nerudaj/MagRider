@@ -94,15 +94,7 @@ void AppStatePause::buildLayout()
                         dic.strings.getString(StringId::ExitButton),
                         [&] { onExit(); })
                     .build())
-            .withTopLeftButton(WidgetBuilder::createTexturedButton(
-                texture, clip.getFrame(Icon::PlayFill), [&] { onResume(); }))
-            .withTopRightButton(WidgetBuilder::createTexturedButton(
-                texture,
-                clip.getFrame(Icon::SettingsFill),
-                [&] { onOptions(); }))
-            .withBottomLeftButton(WidgetBuilder::createTexturedButton(
-                texture, clip.getFrame(Icon::Restart), [&] { onRestart(); }))
-            .withNoBottomRightButton()
+            .withNoCornerButtons()
             .build());
 #endif
 }

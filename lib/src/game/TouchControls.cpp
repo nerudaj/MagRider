@@ -1,4 +1,6 @@
 #include "game/TouchControls.hpp"
+#include "gui/Icon.hpp"
+#include "gui/Sizers.hpp"
 
 static dgm::Circle createMagnetButton(const sf::Vector2u& windowSize, bool left)
 {
@@ -9,13 +11,28 @@ static dgm::Circle createMagnetButton(const sf::Vector2u& windowSize, bool left)
     return circle;
 }
 
-TouchControls::TouchControls(Input& input, const sf::Vector2u& windowSize)
+TouchControls::TouchControls(
+    const dgm::ResourceManager& resmgr,
+    Input& input,
+    const sf::Vector2u& windowSize)
     : input(input)
-    , pauseButton(
-          { windowSize.x / 20.f, windowSize.x / 20.f }, windowSize.x / 20.f)
+    , pauseButtonSprite(resmgr.get<sf::Texture>("pixel-ui-icons.png"))
+    , pauseButton({ 0.f, 0.f }, 0.f)
     , redButton(createMagnetButton(windowSize, "left"_true))
     , blueButton(createMagnetButton(windowSize, "left"_false))
 {
+    pauseButton.setRadius(Sizers::getBaseContainerHeight());
+    pauseButton.setPosition(
+        { pauseButton.getRadius(), pauseButton.getRadius() });
+
+    const auto& frame = resmgr.get<dgm::Clip>("pixel-ui-icons.png.clip")
+                            .getFrame(Icon::PauseFill);
+    pauseButtonSprite.setTextureRect(frame);
+    pauseButtonSprite.setScale(
+        { pauseButton.getRadius() * 2.f / frame.size.x,
+          pauseButton.getRadius() * 2.f / frame.size.y });
+    pauseButtonSprite.setOrigin(sf::Vector2f(frame.size / 2));
+    pauseButtonSprite.setPosition(pauseButton.getPosition());
 }
 
 void TouchControls::processEvent(const sf::Event::TouchBegan& e)
@@ -46,7 +63,7 @@ void TouchControls::processEvent(const sf::Event::TouchEnded& e)
 void TouchControls::draw(dgm::Window& window)
 {
 #ifdef ANDROID
-    pauseButton.debugRender(window, sf::Color(96, 96, 96, 128));
+    window.draw(pauseButtonSprite);
     redButton.debugRender(window, sf::Color(255, 0, 0, 128));
     blueButton.debugRender(window, sf::Color(0, 0, 255, 128));
 #endif

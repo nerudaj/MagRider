@@ -16,7 +16,7 @@ AppStateGame::AppStateGame(
     , dic(dic)
     , settings(settings)
     , config(config)
-    , touchControls(dic.input, app.window.getSize())
+    , touchControls(dic.resmgr, dic.input, app.window.getSize())
     , game(
           SceneBuilder::convertToTiledLevel(
               dic.resmgr.get<tiled::FiniteMapModel>(config.levelResourceName)),

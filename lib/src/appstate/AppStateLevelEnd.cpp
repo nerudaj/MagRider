@@ -66,6 +66,10 @@ void AppStateLevelEnd::buildLayout(bool isNewBest, float levelTime)
                         Messaging::serialize<PopIfNotLevelSelection>());
                 }))
             .build());
+
+    auto content = dic.gui.get<tgui::Container>("DefaultLayoutContentPanel");
+    auto label = dic.gui.get<tgui::Label>("TimeLabel");
+    content->setWidth(label->getMaximumTextWidth());
 }
 
 tgui::Container::Ptr
@@ -74,7 +78,8 @@ AppStateLevelEnd::buildContent(bool isNewBest, float levelTime)
     auto baseSize = Sizers::getBaseFontSize();
     auto content =
         WidgetBuilder::createPanel({ "40%", 13 * baseSize }, COLOR_ORANGE);
-    content->setPosition({ "30%", "parent.height / 2 - height / 2" });
+    content->setPosition(
+        { "parent.width / 2 - width / 2", "parent.height / 2 - height / 2" });
     content->getRenderer()->setBorders({ 2.f });
     content->getRenderer()->setBorderColor(COLOR_YELLOW);
 
@@ -90,7 +95,7 @@ AppStateLevelEnd::buildContent(bool isNewBest, float levelTime)
     auto timeLabel =
         WidgetBuilder::createTextLabel(Utility::formatTime(levelTime), true);
     timeLabel->setTextSize(baseSize * 3);
-    time->add(timeLabel);
+    time->add(timeLabel, "TimeLabel");
 
     auto newBest = WidgetBuilder::createPanel({ "100%", baseSize * 3.f });
     newBest->setPosition({ "0%", baseSize * 9.f });

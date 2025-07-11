@@ -100,8 +100,9 @@ namespace priv
                 props.cornerButtonPadding)
                 .c_str(),
         });
-        contentPanel->setPosition({ "15%", props.titleHeight });
-        contentPanel->add(content);
+        contentPanel->setPosition(
+            { "parent.width / 2 - width / 2", props.titleHeight });
+        contentPanel->add(content, "DefaultLayoutContentPanel");
         container->add(contentPanel);
         return LayoutBuilderWithContent(container, props);
     }

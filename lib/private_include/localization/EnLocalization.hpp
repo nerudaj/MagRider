@@ -63,6 +63,7 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
 #else
     { Tutorial4, "press a to magnetize red\npress d to magnetize blue" },
 #endif
+    { Tutorial5, "change polarity mid-flight\n    to propel yourself" },
 
     // End Screen
     { YourTime, "your time" },

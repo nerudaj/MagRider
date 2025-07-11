@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="26" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="2">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="26" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="4">
  <editorsettings>
   <export target="../../../assets/levels/011.json" format="json"/>
  </editorsettings>
@@ -18,8 +18,14 @@
 </data>
  </layer>
  <objectgroup id="2" name="spawns">
-  <object id="1" name="spawn" x="128" y="130">
+  <object id="1" name="spawn" x="96.5" y="129">
    <point/>
+  </object>
+  <object id="2" x="81.5" y="13.5" width="97.5" height="19">
+   <text wrap="1">$TUTORIAL1</text>
+  </object>
+  <object id="3" x="74.5" y="182.5" width="100" height="19">
+   <text wrap="1">$TUTORIAL4</text>
   </object>
  </objectgroup>
 </map>

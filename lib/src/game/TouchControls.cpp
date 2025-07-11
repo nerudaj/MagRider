@@ -64,7 +64,7 @@ void TouchControls::draw(dgm::Window& window)
 {
 #ifdef ANDROID
     window.draw(pauseButtonSprite);
-    redButton.debugRender(window, sf::Color(255, 0, 0, 128));
-    blueButton.debugRender(window, sf::Color(0, 0, 255, 128));
+    redButton.debugRender(window, sf::Color(255, 0, 77, 128));
+    blueButton.debugRender(window, sf::Color(41, 173, 255, 128));
 #endif
 }

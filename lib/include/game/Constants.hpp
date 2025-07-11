@@ -15,6 +15,7 @@ const sf::Color COLOR_LAVENDER = { 131, 118, 156, 255 };
 const sf::Color COLOR_PINK = { 255, 119, 168, 255 };
 const sf::Color COLOR_LIGHT_PEACH = { 255, 204, 170, 255 };
 const sf::Color COLOR_DARK_PURPLE = { 126, 37, 83, 255 };
+const sf::Color COLOR_RED = { 255, 0, 77, 255 };
 
 constexpr const float JOE_DENSITY = 0.5f;
 constexpr const float JOE_FRICTION = 0.5f;

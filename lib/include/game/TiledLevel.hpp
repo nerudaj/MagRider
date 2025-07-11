@@ -10,9 +10,22 @@ struct TileLayer
     std::vector<Tile> tiles;
 };
 
+enum class ObjectKind
+{
+    Point,
+    Text
+};
+
+struct ObjectData
+{
+    sf::Vector2f position;
+    ObjectKind kind;
+    std::string data;
+};
+
 struct ObjectLayer
 {
-    std::vector<sf::Vector2f> positions;
+    std::vector<ObjectData> objects;
 };
 
 struct TiledLevel

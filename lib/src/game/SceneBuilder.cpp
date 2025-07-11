@@ -3,6 +3,7 @@
 #include "game/Constants.hpp"
 #include "misc/Compatibility.hpp"
 #include "misc/CoordConverter.hpp"
+#include "strings/StringId.hpp"
 #include "types/SemanticTypes.hpp"
 
 TiledLevel SceneBuilder::convertToTiledLevel(const tiled::FiniteMapModel& map)
@@ -43,11 +44,22 @@ TiledLevel SceneBuilder::convertToTiledLevel(const tiled::FiniteMapModel& map)
     auto&& toObjectLayer = [](const tiled::ObjectGroupModel& model)
     {
         return ObjectLayer {
-            .positions =
+            .objects =
                 model.objects
                 | std::views::transform(
                     [](const tiled::ObjectModel& objectModel)
-                    { return sf::Vector2f(objectModel.x, objectModel.y); })
+                    {
+                        return ObjectData {
+                            .position =
+                                sf::Vector2f(objectModel.x, objectModel.y),
+                            .kind = objectModel.text.has_value()
+                                        ? ObjectKind::Text
+                                        : ObjectKind::Point,
+                            .data = objectModel.text
+                                        .value_or(tiled::TextObjectModel {})
+                                        .text,
+                        };
+                    })
                 | uniranges::to<std::vector>(),
         };
     };
@@ -320,15 +332,28 @@ std::vector<Magnet> SceneBuilder::getMagnets(const TiledLevel& level)
     return magnets;
 }
 
+static StringId toStringId(const std::string& str)
+{
+    if (!str.starts_with("$TUTORIAL")) return StringId::MaxId;
+
+    return static_cast<StringId>(
+        std::to_underlying(StringId::Tutorial1) + std::stoi(str.substr(9)) - 1);
+}
+
 Scene SceneBuilder::buildScene(const TiledLevel& level)
 {
     auto world = Box2D::createWorld();
     generateColliders(world, level);
 
+    auto spawns =
+        level.objectLayers.front().objects
+        | std::views::filter([](const ObjectData& data)
+                             { return data.kind == ObjectKind::Point; })
+        | uniranges::to<std::vector>();
+
     auto& joeBody = Box2D::createDynamicBall(
         world,
-        CoordConverter::screenToWorld(
-            level.objectLayers.front().positions.front()),
+        CoordConverter::screenToWorld(spawns.front().position),
         0.5f,
         DynamicBodyProperties {
             .density = JOE_DENSITY,
@@ -344,5 +369,17 @@ Scene SceneBuilder::buildScene(const TiledLevel& level)
         .joe = joeBody,
         .magnets = getMagnets(level),
         .contactListener = std::move(listener),
+        .texts = level.objectLayers.front().objects
+                 | std::views::filter([](const ObjectData& data)
+                                      { return data.kind == ObjectKind::Text; })
+                 | std::views::transform(
+                     [](const ObjectData& data)
+                     {
+                         return WorldText {
+                             .position = data.position,
+                             .textId = toStringId(data.data),
+                         };
+                     })
+                 | uniranges::to<std::vector>(),
     };
 }

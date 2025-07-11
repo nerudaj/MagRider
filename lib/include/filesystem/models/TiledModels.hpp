@@ -136,6 +136,14 @@ namespace tiled
 
     NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(TilesetModel, firstgid, source);
 
+    struct TextObjectModel
+    {
+        std::string text = "";
+        bool wrap = false;
+    };
+
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(TextObjectModel, text, wrap);
+
     struct ObjectModel
     {
         int id = 0;
@@ -146,22 +154,35 @@ namespace tiled
         std::string name;
         std::string type;
         int rotation = 0;
-        bool point = true;
+        bool point = false;
+        std::optional<TextObjectModel> text = std::nullopt;
         bool visible = true;
     };
 
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-        ObjectModel,
-        id,
-        x,
-        y,
-        width,
-        height,
-        name,
-        type,
-        rotation,
-        point,
-        visible);
+    static void from_json(const nlohmann::json& j, ObjectModel& m)
+    {
+        j.at("id").get_to(m.id);
+        j.at("x").get_to(m.x);
+        j.at("y").get_to(m.y);
+        j.at("width").get_to(m.width);
+        j.at("height").get_to(m.height);
+        j.at("name").get_to(m.name);
+        j.at("type").get_to(m.type);
+        j.at("rotation").get_to(m.rotation);
+        j.at("visible").get_to(m.visible);
+
+        if (j.contains("point")) j.at("point").get_to(m.point);
+        if (j.contains("text"))
+        {
+            TextObjectModel text;
+            j.at("text").get_to(text);
+            m.text = text;
+        }
+    }
+
+    static void to_json(nlohmann::json&, const ObjectModel&)
+    { /*not implemented: not needed*/
+    }
 
     struct ObjectGroupModel
     {
@@ -269,5 +290,13 @@ namespace nlohmann
                 }
             }
         }
+    };
+
+    template<class T>
+    struct adl_serializer<std::optional<T>>
+    {
+        static void to_json(json& j, const std::optional<T>& opt) {}
+
+        static void from_json(const json& j, std::optional<T>& opt) {}
     };
 } // namespace nlohmann

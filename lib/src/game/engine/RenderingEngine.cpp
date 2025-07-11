@@ -1,5 +1,6 @@
 #include "game/engine/RenderingEngine.hpp"
 #include "game/Constants.hpp"
+#include "gui/Sizers.hpp"
 #include "misc/Compatibility.hpp"
 #include "misc/CoordConverter.hpp"
 #include "misc/Utility.hpp"
@@ -116,6 +117,13 @@ RenderingEngine::RenderingEngine(
     boxDebugRenderer.SetFlags(b2Draw::e_shapeBit);
 
     line.setOrigin({ 0.f, 12.f });
+
+    text.setOutlineColor(COLOR_BLACK);
+    text.setOutlineThickness(0.5f);
+    text.setFillColor(COLOR_WHITE);
+    text.setLineSpacing(1.1f);
+
+    resmgr.getMutable<sf::Font>("pico-8.ttf").setSmooth(false);
 }
 
 void RenderingEngine::update(const dgm::Time& time)
@@ -192,6 +200,14 @@ void RenderingEngine::renderWorld()
     }
 
     if (settings.renderColliders) scene.world->DebugDraw();
+
+    for (auto&& label : scene.texts)
+    {
+        text.setCharacterSize(10);
+        text.setString(strings.getString(label.textId));
+        text.setPosition(label.position);
+        window.draw(text);
+    }
 }
 
 void RenderingEngine::renderMagnetLine(
@@ -210,12 +226,23 @@ void RenderingEngine::renderMagnetLine(
 
 void RenderingEngine::renderHUD()
 {
+    text.setCharacterSize(Sizers::getBaseFontSize());
     text.setPosition({ 10.f, 10.f });
     text.setString(fpsCounter.getText());
     window.draw(text);
 
+    text.setString(Utility::formatTime(scene.timer));
+    text.setPosition({
+        static_cast<float>(window.getSize().x) - text.getGlobalBounds().size.x
+            - 10.f,
+        10.f,
+    });
+    window.draw(text);
+
     if (!scene.playing)
     {
+        text.setCharacterSize(Sizers::getBaseFontSize() * 2);
+
 #ifdef ANDROID
         text.setString(strings.getString(StringId::TouchToStart));
 #else
@@ -226,14 +253,6 @@ void RenderingEngine::renderHUD()
             - text.getGlobalBounds().size / 2.f);
         window.draw(text);
     }
-
-    text.setString(Utility::formatTime(scene.timer));
-    text.setPosition({
-        static_cast<float>(window.getSize().x) - text.getGlobalBounds().size.x
-            - 10.f,
-        10.f,
-    });
-    window.draw(text);
 }
 
 void RenderingEngine::setJoeIdleState()

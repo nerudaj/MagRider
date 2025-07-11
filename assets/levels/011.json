@@ -36,8 +36,40 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":128,
-                 "y":130
+                 "x":96.5,
+                 "y":129
+                }, 
+                {
+                 "height":19,
+                 "id":2,
+                 "name":"",
+                 "rotation":0,
+                 "text":
+                    {
+                     "text":"$TUTORIAL1",
+                     "wrap":true
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":97.5,
+                 "x":81.5,
+                 "y":13.5
+                }, 
+                {
+                 "height":19,
+                 "id":3,
+                 "name":"",
+                 "rotation":0,
+                 "text":
+                    {
+                     "text":"$TUTORIAL4",
+                     "wrap":true
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":100,
+                 "x":74.5,
+                 "y":182.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -46,7 +78,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":2,
+ "nextobjectid":4,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

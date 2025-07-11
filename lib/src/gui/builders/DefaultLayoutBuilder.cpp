@@ -20,10 +20,11 @@ namespace priv
         const auto isTexturedButton = button->getText().empty();
 
         auto&& panel = WidgetBuilder::createPanel(
-            isTexturedButton ? tgui::Layout2d { props.cornerButtonDimension,
-                                                props.cornerButtonDimension }
-                             : tgui::Layout2d { props.cornerButtonDimension * 2,
-                                                props.cornerButtonDimension });
+            isTexturedButton
+                ? tgui::Layout2d { props.cornerButtonDimension,
+                                   props.cornerButtonDimension }
+                : tgui::Layout2d { props.cornerButtonDimension * 2,
+                                   props.cornerButtonDimension * 0.6f });
         panel->setPosition({
             (align == tgui::HorizontalAlignment::Left
                  ? uni::format("{}", props.cornerButtonPadding)

@@ -55,6 +55,14 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     // Game
     { TouchToStart, "touch screen to start" },
     { SpaceToStart, "press space to start" },
+    { Tutorial1, "   magnetize red to\nrepel from red magnets" },
+    { Tutorial2, "maintain initial velocity" },
+    { Tutorial3, "avoid spikes!" },
+#ifdef ANDROID
+    { Tutorial4, " touch colored circles to\nto magnetize to given color" },
+#else
+    { Tutorial4, "press a to magnetize red\npress d to magnetize blue" },
+#endif
 
     // End Screen
     { YourTime, "your time" },

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "strings/StringId.hpp"
 #include <DGM/dgm.hpp>
 #include <box2d/box2d.h>
 
@@ -34,6 +35,12 @@ struct [[nodiscard]] Magnet final
     int polarity = 0;
 };
 
+struct [[nodiscard]] WorldText final
+{
+    sf::Vector2f position;
+    StringId textId;
+};
+
 struct [[nodiscard]] Scene final
 {
     std::unique_ptr<b2World> world;
@@ -43,4 +50,5 @@ struct [[nodiscard]] Scene final
     int magnetPolarity = 0; // 0 off, 1 red, 2 blue
     bool playing = false;
     float timer = 0.f;
+    std::vector<WorldText> texts;
 };

@@ -84,7 +84,8 @@ void SceneBuilder::generateColliders(
         return tile == Tile::Block || tile == Tile::MagNeg
                || tile == Tile::MagPlus || tile == Tile::Block2
                || tile == Tile::Block3 || tile == Tile::Block4
-               || tile == Tile::Block5 || tile == Tile::Block6;
+               || tile == Tile::Block5 || tile == Tile::Block6
+               || tile == Tile::Block7;
     };
 
     unsigned wholeBlockSequenceLength = 0;

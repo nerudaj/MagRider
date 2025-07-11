@@ -38,4 +38,6 @@ enum class [[nodiscard]] Tile
     Block4,
     Block5,
     Block6,
+    Shroom,
+    Block7,
 };

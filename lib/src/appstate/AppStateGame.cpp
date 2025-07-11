@@ -33,6 +33,7 @@ void AppStateGame::input()
 {
     if (dic.input.isBackButtonPressed())
     {
+        paused = true;
         app.pushState<AppStatePause>(dic, settings);
     }
 
@@ -89,12 +90,13 @@ void AppStateGame::update()
 
 void AppStateGame::draw()
 {
-    game.renderingEngine.draw(app.window);
+    game.renderingEngine.draw(paused);
     touchControls.draw(app.window);
 }
 
 void AppStateGame::restoreFocusImpl(const std::string& msg)
 {
+    paused = false;
     // Empty message means returning from pause menu
     if (!msg.empty()) app.popState(msg);
 }

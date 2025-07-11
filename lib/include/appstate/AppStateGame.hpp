@@ -39,4 +39,5 @@ private:
     GameConfig config;
     TouchControls touchControls;
     Game game;
+    bool paused = false;
 };

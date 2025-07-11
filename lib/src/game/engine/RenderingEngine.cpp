@@ -144,7 +144,7 @@ static sf::Vector2f operator-(const sf::Vector2f& a, const b2Vec2& b)
     };
 }
 
-void RenderingEngine::draw(dgm::Window& _window)
+void RenderingEngine::draw(bool paused)
 {
     window.setViewFromCamera(backgroundCamera);
     window.draw(background);
@@ -153,7 +153,8 @@ void RenderingEngine::draw(dgm::Window& _window)
     renderWorld();
 
     window.setViewFromCamera(hudCamera);
-    renderHUD();
+
+    if (!paused) renderHUD();
 }
 
 void RenderingEngine::renderWorld()

@@ -53,7 +53,7 @@ public:
 public:
     void update(const dgm::Time& time);
 
-    void draw(dgm::Window& window);
+    void draw(bool paused);
 
     void renderWorld();
 

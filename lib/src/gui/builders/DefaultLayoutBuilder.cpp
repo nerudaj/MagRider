@@ -117,6 +117,22 @@ namespace priv
         container->add(panel);
         return LayoutBuilderWithBackgroundAndTitle(container, props);
     }
+
+    LayoutBuilderWithBackgroundAndTitle
+    LayoutBuilderWithBackground::withTexturedTitle(const sf::Texture& texture)
+    {
+        tgui::Texture ttexture(texture);
+
+        auto&& panel = WidgetBuilder::createPanel(
+            { texture.getSize().x * props.titleHeight / texture.getSize().y,
+              props.titleHeight });
+        panel->setPosition({ "parent.width / 2 - width / 2", "0%" });
+        panel->getRenderer()->setTextureBackground(ttexture);
+
+        container->add(panel);
+
+        return LayoutBuilderWithBackgroundAndTitle(container, props);
+    }
 } // namespace priv
 
 priv::LayoutBuilderWithBackground

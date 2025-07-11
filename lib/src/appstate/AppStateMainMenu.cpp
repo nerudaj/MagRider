@@ -43,7 +43,7 @@ void AppStateMainMenu::buildLayout()
     dic.gui.rebuildWith(
         DefaultLayoutBuilder::withBackgroundImage(
             dic.resmgr.get<sf::Texture>("menu-background.png"))
-            .withTitle(CMakeVars::TITLE, HeadingLevel::H1)
+            .withTexturedTitle(dic.resmgr.get<sf::Texture>("title.png"))
             .withContent(ButtonListBuilder()
                              .addButton(
                                  dic.strings.getString(StringId::PlayButton),

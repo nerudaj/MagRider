@@ -161,6 +161,9 @@ namespace priv
         LayoutBuilderWithBackgroundAndTitle
         withTitle(const std::string& title, HeadingLevel level);
 
+        LayoutBuilderWithBackgroundAndTitle
+        withTexturedTitle(const sf::Texture& texture);
+
     private:
         tgui::Panel::Ptr container;
         BuilderProperties props;

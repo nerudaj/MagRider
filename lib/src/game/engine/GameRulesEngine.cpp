@@ -46,18 +46,25 @@ void GameRulesEngine::update(const dgm::Time& time)
     if (input.isMagnetizingRed())
     {
         scene.magnetPolarity = MAGNET_POLARITY_RED;
-        audioEventQueue.pushEvent<JoeMagnetizedToRedAudioEvent>();
     }
     else if (input.isMagnetizingBlue())
     {
         scene.magnetPolarity = MAGNET_POLARITY_BLUE;
-        audioEventQueue.pushEvent<JoeMagnetizedToBlueAudioEvent>();
     }
     else
         scene.magnetPolarity = MAGNET_POLARITY_NONE;
 
     sf::Vector2f totalForce = aggregateMagnetForces(
         scene.joe.GetPosition(), scene.magnetPolarity, scene.magnets);
+
+    // Only trigger sounds when magnet is affecting joe
+    if (totalForce.length() > 0.f)
+    {
+        if (scene.magnetPolarity == MAGNET_POLARITY_RED)
+            audioEventQueue.pushEvent<JoeMagnetizedToRedAudioEvent>();
+        else
+            audioEventQueue.pushEvent<JoeMagnetizedToBlueAudioEvent>();
+    }
 
     scene.joe.ApplyForceToCenter(b2Vec2(totalForce.x, totalForce.y), true);
 

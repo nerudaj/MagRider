@@ -28,5 +28,5 @@ constexpr const int MAGNET_POLARITY_NONE = 0;
 constexpr const int MAGNET_POLARITY_RED = 1;
 constexpr const int MAGNET_POLARITY_BLUE = 2;
 
-constexpr const int VELOCITY_ITERATIONS = 6;
+constexpr const int VELOCITY_ITERATIONS = 3;
 constexpr const int POSITION_ITERATIONS = 2;

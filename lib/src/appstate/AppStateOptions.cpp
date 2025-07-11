@@ -31,12 +31,9 @@ static std::string intValueFormatter(float val)
 
 AppStateOptions::AppStateOptions(
     dgm::App& app, DependencyContainer& dic, AppSettings& settings) noexcept
-    : dgm::AppState(app)
-    , dic(dic)
-    , settings(settings)
-    , content(WidgetBuilder::createScrollablePanel())
+    : dgm::AppState(app), dic(dic), settings(settings)
 {
-    buildLayout();
+    refresh();
 }
 
 void AppStateOptions::input()
@@ -123,7 +120,8 @@ void AppStateOptions::buildLayout()
 void AppStateOptions::refresh()
 {
     // must be recreated, otherwise it disappears for some reason
-    content = WidgetBuilder::createPanel();
+    content = WidgetBuilder::createScrollablePanel(
+        { "100%", "100%" }, tgui::Color(95, 87, 79, 192));
 
     buildLayout();
 }

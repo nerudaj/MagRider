@@ -20,7 +20,11 @@ AppStateLevelEnd::AppStateLevelEnd(
 
 void AppStateLevelEnd::input()
 {
-    CommonHandler::handleInput(app, dic, settings.input);
+    CommonHandler::handleInput(
+        app,
+        dic,
+        settings.input,
+        CommonHandlerOptions { .disableGoBack = true });
 }
 
 void AppStateLevelEnd::update()

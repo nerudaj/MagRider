@@ -2,12 +2,11 @@
 
 std::string Utility::formatTime(const float value)
 {
-    const auto minutes = value / 60.f;
+    const auto minutes = static_cast<int>(value / 60.f);
     float seconds = 0;
     const auto fractional =
-        static_cast<int>(100.f * std::modf(value - minutes, &seconds));
-    return uni::format(
-        "{:02.0f}:{:02.0f}.{:02d}", minutes, seconds, fractional);
+        static_cast<int>(100.f * std::modf(value - 60.f * minutes, &seconds));
+    return uni::format("{:02}:{:02.0f}.{:02d}", minutes, seconds, fractional);
 }
 
 std::optional<float>

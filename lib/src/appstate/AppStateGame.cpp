@@ -91,7 +91,7 @@ void AppStateGame::update()
 void AppStateGame::draw()
 {
     game.renderingEngine.draw(paused);
-    touchControls.draw(app.window);
+    if (!paused) touchControls.draw(app.window);
 }
 
 void AppStateGame::restoreFocusImpl(const std::string& msg)

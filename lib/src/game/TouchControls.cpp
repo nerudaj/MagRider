@@ -21,7 +21,7 @@ TouchControls::TouchControls(
     , redButton(createMagnetButton(windowSize, "left"_true))
     , blueButton(createMagnetButton(windowSize, "left"_false))
 {
-    pauseButton.setRadius(Sizers::getBaseContainerHeight());
+    pauseButton.setRadius(Sizers::getBaseContainerHeight() / 2.f);
     pauseButton.setPosition(
         { pauseButton.getRadius(), pauseButton.getRadius() });
 

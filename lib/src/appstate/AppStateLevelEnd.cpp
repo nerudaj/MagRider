@@ -73,7 +73,16 @@ void AppStateLevelEnd::buildLayout(bool isNewBest, float levelTime)
 
     auto content = dic.gui.get<tgui::Container>("DefaultLayoutContentPanel");
     auto label = dic.gui.get<tgui::Label>("TimeLabel");
-    content->setWidth(label->getMaximumTextWidth());
+
+    auto dummyLabel =
+        WidgetBuilder::createTextLabel(label->getText().toStdString());
+    dummyLabel->setTextSize(label->getTextSize());
+    dummyLabel->setAutoSize(true);
+    dic.gui.add(dummyLabel);
+
+    content->setWidth(std::format("15% + {}", dummyLabel->getSize().x).c_str());
+
+    dic.gui.remove(dummyLabel);
 }
 
 tgui::Container::Ptr

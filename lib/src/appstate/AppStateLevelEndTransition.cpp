@@ -16,7 +16,7 @@ AppStateLevelEndTransition::AppStateLevelEndTransition(
     , animation(
           static_cast<float>(app.window.getSize().x),
           sf::seconds(1.f),
-          state.levelWon ? sf::Color::White : sf::Color::Red,
+          state.levelWon ? COLOR_WHITE : COLOR_RED,
           sf::Vector2f(app.window.getSize() / 2u))
 {
 }

@@ -92,7 +92,7 @@ namespace priv
     LayoutBuilderWithContent LayoutBuilderWithBackgroundAndTitle::withContent(
         tgui::Container::Ptr content)
     {
-        auto&& contentPanel = WidgetBuilder::createPanel({
+        auto&& contentPanel = WidgetBuilder::createScrollablePanel({
             "70%",
             uni::format(
                 "100% - {} - {} - {}",
@@ -104,6 +104,8 @@ namespace priv
         contentPanel->setPosition(
             { "parent.width / 2 - width / 2", props.titleHeight });
         contentPanel->add(content, "DefaultLayoutContentPanel");
+        contentPanel->setHorizontalScrollbarPolicy(
+            tgui::Scrollbar::Policy::Never);
         container->add(contentPanel);
         return LayoutBuilderWithContent(container, props);
     }

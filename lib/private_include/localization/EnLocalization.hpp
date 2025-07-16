@@ -16,6 +16,10 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     { Continue, "continue" },
     { Retry, "retry" },
 
+    // Select
+    { Grasslands, "grasslands" },
+    { Factory, "factory" },
+
     // Options
     { VideoOptionsTab, "video" },
     { AudioOptionsTab, "audio" },

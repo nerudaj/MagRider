@@ -22,9 +22,13 @@ public:
 private:
     void restoreFocusImpl(const std::string& message = "") override;
 
+    void onTabClicked(const tgui::String& tabName);
+
     void buildLayout();
 
-    tgui::Container::Ptr buildContent() const;
+    void buildContentGrasslands() const;
+
+    void buildContentFactory() const;
 
     tgui::Container::Ptr buildLevelCard(size_t levelIdx) const;
 
@@ -33,4 +37,5 @@ private:
         dic;               ///< Dependency container for managing dependencies
     AppSettings& settings; ///< Application settings for configuration
     std::vector<std::string> levelIds;
+    tgui::Panel::Ptr content;
 };

@@ -15,6 +15,7 @@ AppStateLevelSelect::AppStateLevelSelect(
     , levelIds(dic.resmgr.getLoadedResourceIds<tiled::FiniteMapModel>().value())
 {
     std::ranges::sort(levelIds);
+    content = WidgetBuilder::createPanel();
     buildLayout();
 }
 
@@ -46,6 +47,14 @@ void AppStateLevelSelect::restoreFocusImpl(const std::string& message)
         app.popState(message);
 }
 
+void AppStateLevelSelect::onTabClicked(const tgui::String& tabName)
+{
+    if (tabName == dic.strings.getString(StringId::Grasslands))
+        buildContentGrasslands();
+    else if (tabName == dic.strings.getString(StringId::Factory))
+        buildContentFactory();
+}
+
 void AppStateLevelSelect::buildLayout()
 {
     dic.gui.rebuildWith(
@@ -59,16 +68,26 @@ void AppStateLevelSelect::buildLayout()
 #else
                 HeadingLevel::H1)
 #endif
-            .withContent(buildContent())
+            .withContent(
+                NavbarLayoutBuilder()
+                    .withNavbarWidget(WidgetBuilder::createTabbedContent(
+                        { dic.strings.getString(StringId::Grasslands),
+                          dic.strings.getString(StringId::Factory) },
+                        [&](const tgui::String& tabName)
+                        { onTabClicked(tabName); }))
+                    .withContent(content)
+                    .build())
             .withNoTopLeftButton()
             .withNoTopRightButton()
             .withBottomLeftButton(WidgetBuilder::createButton(
                 dic.strings.getString(StringId::Back), [&] { app.popState(); }))
             .withNoBottomRightButton()
             .build());
+
+    buildContentGrasslands();
 }
 
-tgui::Container::Ptr AppStateLevelSelect::buildContent() const
+void AppStateLevelSelect::buildContentGrasslands() const
 {
     auto&& grid = tgui::Grid::create();
     grid->setSize({ "100%", "100%" });
@@ -80,12 +99,34 @@ tgui::Container::Ptr AppStateLevelSelect::buildContent() const
         for (unsigned x = 0; x < COL_COUNT; ++x)
         {
             const unsigned levelIdx = y * COL_COUNT + x;
+            if (levelIdx >= 18) break;
+            grid->addWidget(buildLevelCard(levelIdx), y, x);
+        }
+    }
+
+    content->removeAllWidgets();
+    content->add(grid);
+}
+
+void AppStateLevelSelect::buildContentFactory() const
+{
+    auto&& grid = tgui::Grid::create();
+    grid->setSize({ "100%", "100%" });
+
+    const unsigned ROW_COUNT = 3;
+    const unsigned COL_COUNT = 6;
+    for (unsigned y = 0; y < ROW_COUNT; ++y)
+    {
+        for (unsigned x = 0; x < COL_COUNT; ++x)
+        {
+            const unsigned levelIdx = y * COL_COUNT + x + 18;
             if (levelIdx >= levelIds.size()) break;
             grid->addWidget(buildLevelCard(levelIdx), y, x);
         }
     }
 
-    return grid;
+    content->removeAllWidgets();
+    content->add(grid);
 }
 
 tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const

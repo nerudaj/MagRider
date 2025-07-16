@@ -14,6 +14,10 @@ enum class [[nodiscard]] StringId
     Continue,
     Retry,
 
+    // Select
+    Grasslands,
+    Factory,
+
     // Options
     VideoOptionsTab,
     AudioOptionsTab,

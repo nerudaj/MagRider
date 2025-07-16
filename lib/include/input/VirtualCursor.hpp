@@ -38,4 +38,5 @@ private:
     Input& input;
     sf::Sprite sprite;
     sf::Vector2f position;
+    sf::Time timeSinceLastChange = sf::seconds(5);
 };

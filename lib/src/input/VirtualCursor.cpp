@@ -2,6 +2,8 @@
 
 void VirtualCursor::update(const dgm::Time& time, const float cursorSpeed)
 {
+    const auto origPosition = position;
+
     const auto cursorDelta = input.getCursorDelta();
     const auto mousePos = sf::Vector2f(sf::Mouse::getPosition(window));
     if (cursorDelta != sf::Vector2f {})
@@ -16,10 +18,17 @@ void VirtualCursor::update(const dgm::Time& time, const float cursorSpeed)
     }
 
     sf::Mouse::setPosition(sf::Vector2i(position), window);
+
+    if (origPosition == position)
+        timeSinceLastChange += time.getElapsed();
+    else
+        timeSinceLastChange = sf::seconds(0.f);
 }
 
 void VirtualCursor::draw()
 {
+    if (timeSinceLastChange > sf::seconds(5)) return;
+
     sprite.setPosition(position);
     window.draw(sprite);
 }

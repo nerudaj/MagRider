@@ -272,8 +272,10 @@
             "scaleInEditor": 1
         }
     },
+    "last.executablePath": "C:/Users/merickova/Documents/GitHub/MagRider/_build/Compiled/Debug/MagRider-d.exe",
     "last.exportedFilePath": "C:/Users/merickova/Documents/GitHub/MagRider/assets/levels",
     "last.imagePath": "C:/Users/merickova/Documents/GitHub/MagRider/assets/graphics",
+    "last.workingDirectory": "C:/Users/merickova/Documents/GitHub/MagRider/_build",
     "map.height": 60,
     "map.lastUsedExportFilter": "Mapové soubory JSON (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
@@ -306,6 +308,7 @@
     ],
     "project": "magrider.tiled-project",
     "recentFiles": [
+        "tileset.tsx",
         "levels/1.tmx",
         "levels/2.tmx",
         "levels/4.tmx",
@@ -316,8 +319,7 @@
         "levels/9.tmx",
         "levels/10.tmx",
         "levels/11.tmx",
-        "levels/3.tmx",
-        "levels/12.tmx"
+        "levels/3.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.spacing": 4

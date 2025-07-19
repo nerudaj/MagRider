@@ -168,7 +168,11 @@ void RenderingEngine::draw(bool paused)
 void RenderingEngine::renderWorld()
 {
     auto joePos = CoordConverter::worldToScreen(scene.joe.GetPosition());
+#ifndef INTEGER_ROUNDING
+    auto roundedJoePos = joePos;
+#else
     auto roundedJoePos = sf::Vector2f(sf::Vector2i(joePos));
+#endif
 
     worldCamera.setPosition(roundedJoePos);
     sprite.setTextureRect(joeAnimation.getCurrentFrame());

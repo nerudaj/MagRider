@@ -3,7 +3,6 @@
  <editorsettings>
   <export target="exports/mapa1.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" source="MagriderTileset.tsx"/>
  <tileset firstgid="1" source="../tileset.tsx"/>
  <layer id="1" name="Tiles" width="20" height="16">
   <data encoding="csv">

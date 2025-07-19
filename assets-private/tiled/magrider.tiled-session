@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "levels/19.tmx",
+    "activeFile": "tileset.tsx",
     "expandedProjectPaths": [
-        ".",
-        "levels"
+        "levels",
+        "."
     ],
     "fileStates": {
         "Metal.tsx": {
@@ -21,8 +21,8 @@
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 480.5,
-                "y": 159.5
+                "x": 480,
+                "y": 159
             }
         },
         "levels/10.tmx": {
@@ -32,19 +32,19 @@
             "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 704.6666666666666,
-                "y": 287.33333333333326
+                "x": 704,
+                "y": 286.66666666666663
             }
         },
         "levels/11.tmx": {
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 2,
+            "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 416.25,
-                "y": 143.75
+                "x": 462,
+                "y": -22
             }
         },
         "levels/12.tmx": {
@@ -55,7 +55,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 336,
-                "y": 304.5
+                "y": 304
             }
         },
         "levels/13.tmx": {
@@ -63,7 +63,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 592,
-                "y": 239
+                "y": 238
             }
         },
         "levels/14.tmx": {
@@ -71,7 +71,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 768,
-                "y": 383
+                "y": 382
             }
         },
         "levels/15.tmx": {
@@ -82,7 +82,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 480,
-                "y": 495
+                "y": 494
             }
         },
         "levels/16.tmx": {
@@ -93,7 +93,7 @@
             "selectedLayer": 1,
             "viewCenter": {
                 "x": 320,
-                "y": 175.5
+                "y": 175
             }
         },
         "levels/17.tmx": {
@@ -104,7 +104,15 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 480,
-                "y": 367
+                "y": 366
+            }
+        },
+        "levels/18.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1034,
+                "y": 944
             }
         },
         "levels/19.tmx": {
@@ -119,19 +127,41 @@
             }
         },
         "levels/2.tmx": {
-            "scale": 5.5,
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 592.0909090909091,
-                "y": 224.0909090909091
+                "x": 484,
+                "y": 242.66666666666663
+            }
+        },
+        "levels/20.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 468,
+                "y": 620
+            }
+        },
+        "levels/21.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 930.3030303030301,
+                "y": 421.21212121212113
             }
         },
         "levels/3.tmx": {
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 320.5,
-                "y": 113.5
+                "x": 320,
+                "y": 303
             }
         },
         "levels/4.tmx": {
@@ -149,8 +179,8 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 271,
-                "y": 447
+                "x": 270,
+                "y": 446
             }
         },
         "levels/6.tmx": {
@@ -160,8 +190,8 @@
             "scale": 1.1202083333333333,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 479.8214617816627,
-                "y": 144.16961130742052
+                "x": 479.3751162358193,
+                "y": 143.7232657615771
             }
         },
         "levels/7.tmx": {
@@ -171,8 +201,8 @@
             "scale": 1.1202083333333333,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 479.8214617816627,
-                "y": 320.02975636972286
+                "x": 479.3751162358193,
+                "y": 319.5834108238795
             }
         },
         "levels/8.tmx": {
@@ -182,21 +212,22 @@
             "scale": 0.33,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 816.6666666666666,
-                "y": 398.4848484848485
+                "x": 815.1515151515152,
+                "y": 396.9696969696969
             }
         },
         "levels/9.tmx": {
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 673,
-                "y": 353
+                "x": 672,
+                "y": 352
             }
         },
         "levels/MagriderTileset.tsx": {
             "dynamicWrapping": true,
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "levels/_up.tmx": {
             "expandedObjectLayers": [
@@ -258,7 +289,12 @@
         "levels/16.tmx",
         "levels/17.tmx",
         "Metal.tsx",
-        "levels/19.tmx"
+        "levels/19.tmx",
+        "levels/18.tmx",
+        "levels/20.tmx",
+        "levels/21.tmx",
+        "tileset.tsx",
+        "levels/MagriderTileset.tsx"
     ],
     "project": "magrider.tiled-project",
     "recentFiles": [

@@ -80,7 +80,7 @@ void AppStateLevelEnd::buildLayout(bool isNewBest, float levelTime)
     dummyLabel->setAutoSize(true);
     dic.gui.add(dummyLabel);
 
-    content->setWidth(std::format("15% + {}", dummyLabel->getSize().x).c_str());
+    content->setWidth(uni::format("15% + {}", dummyLabel->getSize().x).c_str());
 
     dic.gui.remove(dummyLabel);
 }

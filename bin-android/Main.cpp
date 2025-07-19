@@ -6,8 +6,6 @@
 #include <misc/DependencyContainer.hpp>
 #include <SFML/System/Err.hpp>
 
-const auto SETTINGS_FILE_NAME = std::filesystem::path("settings.json");
-
 int main(int, char*[])
 {
     try

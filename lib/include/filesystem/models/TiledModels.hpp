@@ -105,7 +105,7 @@ namespace tiled
     {
         unsigned id = 0;
         std::string name = "";
-        LayerType type;
+        LayerType type = {};
         std::vector<int> data = {};
         int x = 0;
         int y = 0;
@@ -191,8 +191,8 @@ namespace tiled
         int y = 0;
         std::string name;
         std::vector<ObjectModel> objects = {};
-        DrawOrder draworder;
-        LayerType type;
+        DrawOrder draworder = {};
+        LayerType type = {};
         bool visible = true;
         unsigned opacity = 0;
     };

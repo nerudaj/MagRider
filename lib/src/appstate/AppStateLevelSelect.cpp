@@ -87,19 +87,20 @@ void AppStateLevelSelect::buildLayout()
     buildContentGrasslands();
 }
 
-void AppStateLevelSelect::buildContentGrasslands() const
+void AppStateLevelSelect::buildLevelCards(
+    const size_t startIdx,
+    const size_t columnCount,
+    const size_t rowCount) const
 {
     auto&& grid = tgui::Grid::create();
     grid->setSize({ "100%", "100%" });
 
-    const unsigned ROW_COUNT = 3;
-    const unsigned COL_COUNT = 6;
-    for (unsigned y = 0; y < ROW_COUNT; ++y)
+    for (unsigned y = 0; y < rowCount; ++y)
     {
-        for (unsigned x = 0; x < COL_COUNT; ++x)
+        for (unsigned x = 0; x < columnCount; ++x)
         {
-            const unsigned levelIdx = y * COL_COUNT + x;
-            if (levelIdx >= 18) break;
+            const auto levelIdx = y * columnCount + x + startIdx;
+            if (levelIdx >= levelIds.size()) break;
             grid->addWidget(buildLevelCard(levelIdx), y, x);
         }
     }
@@ -108,25 +109,14 @@ void AppStateLevelSelect::buildContentGrasslands() const
     content->add(grid);
 }
 
+void AppStateLevelSelect::buildContentGrasslands() const
+{
+    buildLevelCards(0, 6, 3);
+}
+
 void AppStateLevelSelect::buildContentFactory() const
 {
-    auto&& grid = tgui::Grid::create();
-    grid->setSize({ "100%", "100%" });
-
-    const unsigned ROW_COUNT = 3;
-    const unsigned COL_COUNT = 6;
-    for (unsigned y = 0; y < ROW_COUNT; ++y)
-    {
-        for (unsigned x = 0; x < COL_COUNT; ++x)
-        {
-            const unsigned levelIdx = y * COL_COUNT + x + 18;
-            if (levelIdx >= levelIds.size()) break;
-            grid->addWidget(buildLevelCard(levelIdx), y, x);
-        }
-    }
-
-    content->removeAllWidgets();
-    content->add(grid);
+    buildLevelCards(18, 6, 3);
 }
 
 tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
@@ -165,7 +155,15 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
         {
             dic.jukebox.playIngameTrack();
             app.pushState<AppStateGameWrapper>(
-                dic, settings, GameConfig { idx, levelIds[idx] });
+                dic,
+                settings,
+                GameConfig {
+                    .levelIdx = idx,
+                    .levelResourceName = levelIds[idx],
+                    .tilesetName =
+                        idx < 18 ? "grass_tileset.png" : "metal_tileset.png",
+                    .joeSkinName = idx < 18 ? "base" : "metal",
+                });
         }));
 
     return card;

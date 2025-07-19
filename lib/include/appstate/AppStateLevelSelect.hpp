@@ -26,6 +26,9 @@ private:
 
     void buildLayout();
 
+    void
+    buildLevelCards(size_t startIdx, size_t columnCount, size_t rowCount) const;
+
     void buildContentGrasslands() const;
 
     void buildContentFactory() const;

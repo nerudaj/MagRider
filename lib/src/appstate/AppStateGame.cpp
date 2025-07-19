@@ -24,7 +24,8 @@ AppStateGame::AppStateGame(
           app.window,
           dic.resmgr,
           settings,
-          dic.strings)
+          dic.strings,
+          config)
 {
     dic.input.reset();
 }

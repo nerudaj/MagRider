@@ -19,10 +19,12 @@ public:
         dgm::Window& window,
         dgm::ResourceManager& resmgr,
         const AppSettings& settings,
-        const StringProvider& strings)
+        const StringProvider& strings,
+        const GameConfig& config)
         : scene(SceneBuilder::buildScene(level))
         , gameRulesEngine(gameEvents, audioEvents, scene, input)
-        , renderingEngine(window, resmgr, settings.video, strings, scene, level)
+        , renderingEngine(
+              window, resmgr, settings.video, strings, scene, level, config)
         , audioEngine(resmgr)
     {
     }

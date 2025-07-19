@@ -58,7 +58,8 @@ RenderingEngine::RenderingEngine(
     const VideoSettings& settings,
     const StringProvider& strings,
     Scene& scene,
-    const TiledLevel& level) noexcept
+    const TiledLevel& level,
+    const GameConfig& config) noexcept
     // Dependencies
     : window(window)
     , settings(settings)
@@ -76,8 +77,8 @@ RenderingEngine::RenderingEngine(
           resmgr.get<dgm::AnimationStates>("lines.png.anim")))
     , tileset(setAndGetTileset(
           atlas,
-          resmgr.get<sf::Texture>("set.png"),
-          resmgr.get<dgm::Clip>("set.png.clip")))
+          resmgr.get<sf::Texture>(config.tilesetName),
+          resmgr.get<dgm::Clip>(config.tilesetName + ".clip")))
     // Non-drawables
     , boxDebugRenderer(window)
     , backgroundCamera(createFullscreenCamera(
@@ -88,6 +89,7 @@ RenderingEngine::RenderingEngine(
           sf::FloatRect { { 0.f, 0.f }, { 1.f, 1.f } },
           sf::Vector2f(window.getSize()))
     , animation(2, 10)
+    , joeSkinName(config.joeSkinName)
 
     // Drawables
     , text(resmgr.get<sf::Font>("pico-8.ttf"))
@@ -140,7 +142,7 @@ void RenderingEngine::update(const dgm::Time& time)
     timeToBlink -= time.getElapsed();
     if (timeToBlink < sf::Time::Zero)
     {
-        joeAnimation.setState("base_joe_blink", "looping"_false);
+        joeAnimation.setState(joeSkinName + "_joe_blink", "looping"_false);
     }
 }
 
@@ -261,6 +263,6 @@ void RenderingEngine::renderHUD()
 
 void RenderingEngine::setJoeIdleState()
 {
-    joeAnimation.setState("base_joe_idle", "looping"_true);
+    joeAnimation.setState(joeSkinName + "_joe_idle", "looping"_true);
     timeToBlink = sf::seconds(static_cast<float>(rand() % 5));
 }

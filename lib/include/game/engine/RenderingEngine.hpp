@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game/Box2d.hpp"
+#include "game/GameConfig.hpp"
 #include "game/Scene.hpp"
 #include "game/TiledLevel.hpp"
 #include "misc/FpsCounter.hpp"
@@ -48,7 +49,8 @@ public:
         const VideoSettings& settings,
         const StringProvider& strings,
         Scene& scene,
-        const TiledLevel& level) noexcept;
+        const TiledLevel& level,
+        const GameConfig& config) noexcept;
 
 public:
     void update(const dgm::Time& time);
@@ -80,6 +82,7 @@ private:
     dgm::Camera hudCamera;
     FpsCounter fpsCounter;
     SimpleAnimation animation;
+    std::string joeSkinName;
 
     sf::Text text;
     dgm::TileMap tileMap;

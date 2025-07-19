@@ -9,4 +9,5 @@ struct [[nodiscard]] GameConfig final
     std::string levelResourceName;
     std::string tilesetName;
     std::string joeSkinName;
+    std::string backgroundName;
 };

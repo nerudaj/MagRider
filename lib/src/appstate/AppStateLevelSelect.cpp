@@ -163,6 +163,7 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
         dic.strings.getString(StringId::PlayButton),
         [&, idx = levelIdx]
         {
+            bool useGrass = idx < 18;
             dic.jukebox.playIngameTrack();
             app.pushState<AppStateGameWrapper>(
                 dic,
@@ -174,8 +175,10 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
                              ? DIFFICULTY_REMAPPER[idx] - 1
                              : idx],
                     .tilesetName =
-                        idx < 18 ? "grass_tileset.png" : "metal_tileset.png",
-                    .joeSkinName = idx < 18 ? "base" : "metal",
+                        useGrass ? "grass_tileset.png" : "metal_tileset.png",
+                    .joeSkinName = useGrass ? "base" : "metal",
+                    .backgroundName = useGrass ? "background-forest.png"
+                                               : "background-city.png",
                 });
         }));
 

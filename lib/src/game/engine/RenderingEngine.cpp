@@ -96,7 +96,7 @@ RenderingEngine::RenderingEngine(
     , tileMap(dgm::TileMap(atlas.getTexture(), tileset))
     , sprite(atlas.getTexture())
     , line(atlas.getTexture())
-    , background(resmgr.get<sf::Texture>("background-forest.png"))
+    , background(resmgr.get<sf::Texture>(config.backgroundName))
     , joeAnimation(ballAnimationStates, 15)
 {
     tileMap.build(

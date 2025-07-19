@@ -70,7 +70,7 @@ void AppStateLevelSelect::buildLayout()
     dic.gui.rebuildWith(
         DefaultLayoutBuilder()
             .withBackgroundImage(
-                dic.resmgr.get<sf::Texture>("menu-background.png"))
+                dic.resmgr.get<sf::Texture>("background-forest.png"))
             .withTitle(
                 dic.strings.getString(StringId::SelectLevel),
 #ifdef ANDROID

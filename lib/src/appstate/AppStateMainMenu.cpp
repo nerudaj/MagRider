@@ -42,7 +42,7 @@ void AppStateMainMenu::buildLayout()
 {
     dic.gui.rebuildWith(
         DefaultLayoutBuilder::withBackgroundImage(
-            dic.resmgr.get<sf::Texture>("menu-background.png"))
+            dic.resmgr.get<sf::Texture>("background-city.png"))
             .withTexturedTitle(dic.resmgr.get<sf::Texture>("title.png"))
             .withContent(ButtonListBuilder()
                              .addButton(

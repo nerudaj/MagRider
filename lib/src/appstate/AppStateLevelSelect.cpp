@@ -7,6 +7,14 @@
 #include "game/Constants.hpp"
 #include "gui/Builders.hpp"
 #include "misc/Utility.hpp"
+#include <array>
+
+/// <summary>
+/// Remaps levels based on their perceived difficulty
+/// </summary>
+constexpr const std::array<size_t, 18> DIFFICULTY_REMAPPER = {
+    11, 1, 4, 2, 3, 16, 12, 7, 6, 10, 13, 15, 8, 9, 5, 17, 14, 18
+};
 
 AppStateLevelSelect::AppStateLevelSelect(
     dgm::App& app, DependencyContainer& dic, AppSettings& settings) noexcept
@@ -161,7 +169,10 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
                 settings,
                 GameConfig {
                     .levelIdx = idx,
-                    .levelResourceName = levelIds[idx],
+                    .levelResourceName = levelIds
+                        [idx < DIFFICULTY_REMAPPER.size()
+                             ? DIFFICULTY_REMAPPER[idx] - 1
+                             : idx],
                     .tilesetName =
                         idx < 18 ? "grass_tileset.png" : "metal_tileset.png",
                     .joeSkinName = idx < 18 ? "base" : "metal",

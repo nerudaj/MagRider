@@ -2,6 +2,7 @@
 
 #include <DGM/classes/Error.hpp>
 #include <expected>
+#include <nlohmann/json.hpp>
 #include <string>
 
 class AppStorage
@@ -12,4 +13,11 @@ public:
 
     static void
     saveFile(const std::filesystem::path& file, const std::string& data);
+
+    template<class Serializable>
+    static void saveFile(
+        const std::filesystem::path& path, const Serializable& serializable)
+    {
+        saveFile(path, nlohmann::json(serializable).dump(4));
+    }
 };

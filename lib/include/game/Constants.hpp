@@ -1,6 +1,8 @@
 #pragma once
 
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <filesystem>
 
 const sf::Vector2f INTERNAL_RESOLUTION = { 640.f, 360.f };
 const sf::Color COLOR_BLACK = { 0, 0, 0, 255 };
@@ -30,3 +32,5 @@ constexpr const int MAGNET_POLARITY_BLUE = 2;
 
 constexpr const int VELOCITY_ITERATIONS = 3;
 constexpr const int POSITION_ITERATIONS = 2;
+
+const auto SETTINGS_FILE_NAME = std::filesystem::path("settings.json");

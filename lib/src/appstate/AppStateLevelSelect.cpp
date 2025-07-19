@@ -2,6 +2,7 @@
 #include "appstate/AppStateGameWrapper.hpp"
 #include "appstate/CommonHandler.hpp"
 #include "appstate/Messaging.hpp"
+#include "filesystem/AppStorage.hpp"
 #include "filesystem/models/TiledModels.hpp"
 #include "game/Constants.hpp"
 #include "gui/Builders.hpp"
@@ -34,6 +35,7 @@ void AppStateLevelSelect::draw()
 
 void AppStateLevelSelect::restoreFocusImpl(const std::string& message)
 {
+    AppStorage::saveFile(SETTINGS_FILE_NAME, settings);
     dic.jukebox.playTitleTrack();
     auto msg = Messaging::deserialize(message);
     if (msg)

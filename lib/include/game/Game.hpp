@@ -25,7 +25,7 @@ public:
         , gameRulesEngine(gameEvents, audioEvents, scene, input)
         , renderingEngine(
               window, resmgr, settings.video, strings, scene, level, config)
-        , audioEngine(resmgr)
+        , audioEngine(resmgr, settings.audio)
     {
     }
 

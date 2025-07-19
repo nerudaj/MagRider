@@ -197,7 +197,11 @@ void AppStateOptions::buildAudioOptionsLayout()
                 dic.strings.getString(StringId::MusicVolume),
                 WidgetBuilder::createSlider(
                     settings.audio.musicVolume,
-                    [&](float val) { settings.audio.musicVolume = val; },
+                    [&](float val)
+                    {
+                        settings.audio.musicVolume = val;
+                        dic.jukebox.setVolume(settings.audio.musicVolume);
+                    },
                     dic.gui,
                     SliderProperties { .valueFormatter = intValueFormatter,
                                        .low = 0.f,

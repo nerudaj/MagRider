@@ -24,6 +24,11 @@ public:
         song.play();
     }
 
+    void setVolume(float volume)
+    {
+        song.setVolume(volume);
+    }
+
 private:
     std::filesystem::path getSongPath(const std::string& songName) const;
 

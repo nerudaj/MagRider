@@ -219,7 +219,7 @@ void RenderingEngine::renderWorld()
 void RenderingEngine::renderMagnetLine(
     const sf::Vector2f& joeScreenPos, const sf::Vector2f& direction)
 {
-    line.setPosition(joeScreenPos);
+    line.setPosition(joeScreenPos + dgm::Math::toUnit(direction) * 16.f);
     line.setRotation(dgm::Math::cartesianToPolar(direction).angle);
     line.setScale(
         { CoordConverter::worldToScreen(direction.length()) / 48.f, 1.f });

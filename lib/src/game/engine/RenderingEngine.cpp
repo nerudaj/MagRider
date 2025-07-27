@@ -232,10 +232,19 @@ void RenderingEngine::renderMagnetLine(
 
 void RenderingEngine::renderHUD()
 {
-    text.setCharacterSize(Sizers::getBaseFontSize());
-    text.setPosition({ 10.f, 10.f });
-    text.setString(fpsCounter.getText());
-    window.draw(text);
+    const auto baseFontSize = Sizers::getBaseFontSize();
+    text.setCharacterSize(baseFontSize);
+
+    if (settings.showFps)
+    {
+        text.setString(fpsCounter.getText());
+        text.setPosition({
+            static_cast<float>(window.getSize().x)
+                - text.getGlobalBounds().size.x - 10.f,
+            20.f + baseFontSize,
+        });
+        window.draw(text);
+    }
 
     text.setString(Utility::formatTime(scene.timer));
     text.setPosition({
@@ -247,7 +256,7 @@ void RenderingEngine::renderHUD()
 
     if (!scene.playing)
     {
-        text.setCharacterSize(Sizers::getBaseFontSize() * 2);
+        text.setCharacterSize(baseFontSize * 2);
 
 #ifdef ANDROID
         text.setString(strings.getString(StringId::TouchToStart));

@@ -22,6 +22,12 @@ struct [[nodiscard]] VideoSettings final
 #endif
     float uiScale = 1.f;
     bool renderColliders = false;
+    bool showFps =
+#ifdef _DEBUG
+        true;
+#else
+        false;
+#endif
 };
 
 namespace sf
@@ -30,4 +36,4 @@ namespace sf
 }
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    VideoSettings, resolution, fullscreen, uiScale);
+    VideoSettings, resolution, fullscreen, uiScale, showFps);

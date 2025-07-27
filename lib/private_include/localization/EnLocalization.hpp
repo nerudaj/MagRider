@@ -30,6 +30,7 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     { SetUiScale, "set ui scale" },
     { SetTheme, "set theme" },
     { RenderColliders, "render box2d colliders" },
+    { ShowFPS, "show fps" },
     { SoundVolume, "sound volume" },
     { MusicVolume, "music volume" },
     { GamepadDeadzone, "gamepad deadzone" },

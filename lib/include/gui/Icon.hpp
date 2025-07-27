@@ -11,6 +11,7 @@ enum [[nodiscard]] Icon
     PlayFill,
     PauseFill,
     StopFill,
+    RestartFill,
     SettingsFill,
     StarFill,
 };

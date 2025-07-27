@@ -42,8 +42,11 @@ void AppStatePause::draw()
 void AppStatePause::buildLayout()
 {
 #ifdef ANDROID
-    auto&& texture = dic.resmgr.get<sf::Texture>("pixel-ui-icons.png");
-    auto&& clip = dic.resmgr.get<dgm::Clip>("pixel-ui-icons.png.clip");
+    auto getTexture = [&](Icon icon) -> tgui::Texture
+    {
+        return dic.resmgr.get<tgui::Texture>(
+            uni::format("Icon{}", std::to_underlying(icon)));
+    };
 
     dic.gui.rebuildWith(
         DefaultLayoutBuilder()
@@ -60,13 +63,11 @@ void AppStatePause::buildLayout()
                         [&] { onExit(); })
                     .build())
             .withTopLeftButton(WidgetBuilder::createTexturedButton(
-                texture, clip.getFrame(Icon::PlayFill), [&] { onResume(); }))
+                getTexture(Icon::PlayFill), [&] { onResume(); }))
             .withTopRightButton(WidgetBuilder::createTexturedButton(
-                texture,
-                clip.getFrame(Icon::SettingsFill),
-                [&] { onOptions(); }))
+                getTexture(Icon::SettingsFill), [&] { onOptions(); }))
             .withBottomLeftButton(WidgetBuilder::createTexturedButton(
-                texture, clip.getFrame(Icon::Restart), [&] { onRestart(); }))
+                getTexture(Icon::RestartFill), [&] { onRestart(); }))
             .withNoBottomRightButton()
             .build());
 #else

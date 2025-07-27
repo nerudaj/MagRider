@@ -140,6 +140,22 @@ NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createTexturedButton(
     return btn;
 }
 
+NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createTexturedButton(
+    const tgui::Texture& texture,
+    std::function<void(void)> onClick,
+    WidgetOptions options)
+{
+    auto btn = tgui::Button::create();
+    btn->getRenderer()->setBorders({ 0.f });
+    btn->getRenderer()->setTexture(texture);
+
+    btn->onClick(onClick);
+    btn->setSize({ "100%", "100%" });
+
+    applyOptionsToWidget(options, btn);
+    return btn;
+}
+
 tgui::CheckBox::Ptr WidgetBuilder::createCheckbox(
     bool checked, std::function<void(bool)> onChange, WidgetOptions options)
 {

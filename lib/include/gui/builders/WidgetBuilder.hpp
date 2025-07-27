@@ -82,6 +82,11 @@ public:
         std::function<void(void)> onClick,
         WidgetOptions options = WidgetOptions {});
 
+    static NODISCARD_RESULT tgui::Button::Ptr createTexturedButton(
+        const tgui::Texture& texture,
+        std::function<void(void)> onClick,
+        WidgetOptions options = WidgetOptions {});
+
     static NODISCARD_RESULT tgui::CheckBox::Ptr createCheckbox(
         bool checked,
         std::function<void(bool)> onChange,

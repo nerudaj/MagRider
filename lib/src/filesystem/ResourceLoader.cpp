@@ -1,11 +1,25 @@
 #include "filesystem/ResourceLoader.hpp"
 #include "filesystem/AppStorage.hpp"
 #include "filesystem/TiledLoader.hpp"
+#include "gui/TguiHelper.hpp"
 #include "misc/Compatibility.hpp"
 #include "misc/Playlist.hpp"
 #include <TGUI/Backend/SFML-Graphics.hpp>
 #include <TGUI/Tgui.hpp>
 #include <expected>
+
+static std::expected<tgui::Texture, dgm::Error>
+loadTguiTexture(const std::filesystem::path& path)
+{
+    try
+    {
+        return tgui::Texture(path.string());
+    }
+    catch (const std::exception& ex)
+    {
+        return std::unexpected(dgm::Error(ex.what()));
+    }
+}
 
 static std::expected<tgui::Font, dgm::Error>
 loadTguiFont(const std::filesystem::path& path)
@@ -62,6 +76,21 @@ loadPlaylist(const std::filesystem::path& path)
     }
 }
 
+void preprocessUiIcons(
+    const std::string& resourceName, dgm::ResourceManager& resmgr)
+{
+    auto texture = resmgr.get<sf::Texture>(resourceName);
+    auto clip = resmgr.get<dgm::Clip>(resourceName + ".clip");
+
+    for (auto&& frameIdx : std::views::iota(0u, clip.getFrameCount()))
+    {
+        auto result = resmgr.insertResource<tgui::Texture>(
+            uni::format("Icon{}", frameIdx),
+            TguiHelper::convertTexture(texture, clip.getFrame(frameIdx)));
+        if (!result) throw std::runtime_error(result.error().getMessage());
+    }
+}
+
 dgm::ResourceManager
 ResourceLoader::loadResources(const std::filesystem::path& assetDir)
 {
@@ -93,6 +122,14 @@ ResourceLoader::loadResources(const std::filesystem::path& assetDir)
 
     if (auto result = resmgr.loadResourcesFromDirectory<sf::Texture>(
             assetDir / "graphics", dgm::Utility::loadTexture, { ".png" });
+        !result)
+    {
+        throw std::runtime_error(uni::format(
+            "Could not load texture: {}", result.error().getMessage()));
+    }
+
+    if (auto result = resmgr.loadResourcesFromDirectory<tgui::Texture>(
+            assetDir / "graphics", loadTguiTexture, { ".png" });
         !result)
     {
         throw std::runtime_error(uni::format(
@@ -141,6 +178,8 @@ ResourceLoader::loadResources(const std::filesystem::path& assetDir)
         throw std::runtime_error(uni::format(
             "Could not load playlist: {}", result.error().getMessage()));
     }
+
+    preprocessUiIcons("pixel-ui-icons.png", resmgr);
 
     return resmgr;
 }

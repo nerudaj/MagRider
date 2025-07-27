@@ -1,6 +1,16 @@
 {
     "automappingRulesFile": "",
     "commands": [
+        {
+            "arguments": "",
+            "command": "C:/Users/merickova/Documents/GitHub/MagRider/_build/Compiled/Debug/MagRider-d.exe",
+            "enabled": true,
+            "name": "Playtest",
+            "saveBeforeExecute": true,
+            "shortcut": "F5",
+            "showOutput": true,
+            "workingDirectory": "C:/Users/merickova/Documents/GitHub/MagRider/_build"
+        }
     ],
     "compatibilityVersion": 1100,
     "extensionsPath": "extensions",

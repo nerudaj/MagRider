@@ -22,6 +22,7 @@ AppStateLevelSelect::AppStateLevelSelect(
     , dic(dic)
     , settings(settings)
     , levelIds(dic.resmgr.getLoadedResourceIds<tiled::FiniteMapModel>().value())
+    , lastSelectedTab(dic.strings.getString(StringId::Grasslands))
 {
     std::ranges::sort(levelIds);
     content = WidgetBuilder::createPanel();
@@ -59,10 +60,21 @@ void AppStateLevelSelect::restoreFocusImpl(const std::string& message)
 
 void AppStateLevelSelect::onTabClicked(const tgui::String& tabName)
 {
+    lastSelectedTab = tabName;
+
     if (tabName == dic.strings.getString(StringId::Grasslands))
+    {
         buildContentGrasslands();
+    }
     else if (tabName == dic.strings.getString(StringId::Factory))
+    {
         buildContentFactory();
+    }
+    else
+    {
+        throw std::runtime_error(
+            uni::format("Unsupported tab name {}", tabName.toStdString()));
+    }
 }
 
 void AppStateLevelSelect::buildLayout()
@@ -84,7 +96,8 @@ void AppStateLevelSelect::buildLayout()
                         { dic.strings.getString(StringId::Grasslands),
                           dic.strings.getString(StringId::Factory) },
                         [&](const tgui::String& tabName)
-                        { onTabClicked(tabName); }))
+                        { onTabClicked(tabName); },
+                        WidgetOptions { .id = "LevelSelectTabs" }))
                     .withContent(content)
                     .build())
             .withNoTopLeftButton()
@@ -94,7 +107,10 @@ void AppStateLevelSelect::buildLayout()
             .withNoBottomRightButton()
             .build());
 
-    buildContentGrasslands();
+    auto tabs = dic.gui.get<tgui::Tabs>("LevelSelectTabs");
+    tabs->deselect();
+    tabs->select(lastSelectedTab);
+    //    buildContentGrasslands();
 }
 
 void AppStateLevelSelect::buildLevelCards(
@@ -165,30 +181,33 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
         return label;
     };
 
+    auto onClick = [&, idx = levelIdx]
+    {
+        bool useGrass = idx < 18;
+        dic.jukebox.playIngameTrack();
+        app.pushState<AppStateGameWrapper>(
+            dic,
+            settings,
+            GameConfig {
+                .levelIdx = idx,
+                .levelResourceName = levelIds
+                    [idx < DIFFICULTY_REMAPPER.size()
+                         ? DIFFICULTY_REMAPPER[idx] - 1
+                         : idx],
+                .tilesetName =
+                    useGrass ? "grass_tileset.png" : "metal_tileset.png",
+                .joeSkinName = useGrass ? "base" : "metal",
+                .backgroundName =
+                    useGrass ? "background-forest.png" : "background-city.png",
+            });
+    };
+
     headerPanel->add(createLabel(std::to_string(levelIdx + 1)));
     timePanel->add(createLabel(timeText));
     buttonPanel->add(WidgetBuilder::createButton(
-        dic.strings.getString(StringId::PlayButton),
-        [&, idx = levelIdx]
-        {
-            bool useGrass = idx < 18;
-            dic.jukebox.playIngameTrack();
-            app.pushState<AppStateGameWrapper>(
-                dic,
-                settings,
-                GameConfig {
-                    .levelIdx = idx,
-                    .levelResourceName = levelIds
-                        [idx < DIFFICULTY_REMAPPER.size()
-                             ? DIFFICULTY_REMAPPER[idx] - 1
-                             : idx],
-                    .tilesetName =
-                        useGrass ? "grass_tileset.png" : "metal_tileset.png",
-                    .joeSkinName = useGrass ? "base" : "metal",
-                    .backgroundName = useGrass ? "background-forest.png"
-                                               : "background-city.png",
-                });
-        }));
+        dic.strings.getString(StringId::PlayButton), onClick));
+
+    card->onClick(onClick);
 
     return card;
 }

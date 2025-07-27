@@ -184,6 +184,11 @@ void AppStateOptions::buildVideoOptionsLayout()
                     settings.video.renderColliders,
                     [&](bool value)
                     { settings.video.renderColliders = value; }))
+            .addOption(
+                dic.strings.getString(StringId::ShowFPS),
+                WidgetBuilder::createCheckbox(
+                    settings.video.showFps,
+                    [&](bool value) { settings.video.showFps = value; }))
 #endif
             .build());
 }

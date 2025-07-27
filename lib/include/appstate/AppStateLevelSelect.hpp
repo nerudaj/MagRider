@@ -41,4 +41,5 @@ private:
     AppSettings& settings; ///< Application settings for configuration
     std::vector<std::string> levelIds;
     tgui::Panel::Ptr content;
+    tgui::String lastSelectedTab;
 };

@@ -219,10 +219,17 @@ void RenderingEngine::renderWorld()
 void RenderingEngine::renderMagnetLine(
     const sf::Vector2f& joeScreenPos, const sf::Vector2f& direction)
 {
-    line.setPosition(joeScreenPos + dgm::Math::toUnit(direction) * 16.f);
+    const float JOE_WORLD_RADIUS = 0.5f;
+    const float JOE_SCREEN_RADIUS = 16.f;
+    const float MAGLINE_SCREEN_LENGTH = 48.f;
+
+    line.setPosition(
+        joeScreenPos + dgm::Math::toUnit(direction) * JOE_SCREEN_RADIUS);
     line.setRotation(dgm::Math::cartesianToPolar(direction).angle);
     line.setScale(
-        { CoordConverter::worldToScreen(direction.length()) / 48.f, 1.f });
+        { CoordConverter::worldToScreen(direction.length() - JOE_WORLD_RADIUS)
+              / MAGLINE_SCREEN_LENGTH,
+          1.f });
     line.setTextureRect(
         magnetLineAnimationStates
             [scene.magnetPolarity == MAGNET_POLARITY_RED ? "red" : "blue"]

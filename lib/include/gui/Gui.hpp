@@ -50,7 +50,7 @@ public:
     void rebuildWith(const tgui::Widget::Ptr& layout)
     {
         removeAllWidgets();
-        add(layout);
+        add(layout, "RootContainer");
     }
 
     void removeAllWidgets()

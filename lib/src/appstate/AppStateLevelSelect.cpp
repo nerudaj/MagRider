@@ -121,11 +121,19 @@ void AppStateLevelSelect::buildLevelCards(
 
 void AppStateLevelSelect::buildContentGrasslands() const
 {
+    dic.gui.get<tgui::Panel>("RootContainer")
+        ->getRenderer()
+        ->setTextureBackground(
+            dic.resmgr.get<sf::Texture>("background-forest.png"));
     buildLevelCards(0, 6, 3);
 }
 
 void AppStateLevelSelect::buildContentFactory() const
 {
+    dic.gui.get<tgui::Panel>("RootContainer")
+        ->getRenderer()
+        ->setTextureBackground(
+            dic.resmgr.get<sf::Texture>("background-city.png"));
     buildLevelCards(18, 6, 3);
 }
 

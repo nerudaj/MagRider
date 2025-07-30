@@ -121,13 +121,30 @@ void AppStateLevelSelect::buildLevelCards(
     auto&& grid = tgui::Grid::create();
     grid->setSize({ "100%", "100%" });
 
+    auto&& bestTimes =
+        std::vector<std::optional<float>>(columnCount * rowCount, std::nullopt);
+
     for (unsigned y = 0; y < rowCount; ++y)
     {
         for (unsigned x = 0; x < columnCount; ++x)
         {
             const auto levelIdx = y * columnCount + x + startIdx;
             if (levelIdx >= levelIds.size()) break;
-            grid->addWidget(buildLevelCard(levelIdx), y, x);
+
+            bestTimes[levelIdx - startIdx] =
+                Utility::getBestTime(settings.save, levelIdx);
+
+            const bool isUnlocked =
+                levelIdx == startIdx
+                || bestTimes[levelIdx - startIdx - 1].has_value()
+                || (y > 0
+                    && bestTimes[levelIdx - startIdx - columnCount]
+                           .has_value());
+            grid->addWidget(
+                buildLevelCard(
+                    levelIdx, isUnlocked, bestTimes[levelIdx - startIdx]),
+                y,
+                x);
         }
     }
 
@@ -153,14 +170,17 @@ void AppStateLevelSelect::buildContentFactory() const
     buildLevelCards(18, 6, 3);
 }
 
-tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
+tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
+    size_t levelIdx,
+    bool isUnlocked,
+    const std::optional<float>& bestTime) const
 {
-    const auto&& bestTime = Utility::getBestTime(settings.save, levelIdx);
-
     auto&& card = WidgetBuilder::createPanel(
         { "16%", "30%" }, bestTime ? COLOR_ORANGE : COLOR_DARK_GREY);
     card->getRenderer()->setBorders({ 2.f });
-    card->getRenderer()->setBorderColor(COLOR_YELLOW);
+    card->getRenderer()->setBorderColor(
+        isUnlocked ? COLOR_YELLOW : COLOR_BLACK);
+
     auto&& headerPanel = WidgetBuilder::createPanel({ "100%", "40%" });
     auto&& timePanel = WidgetBuilder::createPanel({ "100%", "30%" });
     timePanel->setPosition({ "0%", "40%" });
@@ -169,15 +189,16 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
 
     card->add(headerPanel);
     card->add(timePanel);
-    card->add(buttonPanel);
+
+    if (isUnlocked) card->add(buttonPanel);
 
     auto&& timeText = std::string("--:--");
     if (bestTime) timeText = Utility::formatTime(bestTime.value());
+    if (!isUnlocked) timeText = "locked";
 
     auto&& createLabel = [&](const std::string& str)
     {
         auto&& label = WidgetBuilder::createTextLabel(str, "justify"_true);
-        label->getRenderer()->setTextColor(COLOR_DARK_GREY);
         return label;
     };
 
@@ -207,7 +228,7 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(size_t levelIdx) const
     buttonPanel->add(WidgetBuilder::createButton(
         dic.strings.getString(StringId::PlayButton), onClick));
 
-    card->onClick(onClick);
+    if (isUnlocked) card->onClick(onClick);
 
     return card;
 }

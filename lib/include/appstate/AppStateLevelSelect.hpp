@@ -33,7 +33,10 @@ private:
 
     void buildContentFactory() const;
 
-    tgui::Container::Ptr buildLevelCard(size_t levelIdx) const;
+    tgui::Container::Ptr buildLevelCard(
+        size_t levelIdx,
+        bool isUnlocked,
+        const std::optional<float>& bestTime) const;
 
 private:
     DependencyContainer&

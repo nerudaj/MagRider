@@ -17,6 +17,7 @@ enum class [[nodiscard]] StringId
     // Select
     Grasslands,
     Factory,
+    Locked,
 
     // Options
     VideoOptionsTab,
@@ -63,6 +64,7 @@ enum class [[nodiscard]] StringId
     Tutorial3,
     Tutorial4,
     Tutorial5,
+    Tutorial6,
 
     // End Screen
     YourTime,

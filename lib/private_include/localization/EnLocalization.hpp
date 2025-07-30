@@ -19,6 +19,7 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     // Select
     { Grasslands, "grasslands" },
     { Factory, "factory" },
+    { Locked, "locked" },
 
     // Options
     { VideoOptionsTab, "video" },
@@ -69,6 +70,7 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     { Tutorial4, "press a to magnetize red\npress d to magnetize blue" },
 #endif
     { Tutorial5, "change polarity mid-flight\n    to propel yourself" },
+    { Tutorial6, "there are 4 ways to\nfinish this level" },
 
     // End Screen
     { YourTime, "your time" },

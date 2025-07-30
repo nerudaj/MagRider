@@ -194,7 +194,7 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
 
     auto&& timeText = std::string("--:--");
     if (bestTime) timeText = Utility::formatTime(bestTime.value());
-    if (!isUnlocked) timeText = "locked";
+    if (!isUnlocked) timeText = dic.strings.getString(StringId::Locked);
 
     auto&& createLabel = [&](const std::string& str)
     {

@@ -64,6 +64,10 @@ void AppStateGame::update()
     {
         game.audioEvents.pushEvent<JoeWonAudioEvent>();
     }
+    else if (game.scene.contactListener->died)
+    {
+        game.audioEvents.pushEvent<JoeDiedAudioEvent>();
+    }
 
     game.audioEvents.processEvents(game.audioEngine);
 

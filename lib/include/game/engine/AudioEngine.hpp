@@ -28,10 +28,13 @@ public:
 
     inline void operator()(JoeWonAudioEvent)
     {
-        playSound("fanfare.wav", true);
+        playSound("win_fanfare.wav", true);
     }
 
-    inline void operator()(JoeDiedAudioEvent) {}
+    inline void operator()(JoeDiedAudioEvent)
+    {
+        playSound("lose_fanfare.wav", true);
+    }
 
 private:
     void playSound(const std::string& name, bool override);

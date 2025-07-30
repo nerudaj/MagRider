@@ -113,8 +113,7 @@ namespace priv
     LayoutBuilderWithBackgroundAndTitle LayoutBuilderWithBackground::withTitle(
         const std::string& title, HeadingLevel level)
     {
-        auto&& panel =
-            WidgetBuilder::createPanel({ "100%", props.titleHeight });
+        auto&& panel = tgui::Group::create({ "100%", props.titleHeight });
         panel->add(WidgetBuilder::createHeading(title, level));
         container->add(panel);
         return LayoutBuilderWithBackgroundAndTitle(container, props);

@@ -71,7 +71,9 @@ void AppStateOptions::draw()
 void AppStateOptions::buildLayout()
 {
     auto tabLabels = std::vector<std::string> {
+#ifndef ANDROID
         dic.strings.getString(StringId::VideoOptionsTab),
+#endif
         dic.strings.getString(StringId::AudioOptionsTab),
     };
 

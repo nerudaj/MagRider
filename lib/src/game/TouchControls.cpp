@@ -60,11 +60,22 @@ void TouchControls::processEvent(const sf::Event::TouchEnded& e)
     input.toggleInput(fingerToAction[e.finger], false);
 }
 
+sf::Color makeSemiTransparentColor(const sf::Color& color)
+{
+    return sf::Color(color.r, color.g, color.b, 128);
+}
+
 void TouchControls::draw(dgm::Window& window)
 {
 #ifdef ANDROID
     window.draw(pauseButtonSprite);
-    redButton.debugRender(window, sf::Color(255, 0, 77, 128));
-    blueButton.debugRender(window, sf::Color(41, 173, 255, 128));
+    redButton.debugRender(
+        window,
+        makeSemiTransparentColor(
+            input.isMagnetizingRed() ? COLOR_DARK_PURPLE : COLOR_RED));
+    blueButton.debugRender(
+        window,
+        makeSemiTransparentColor(
+            input.isMagnetizingBlue() ? COLOR_DARK_BLUE : COLOR_LIGHT_BLUE));
 #endif
 }

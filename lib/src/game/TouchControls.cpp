@@ -1,4 +1,5 @@
 #include "game/TouchControls.hpp"
+#include "game/Constants.hpp"
 #include "gui/Icon.hpp"
 #include "gui/Sizers.hpp"
 
@@ -21,16 +22,15 @@ TouchControls::TouchControls(
     , redButton(createMagnetButton(windowSize, "left"_true))
     , blueButton(createMagnetButton(windowSize, "left"_false))
 {
-    pauseButton.setRadius(Sizers::getBaseContainerHeight() / 2.f);
+    pauseButton.setRadius(Sizers::getBaseContainerHeight());
     pauseButton.setPosition(
         { pauseButton.getRadius(), pauseButton.getRadius() });
 
     const auto& frame = resmgr.get<dgm::Clip>("pixel-ui-icons.png.clip")
                             .getFrame(Icon::PauseFill);
     pauseButtonSprite.setTextureRect(frame);
-    pauseButtonSprite.setScale(
-        { pauseButton.getRadius() * 2.f / frame.size.x,
-          pauseButton.getRadius() * 2.f / frame.size.y });
+    pauseButtonSprite.setScale({ pauseButton.getRadius() / frame.size.x,
+                                 pauseButton.getRadius() / frame.size.y });
     pauseButtonSprite.setOrigin(sf::Vector2f(frame.size / 2));
     pauseButtonSprite.setPosition(pauseButton.getPosition());
 }

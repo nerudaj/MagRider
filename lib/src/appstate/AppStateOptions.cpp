@@ -116,7 +116,11 @@ void AppStateOptions::buildLayout()
             .withNoBottomRightButton()
             .build());
 
+#ifdef ANDROID
+    buildAudioOptionsLayout();
+#else
     buildVideoOptionsLayout();
+#endif
 }
 
 void AppStateOptions::refresh()

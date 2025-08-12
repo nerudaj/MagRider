@@ -12,8 +12,12 @@
 /// <summary>
 /// Remaps levels based on their perceived difficulty
 /// </summary>
-constexpr const std::array<size_t, 18> DIFFICULTY_REMAPPER = {
-    11, 1, 4, 2, 3, 16, 12, 7, 6, 10, 13, 15, 8, 9, 5, 17, 14, 18
+constexpr const std::array<size_t, 30> DIFFICULTY_REMAPPER = {
+    11, 1,  /*4,*/ 16, 2,  3,  12, /*7,*/ /*6,*/ 13,
+    10, 15, 8,         9,  5,  17, 14,
+    18, 19, 20,        21, 22, 23, 24,
+    33, 26, 27,        25, 32, 30, 31,
+    29, 28
 };
 
 AppStateLevelSelect::AppStateLevelSelect(
@@ -158,7 +162,7 @@ void AppStateLevelSelect::buildContentGrasslands() const
         ->getRenderer()
         ->setTextureBackground(
             dic.resmgr.get<tgui::Texture>("background-forest.png"));
-    buildLevelCards(0, 6, 3);
+    buildLevelCards(0, 5, 3);
 }
 
 void AppStateLevelSelect::buildContentFactory() const
@@ -167,7 +171,7 @@ void AppStateLevelSelect::buildContentFactory() const
         ->getRenderer()
         ->setTextureBackground(
             dic.resmgr.get<tgui::Texture>("background-city.png"));
-    buildLevelCards(18, 6, 3);
+    buildLevelCards(15, 5, 3);
 }
 
 tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
@@ -204,7 +208,8 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
 
     auto onClick = [&, idx = levelIdx]
     {
-        bool useGrass = idx < 18;
+        bool useGrass = idx < 15;
+        bool useDefaultJoe = (rand() % 3) < 2;
         dic.jukebox.playIngameTrack();
         app.pushState<AppStateGameWrapper>(
             dic,
@@ -217,7 +222,7 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
                          : idx],
                 .tilesetName =
                     useGrass ? "grass_tileset.png" : "metal_tileset.png",
-                .joeSkinName = useGrass ? "base" : "metal",
+                .joeSkinName = useDefaultJoe ? "base" : "metal",
                 .backgroundName =
                     useGrass ? "background-forest.png" : "background-city.png",
             });

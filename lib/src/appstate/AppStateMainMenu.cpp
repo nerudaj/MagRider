@@ -10,6 +10,7 @@ AppStateMainMenu::AppStateMainMenu(
     dgm::App& app, DependencyContainer& dic, AppSettings& settings) noexcept
     : dgm::AppState(app), dic(dic), settings(settings)
 {
+    app.window.getSfmlWindowContext().setFramerateLimit(120);
     buildLayout();
     dic.jukebox.playTitleTrack();
 }

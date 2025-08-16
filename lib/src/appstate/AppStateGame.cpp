@@ -53,6 +53,15 @@ void AppStateGame::input()
             touchControls.processEvent(*event->getIf<sf::Event::TouchEnded>());
         }
     }
+
+#ifdef _DEBUG
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right))
+    {
+        static int cnt = 0;
+        std::ignore = app.window.getScreenshot().saveToFile(
+            uni::format("screen{}.png", cnt++));
+    }
+#endif
 }
 
 void AppStateGame::update()

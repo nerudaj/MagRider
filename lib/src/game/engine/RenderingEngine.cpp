@@ -250,8 +250,7 @@ void RenderingEngine::renderHUD()
 
     text.setString(Utility::formatTime(scene.timer));
     text.setPosition({
-        static_cast<float>(window.getSize().x) - text.getGlobalBounds().size.x
-            - 10.f,
+        window.getSize().x / 2.f - text.getGlobalBounds().size.x / 2.f,
         10.f,
     });
     window.draw(text);

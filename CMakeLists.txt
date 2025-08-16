@@ -112,6 +112,12 @@ if ( ${USE_NSIS} )
 	set ( CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL "ON" )
 	set ( CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/assets-private/appicon.ico" )
 	set ( CPACK_NSIS_URL_INFO_ABOUT "${INSTALLER_ABOUT_URL}" )
+    set ( CPACK_PACKAGE_HOMEPAGE_URL  "${INSTALLER_ABOUT_URL}" )
+
+    # Project-specific installer stuff
+    set ( CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/assets-private/nsis/license.txt" )
+    set ( CPACK_PACKAGE_VENDOR        "Jakub Neruda")
+    set ( CPACK_MONOLITHIC_INSTALL ON )
     
     set ( CPACK_NSIS_DISPLAY_NAME "${THE_PROJECT_NAME}" )
     set ( CPACK_NSIS_PACKAGE_NAME "${THE_PROJECT_NAME}" )

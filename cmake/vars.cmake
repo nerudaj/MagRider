@@ -8,7 +8,7 @@ string ( TOLOWER "${THE_PROJECT_NAME}" PROJECT_NAME_LOWERCASE )
 set ( USE_SFML_TGUI_STATIC_LINKAGE OFF )
 
 # Installer
-set ( INSTALLER_ABOUT_URL "https://nerudaj.itch.io/" )
+set ( INSTALLER_ABOUT_URL "https://nerudaj.itch.io/magrider" )
 
 # Android vars
 set ( ANDROID_ORG "org.nerudaj.${PROJECT_NAME_LOWERCASE}" )

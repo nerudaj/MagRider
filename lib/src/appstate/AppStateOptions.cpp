@@ -70,70 +70,6 @@ void AppStateOptions::draw()
 
 void AppStateOptions::buildLayout()
 {
-    auto tabLabels = std::vector<std::string> {
-#ifndef ANDROID
-        dic.strings.getString(StringId::VideoOptionsTab),
-#endif
-        dic.strings.getString(StringId::AudioOptionsTab),
-    };
-
-    if (settings.features.showInputSettings)
-    {
-        const auto extraLabels = std::vector<std::string> {
-            dic.strings.getString(StringId::InputOptionsTab),
-            dic.strings.getString(StringId::BindingsOptionsTab)
-        };
-        tabLabels.insert(
-            tabLabels.end(), extraLabels.begin(), extraLabels.end());
-    }
-
-    dic.gui.rebuildWith(
-        DefaultLayoutBuilder()
-            .withBackgroundImage(
-                dic.resmgr.get<sf::Texture>("background-trees.png"))
-            .withTitle(
-                dic.strings.getString(StringId::Options),
-#ifdef ANDROID
-                HeadingLevel::H2)
-#else
-                HeadingLevel::H1)
-#endif
-            .withContent(
-                NavbarLayoutBuilder()
-                    .withNavbarWidget(WidgetBuilder::createTabbedContent(
-                        tabLabels,
-                        [&](const tgui::String& tabName)
-                        { onTabClicked(tabName); },
-                        WidgetOptions {
-                            .id = TABS_ID,
-                        }))
-                    .withContent(content)
-                    .build())
-            .withNoTopLeftButton()
-            .withNoTopRightButton()
-            .withBottomLeftButton(WidgetBuilder::createButton(
-                dic.strings.getString(StringId::Back), [&] { onBack(); }))
-            .withNoBottomRightButton()
-            .build());
-
-#ifdef ANDROID
-    buildAudioOptionsLayout();
-#else
-    buildVideoOptionsLayout();
-#endif
-}
-
-void AppStateOptions::refresh()
-{
-    // must be recreated, otherwise it disappears for some reason
-    content = WidgetBuilder::createScrollablePanel(
-        { "100%", "100%" }, tgui::Color(95, 87, 79, 192));
-
-    buildLayout();
-}
-
-void AppStateOptions::buildVideoOptionsLayout()
-{
     content->removeAllWidgets();
     content->add(
         FormBuilder()
@@ -158,7 +94,7 @@ void AppStateOptions::buildVideoOptionsLayout()
                             sf::VideoMode::getFullscreenModes()[idx].size);
                     }))
 #endif
-            .addOption(
+            .addOptionWithSubmit(
                 dic.strings.getString(StringId::SetUiScale),
                 WidgetBuilder::createSlider(
                     settings.video.uiScale,
@@ -166,12 +102,44 @@ void AppStateOptions::buildVideoOptionsLayout()
                     {
                         settings.video.uiScale = val;
                         Sizers::setUiScale(val);
-                        // TODO: should refresh view, but the user should not be
-                        // clicking anything
                     },
                     dic.gui,
-                    SliderProperties { .low = 1.f, .high = 2.f, .step = 0.1f }))
+                    SliderProperties {
+                        .valueFormatter = [](float val)
+                        { return uni::format("{:.1f}", val); },
+                        .low = 1.f,
+                        .high = 2.f,
+                        .step = 0.1f,
+                    }),
+                WidgetBuilder::createRowButton(
+                    dic.strings.getString(StringId::Apply), [&] { refresh(); }))
+            .addSeparator()
+            .addOption(
+                dic.strings.getString(StringId::MusicVolume),
+                WidgetBuilder::createSlider(
+                    settings.audio.musicVolume,
+                    [&](float val)
+                    {
+                        settings.audio.musicVolume = val;
+                        dic.jukebox.setVolume(settings.audio.musicVolume);
+                    },
+                    dic.gui,
+                    SliderProperties { .valueFormatter = intValueFormatter,
+                                       .low = 0.f,
+                                       .high = 100.f,
+                                       .step = 1.f }))
+            .addOption(
+                dic.strings.getString(StringId::SoundVolume),
+                WidgetBuilder::createSlider(
+                    settings.audio.soundVolume,
+                    [&](float val) { settings.audio.soundVolume = val; },
+                    dic.gui,
+                    SliderProperties { .valueFormatter = intValueFormatter,
+                                       .low = 0.f,
+                                       .high = 100.f,
+                                       .step = 1.f }))
 #ifdef _DEBUG
+            .addSeparator()
             .addOption(
                 dic.strings.getString(StringId::SetTheme),
                 WidgetBuilder::createDropdown(
@@ -197,68 +165,37 @@ void AppStateOptions::buildVideoOptionsLayout()
                     [&](bool value) { settings.video.showFps = value; }))
 #endif
             .build());
-}
 
-void AppStateOptions::buildAudioOptionsLayout()
-{
-    content->removeAllWidgets();
-    content->add(
-        FormBuilder()
-            .addOption(
-                dic.strings.getString(StringId::MusicVolume),
-                WidgetBuilder::createSlider(
-                    settings.audio.musicVolume,
-                    [&](float val)
-                    {
-                        settings.audio.musicVolume = val;
-                        dic.jukebox.setVolume(settings.audio.musicVolume);
-                    },
-                    dic.gui,
-                    SliderProperties { .valueFormatter = intValueFormatter,
-                                       .low = 0.f,
-                                       .high = 100.f,
-                                       .step = 1.f }))
-            .addOption(
-                dic.strings.getString(StringId::SoundVolume),
-                WidgetBuilder::createSlider(
-                    settings.audio.soundVolume,
-                    [&](float val) { settings.audio.soundVolume = val; },
-                    dic.gui,
-                    SliderProperties { .valueFormatter = intValueFormatter,
-                                       .low = 0.f,
-                                       .high = 100.f,
-                                       .step = 1.f }))
+    dic.gui.rebuildWith(
+        DefaultLayoutBuilder()
+            .withBackgroundImage(
+                dic.resmgr.get<sf::Texture>("background-trees.png"))
+            .withTitle(
+                dic.strings.getString(StringId::Options),
+#ifdef ANDROID
+                HeadingLevel::H2)
+#else
+                HeadingLevel::H1)
+#endif
+            .withContent(content)
+            .withNoTopLeftButton()
+            .withNoTopRightButton()
+            .withBottomLeftButton(WidgetBuilder::createButton(
+                dic.strings.getString(StringId::Back), [&] { onBack(); }))
+            .withNoBottomRightButton()
             .build());
 }
 
-void AppStateOptions::buildInputOptionsLayout()
+void AppStateOptions::refresh()
 {
-    content->removeAllWidgets();
-    content->add(
-        FormBuilder()
-            .addOption(
-                dic.strings.getString(StringId::GamepadDeadzone),
-                WidgetBuilder::createSlider(
-                    settings.input.gamepadDeadzone,
-                    [&](float val) { settings.input.gamepadDeadzone = val; },
-                    dic.gui,
-                    SliderProperties { .valueFormatter = intValueFormatter,
-                                       .low = 0.f,
-                                       .high = 100.f,
-                                       .step = 1.f }))
-            .addOption(
-                dic.strings.getString(StringId::CursorSpeed),
-                WidgetBuilder::createSlider(
-                    settings.input.cursorSpeed,
-                    [&](float val) { settings.input.cursorSpeed = val; },
-                    dic.gui,
-                    SliderProperties { .valueFormatter = intValueFormatter,
-                                       .low = 100.f,
-                                       .high = 1000.f,
-                                       .step = 10.f }))
-            .build());
+    // must be recreated, otherwise it disappears for some reason
+    content = WidgetBuilder::createScrollablePanel(
+        { "100%", "100%" }, tgui::Color(95, 87, 79, 192));
+
+    buildLayout();
 }
 
+/*
 template<class V, class T>
 bool doesVariantContain(const V& v, T t)
 {
@@ -266,7 +203,7 @@ bool doesVariantContain(const V& v, T t)
     return false;
 }
 
-void AppStateOptions::buildBindingsOptionsLayout()
+ void AppStateOptions::buildBindingsOptionsLayout()
 {
     auto&& inputKindMapper = InputKindToStringMapper(dic.strings);
     auto&& hwInputMapper = HwInputToStringMapper();
@@ -351,19 +288,7 @@ void AppStateOptions::buildBindingsOptionsLayout()
 
     content->removeAllWidgets();
     content->add(tableBuilder.build());
-}
-
-void AppStateOptions::onTabClicked(const tgui::String& tabName)
-{
-    if (tabName == dic.strings.getString(StringId::VideoOptionsTab))
-        buildVideoOptionsLayout();
-    else if (tabName == dic.strings.getString(StringId::AudioOptionsTab))
-        buildAudioOptionsLayout();
-    else if (tabName == dic.strings.getString(StringId::InputOptionsTab))
-        buildInputOptionsLayout();
-    else if (tabName == dic.strings.getString(StringId::BindingsOptionsTab))
-        buildBindingsOptionsLayout();
-}
+}*/
 
 void AppStateOptions::onBack()
 {

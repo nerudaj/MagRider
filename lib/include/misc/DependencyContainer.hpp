@@ -2,6 +2,7 @@
 
 #include "filesystem/ResourceLoader.hpp"
 #include "gui/Gui.hpp"
+#include "gui/Sizers.hpp"
 #include "input/Input.hpp"
 #include "input/VirtualCursor.hpp"
 #include "misc/Jukebox.hpp"
@@ -36,6 +37,7 @@ struct [[nodiscard]] DependencyContainer final
               resmgr.get<sf::Texture>("cursor.png"))
         , jukebox(resmgr, rootDir)
     {
+        Sizers::setUiScale(settings.video.uiScale);
         gui.setFont(resmgr.get<tgui::Font>("pico-8.ttf"));
         // NOTE: You can create your own theme file and use it here
         gui.setTheme(resmgr.get<tgui::Theme::Ptr>("Pico8.txt"));

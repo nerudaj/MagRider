@@ -13,6 +13,7 @@ enum class [[nodiscard]] StringId
     LevelFinished,
     Continue,
     Retry,
+    Apply,
 
     // Select
     Grasslands,

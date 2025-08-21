@@ -26,20 +26,11 @@ private:
     // resolution change
     void refresh();
 
-    void buildVideoOptionsLayout();
-
-    void buildAudioOptionsLayout();
-
-    void buildInputOptionsLayout();
-
-    void buildBindingsOptionsLayout();
-
-    void onTabClicked(const tgui::String& tabName);
-
     void onBack();
 
     void onResolutionSelected(const sf::Vector2u& resolution);
 
+    /*
     template<class BindType>
 #ifndef ANDROID
         requires std::is_same_v<BindType, KmbBinding>
@@ -75,7 +66,7 @@ private:
     {
         dic.gui.get<tgui::Button>(getBindButtonId<BindType>(action))
             ->setText("...");
-    }
+    }*/
 
 private:
     DependencyContainer& dic;

@@ -22,7 +22,7 @@ public:
         const StringProvider& strings,
         const GameConfig& config)
         : scene(SceneBuilder::buildScene(level))
-        , gameRulesEngine(gameEvents, audioEvents, scene, input)
+        , gameRulesEngine(gameEvents, audioEvents, scene, input, settings.input)
         , renderingEngine(
               window, resmgr, settings.video, strings, scene, level, config)
         , audioEngine(resmgr, settings.audio)

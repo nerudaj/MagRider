@@ -38,6 +38,7 @@ enum class [[nodiscard]] StringId
     BindingHeadingAction,
     BindingHeadingKMB,
     BindingsHeadingGamepad,
+    SameColorAttracts,
 
     // InputKind
     InputKind_BackButton,

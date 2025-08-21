@@ -113,8 +113,8 @@ tgui::Panel::Ptr FormBuilder::createOptionRowWithSubmitButton(
     widgetPanel->add(widgetPtr);
     row->add(widgetPanel);
 
-    auto&& btnPanel = tgui::Panel::create({ "15%", "100%" });
-    btnPanel->setPosition("85%", "0%");
+    auto&& btnPanel = tgui::Panel::create({ "11%", "90%" });
+    btnPanel->setPosition("87%", "5%");
     btnPanel->getRenderer()->setBackgroundColor(tgui::Color::Transparent);
     btnPanel->add(buttonPtr);
     row->add(btnPanel);

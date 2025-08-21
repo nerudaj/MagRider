@@ -40,6 +40,7 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     { BindingHeadingAction, "action" },
     { BindingHeadingKMB, "keyboard/mouse" },
     { BindingsHeadingGamepad, "gamepad" },
+    { SameColorAttracts, "same color attracts" },
 
     // InputKind
     { InputKind_BackButton, "back" },

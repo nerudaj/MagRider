@@ -13,11 +13,14 @@ static sf::Vector2f operator-(const b2Vec2& a, const sf::Vector2f& b)
 
 static sf::Vector2f aggregateMagnetForces(
     const b2Vec2& joePos,
-    const int joePolarity,
-    const std::vector<Magnet>& magnets)
+    int joePolarity,
+    const std::vector<Magnet>& magnets,
+    const InputSettings& settings)
 {
     sf::Vector2f totalForce = {};
     if (joePolarity == MAGNET_POLARITY_NONE) return totalForce;
+
+    if (settings.sameColorAttracts) joePolarity = 3 - joePolarity;
 
     for (auto&& magnet : magnets)
     {
@@ -55,7 +58,10 @@ void GameRulesEngine::update(const dgm::Time& time)
         scene.magnetPolarity = MAGNET_POLARITY_NONE;
 
     sf::Vector2f totalForce = aggregateMagnetForces(
-        scene.joe.GetPosition(), scene.magnetPolarity, scene.magnets);
+        scene.joe.GetPosition(),
+        scene.magnetPolarity,
+        scene.magnets,
+        inputSettings);
 
     // Only trigger sounds when magnet is affecting joe
     if (totalForce.length() > 0.f)

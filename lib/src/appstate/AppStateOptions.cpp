@@ -111,7 +111,7 @@ void AppStateOptions::buildLayout()
                         .high = 2.f,
                         .step = 0.1f,
                     }),
-                WidgetBuilder::createRowButton(
+                WidgetBuilder::createButton(
                     dic.strings.getString(StringId::Apply), [&] { refresh(); }))
             .addSeparator()
             .addOption(
@@ -138,6 +138,13 @@ void AppStateOptions::buildLayout()
                                        .low = 0.f,
                                        .high = 100.f,
                                        .step = 1.f }))
+            .addSeparator()
+            .addOption(
+                dic.strings.getString(StringId::SameColorAttracts),
+                WidgetBuilder::createCheckbox(
+                    settings.input.sameColorAttracts,
+                    [&](bool value)
+                    { settings.input.sameColorAttracts = value; }))
 #ifdef _DEBUG
             .addSeparator()
             .addOption(

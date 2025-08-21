@@ -16,7 +16,7 @@ AppStateGame::AppStateGame(
     , dic(dic)
     , settings(settings)
     , config(config)
-    , touchControls(dic.resmgr, dic.input, app.window.getSize())
+    , touchControls(dic.resmgr, dic.input, settings.input, app.window.getSize())
     , game(
           SceneBuilder::convertToTiledLevel(
               dic.resmgr.get<tiled::FiniteMapModel>(config.levelResourceName)),
@@ -112,5 +112,9 @@ void AppStateGame::restoreFocusImpl(const std::string& msg)
 {
     paused = false;
     // Empty message means returning from pause menu
-    if (!msg.empty()) app.popState(msg);
+    if (!msg.empty())
+        app.popState(msg);
+    else
+        // Settings might have changed touch button scaling
+        touchControls.regenerateButtons(app.window.getSize(), settings.input);
 }

@@ -8,7 +8,12 @@ struct [[nodiscard]] InputSettings final
     float cursorSpeed = 500_px_per_second;
     float gamepadDeadzone = 10.f;
     bool sameColorAttracts = false;
+    float touchControlsSize = 1.f;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    InputSettings, cursorSpeed, gamepadDeadzone, sameColorAttracts);
+    InputSettings,
+    cursorSpeed,
+    gamepadDeadzone,
+    sameColorAttracts,
+    touchControlsSize);

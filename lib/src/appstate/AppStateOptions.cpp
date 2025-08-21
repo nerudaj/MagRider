@@ -113,6 +113,22 @@ void AppStateOptions::buildLayout()
                     }),
                 WidgetBuilder::createButton(
                     dic.strings.getString(StringId::Apply), [&] { refresh(); }))
+
+#ifdef ANDROID
+            .addOption(
+                dic.strings.getString(StringId::SetTouchControlScale),
+                WidgetBuilder::createSlider(
+                    settings.input.touchControlsSize,
+                    [&](float val) { settings.input.touchControlsSize = val; },
+                    dic.gui,
+                    SliderProperties {
+                        .valueFormatter = [](float val)
+                        { return uni::format("{:.1f}", val); },
+                        .low = 1.f,
+                        .high = 2.f,
+                        .step = 0.1f,
+                    }))
+#endif
             .addSeparator()
             .addOption(
                 dic.strings.getString(StringId::MusicVolume),

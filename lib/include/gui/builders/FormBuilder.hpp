@@ -43,12 +43,12 @@ public:
     [[nodiscard]] tgui::Container::Ptr build();
 
 private:
-    static [[nodiscard]] tgui::Panel::Ptr createOptionRow(
+    [[nodiscard]] static tgui::Panel::Ptr createOptionRow(
         const std::string& labelText,
         tgui::Widget::Ptr widgetPtr,
         std::optional<std::string> widgetId);
 
-    static [[nodiscard]] tgui::Panel::Ptr createOptionRowWithSubmitButton(
+    [[nodiscard]] static tgui::Panel::Ptr createOptionRowWithSubmitButton(
         const std::string& labelText,
         tgui::Widget::Ptr widgetPtr,
         tgui::Button::Ptr buttonPtr);

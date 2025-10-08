@@ -28,7 +28,7 @@ public:
         }
     }
 
-    CONSTEXPR_NODISCARD size_t getFrame() const noexcept
+    [[nodiscard]] constexpr size_t getFrame() const noexcept
     {
         return frame;
     }

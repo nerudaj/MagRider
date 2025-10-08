@@ -40,15 +40,15 @@ public:
 
     FormBuilder& addSeparator();
 
-    NODISCARD_RESULT tgui::Container::Ptr build();
+    [[nodiscard]] tgui::Container::Ptr build();
 
 private:
-    static NODISCARD_RESULT tgui::Panel::Ptr createOptionRow(
+    static [[nodiscard]] tgui::Panel::Ptr createOptionRow(
         const std::string& labelText,
         tgui::Widget::Ptr widgetPtr,
         std::optional<std::string> widgetId);
 
-    static NODISCARD_RESULT tgui::Panel::Ptr createOptionRowWithSubmitButton(
+    static [[nodiscard]] tgui::Panel::Ptr createOptionRowWithSubmitButton(
         const std::string& labelText,
         tgui::Widget::Ptr widgetPtr,
         tgui::Button::Ptr buttonPtr);

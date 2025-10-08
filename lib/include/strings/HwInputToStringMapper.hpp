@@ -10,7 +10,7 @@
 class HwInputToStringMapper
 {
 public:
-    NODISCARD_RESULT StringType operator()(sf::Keyboard::Key key)
+    [[nodiscard]] StringType operator()(sf::Keyboard::Key key)
     {
         if (sf::Keyboard::Key::A <= key && key <= sf::Keyboard::Key::Z)
             return std::string(
@@ -28,7 +28,7 @@ public:
         return uni::format("key {}", std::to_underlying(key));
     }
 
-    NODISCARD_RESULT StringType operator()(sf::Mouse::Button btn)
+    [[nodiscard]] StringType operator()(sf::Mouse::Button btn)
     {
         if (btn == sf::Mouse::Button::Left)
             return "lmb";
@@ -37,12 +37,12 @@ public:
         return uni::format("mouse {}", std::to_underlying(btn));
     }
 
-    NODISCARD_RESULT StringType operator()(GamepadButton gamepadButtonIndex)
+    [[nodiscard]] StringType operator()(GamepadButton gamepadButtonIndex)
     {
         return uni::format("joy {}", gamepadButtonIndex.get());
     }
 
-    NODISCARD_RESULT StringType
+    [[nodiscard]] StringType
     operator()(std::pair<sf::Joystick::Axis, dgm::AxisHalf> axis)
     {
         auto axisName = [](sf::Joystick::Axis a) -> std::string
@@ -76,17 +76,17 @@ public:
             axis.second == dgm::AxisHalf::Negative ? "-" : "+");
     }
 
-    NODISCARD_RESULT StringType operator()(auto)
+    [[nodiscard]] StringType operator()(auto)
     {
         return "<not bound>";
     }
 
-    NODISCARD_RESULT StringType getMapping(KmbBinding binding)
+    [[nodiscard]] StringType getMapping(KmbBinding binding)
     {
         return std::visit(*this, binding);
     }
 
-    NODISCARD_RESULT StringType getMapping(GamepadBinding binding)
+    [[nodiscard]] StringType getMapping(GamepadBinding binding)
     {
         return std::visit(*this, binding);
     }

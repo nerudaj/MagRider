@@ -22,7 +22,7 @@ namespace priv
         ~FinalNavbarLayoutBuilder() = default;
 
     public:
-        NODISCARD_RESULT tgui::Panel::Ptr build();
+        [[nodiscard]] tgui::Panel::Ptr build();
 
     private:
         tgui::Widget::Ptr widget;

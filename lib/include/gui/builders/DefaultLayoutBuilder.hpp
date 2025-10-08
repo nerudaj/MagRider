@@ -25,7 +25,7 @@ namespace priv
         }
 
     public:
-        NODISCARD_RESULT inline tgui::Panel::Ptr build() const
+        [[nodiscard]] inline tgui::Panel::Ptr build() const
         {
             return container;
         }

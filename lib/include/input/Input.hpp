@@ -32,15 +32,15 @@ public:
 
     bool shouldStart() const;
 
-    NODISCARD_RESULT bool isMenuCycleLeftPressed() const;
+    [[nodiscard]] bool isMenuCycleLeftPressed() const;
 
-    NODISCARD_RESULT bool isMenuCycleRightPressed() const;
+    [[nodiscard]] bool isMenuCycleRightPressed() const;
 
-    NODISCARD_RESULT bool isBackButtonPressed() const;
+    [[nodiscard]] bool isBackButtonPressed() const;
 
-    NODISCARD_RESULT bool isConfirmPressed() const;
+    [[nodiscard]] bool isConfirmPressed() const;
 
-    NODISCARD_RESULT sf::Vector2f getCursorDelta() const;
+    [[nodiscard]] sf::Vector2f getCursorDelta() const;
 
     void toggleInput(InputKind i, bool pressed);
 

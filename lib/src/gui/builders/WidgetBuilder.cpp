@@ -8,7 +8,7 @@
 #include <TGUI/TGUI.hpp>
 #include <ranges>
 
-NODISCARD_RESULT std::string randomString(std::size_t len)
+[[nodiscard]] std::string randomString(std::size_t len)
 {
     constexpr auto CHARS = std::string_view(
         "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -82,7 +82,7 @@ tgui::Button::Ptr WidgetBuilder::createButton(
     return button;
 }
 
-NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createMenuButton(
+[[nodiscard]] tgui::Button::Ptr WidgetBuilder::createMenuButton(
     const Label& label,
     std::function<void(void)> onClick,
     WidgetOptions options)
@@ -94,7 +94,7 @@ NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createMenuButton(
     return button;
 }
 
-NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createRowButton(
+[[nodiscard]] tgui::Button::Ptr WidgetBuilder::createRowButton(
     const Label& label,
     std::function<void(void)> onClick,
     WidgetOptions options)
@@ -107,7 +107,7 @@ NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createRowButton(
     return button;
 }
 
-NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createTexturedButton(
+[[nodiscard]] tgui::Button::Ptr WidgetBuilder::createTexturedButton(
     const sf::Texture& texture,
     const sf::IntRect& textureRect,
     std::function<void(void)> onClick,
@@ -140,7 +140,7 @@ NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createTexturedButton(
     return btn;
 }
 
-NODISCARD_RESULT tgui::Button::Ptr WidgetBuilder::createTexturedButton(
+[[nodiscard]] tgui::Button::Ptr WidgetBuilder::createTexturedButton(
     const tgui::Texture& texture,
     std::function<void(void)> onClick,
     WidgetOptions options)

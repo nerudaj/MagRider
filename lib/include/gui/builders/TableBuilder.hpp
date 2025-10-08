@@ -24,7 +24,7 @@ namespace priv
 
         void addSeparator();
 
-        NODISCARD_RESULT tgui::Widget::Ptr build();
+        [[nodiscard]] tgui::Widget::Ptr build();
 
     private:
         std::optional<std::vector<std::string>> heading;

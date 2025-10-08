@@ -18,14 +18,14 @@ void priv::TableBuilder::addSeparator()
 }
 
 template<class Range>
-NODISCARD_RESULT static auto enumerate(Range&& range)
+[[nodiscard]] static auto enumerate(Range&& range)
 {
     return std::views::zip(
         std::views::iota(size_t { 0 }, std::ranges::size(range)),
         std::forward<Range>(range));
 }
 
-NODISCARD_RESULT static tgui::Widget::Ptr
+[[nodiscard]] static tgui::Widget::Ptr
 createCell(const tgui::Widget::Ptr& content, size_t column, size_t totalColumns)
 {
     size_t columnWidth = 100 / totalColumns;

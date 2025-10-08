@@ -8,7 +8,7 @@
 class TguiHelper final
 {
 public:
-    static NODISCARD_RESULT tgui::Texture
+    [[nodiscard]] static tgui::Texture
     convertTexture(const sf::Texture& texture)
     {
         auto result = tgui::Texture();
@@ -17,7 +17,7 @@ public:
         return result;
     }
 
-    static NODISCARD_RESULT tgui::Texture
+    [[nodiscard]] static tgui::Texture
     convertTexture(const sf::Texture& texture, const sf::IntRect& clipping)
     {
         auto result = tgui::Texture();

@@ -31,7 +31,7 @@ public:
 
     void update(const dgm::Time& time);
 
-    NODISCARD_RESULT bool isDetectionInProgress() const noexcept
+    [[nodiscard]] bool isDetectionInProgress() const noexcept
     {
         return runMode != RunMode::Idle;
     }

@@ -1,6 +1,14 @@
 [![CI-Windows](https://github.com/nerudaj/dgm-template/actions/workflows/ci-windows.yml/badge.svg?branch=main)](https://github.com/nerudaj/dgm-template/actions/workflows/ci-windows.yml) [![CI-Android](https://github.com/nerudaj/dgm-template/actions/workflows/ci-android.yml/badge.svg?branch=main)](https://github.com/nerudaj/dgm-template/actions/workflows/ci-android.yml)
 
-# dgm project template
+# MagRider
+
+Platformer game inspired by Magnetic Joe. You control a magnetic ball and you traverse the levels by interacting with magnets. Available on Windows and Android.
+
+Get the game on Itch.io: [https://nerudaj.itch.io/MagRider](https://nerudaj.itch.io/MagRider)
+
+Gameplay footage (click the image to open Youtube):
+
+[![Gameplay](https://img.youtube.com/vi/-qxmAQ5rths/0.jpg)](https://www.youtube.com/watch?v=-qxmAQ5rths)
 
 ## Table of Contents
 

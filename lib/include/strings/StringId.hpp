@@ -18,6 +18,7 @@ enum class [[nodiscard]] StringId
     // Select
     Grasslands,
     Factory,
+    LostLevels,
     Locked,
 
     // Options

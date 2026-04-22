@@ -33,6 +33,8 @@ private:
 
     void buildContentFactory() const;
 
+    void buildContentLostLevels() const;
+
     tgui::Container::Ptr buildLevelCard(
         size_t levelIdx,
         bool isUnlocked,

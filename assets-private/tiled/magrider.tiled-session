@@ -14,6 +14,22 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "levels/031.tmx": {
+            "scale": 0.3240885416666666,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 961.1570912012858,
+                "y": 192.84853354760958
+            }
+        },
+        "levels/034.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 930,
+                "y": 1004.6666666666666
+            }
+        },
         "levels/1.tmx": {
             "expandedObjectLayers": [
                 2
@@ -21,7 +37,7 @@
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 480.5,
+                "x": 520.5,
                 "y": 159.5
             }
         },
@@ -54,8 +70,8 @@
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 336.5,
-                "y": 303.5
+                "x": 352.5,
+                "y": 304.5
             }
         },
         "levels/13.tmx": {
@@ -92,7 +108,7 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 320.5,
+                "x": 336.5,
                 "y": 175.5
             }
         },
@@ -111,7 +127,7 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 656,
+                "x": 657,
                 "y": 511
             }
         },
@@ -122,8 +138,8 @@
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 357,
-                "y": 287.5
+                "x": 320.5,
+                "y": 288.5
             }
         },
         "levels/2.tmx": {
@@ -141,8 +157,8 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 528,
-                "y": 623
+                "x": 529,
+                "y": 625
             }
         },
         "levels/21.tmx": {
@@ -152,16 +168,16 @@
             "scale": 0.33,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 960.6060606060606,
-                "y": 704.5454545454546
+                "x": 959.090909090909,
+                "y": 704.5454545454545
             }
         },
         "levels/22.tmx": {
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 464,
-                "y": 506
+                "x": 631,
+                "y": 647
             }
         },
         "levels/3.tmx": {
@@ -179,8 +195,8 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 176.33333333333331,
-                "y": 240.33333333333334
+                "x": 176.33333333333334,
+                "y": 240.33333333333331
             }
         },
         "levels/5.tmx": {
@@ -198,7 +214,7 @@
             "scale": 1.1202083333333333,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 479.8214617816627,
+                "x": 479.82146178166266,
                 "y": 144.16961130742052
             }
         },
@@ -209,8 +225,8 @@
             "scale": 1.1202083333333333,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 479.8214617816627,
-                "y": 320.02975636972286
+                "x": 479.82146178166266,
+                "y": 320.0297563697229
             }
         },
         "levels/8.tmx": {
@@ -221,7 +237,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 816.6666666666666,
-                "y": 398.4848484848485
+                "y": 398.4848484848484
             }
         },
         "levels/9.tmx": {
@@ -272,12 +288,12 @@
             "scaleInEditor": 1
         }
     },
-    "last.executablePath": "C:/Users/merickova/Documents/GitHub/MagRider/_build/Compiled/Debug/MagRider-d.exe",
-    "last.exportedFilePath": "C:/Users/merickova/Documents/GitHub/MagRider/assets/levels",
+    "last.executablePath": "/home/doomista/Documents/GitHub/MagRider/_build/Compiled/MagRider",
+    "last.exportedFilePath": "/home/doomista/Documents/GitHub/MagRider/assets/levels",
     "last.imagePath": "C:/Users/merickova/Documents/GitHub/MagRider/assets/graphics",
-    "last.workingDirectory": "C:/Users/merickova/Documents/GitHub/MagRider/_build",
+    "last.workingDirectory": "/home/doomista/Documents/GitHub/MagRider/_build",
     "map.height": 60,
-    "map.lastUsedExportFilter": "Mapové soubory JSON (*.tmj *.json)",
+    "map.lastUsedExportFilter": "All Files (*)",
     "map.lastUsedFormat": "tmx",
     "map.width": 60,
     "openFiles": [
@@ -308,6 +324,7 @@
     ],
     "project": "magrider.tiled-project",
     "recentFiles": [
+        "levels/031.tmx",
         "tileset.tsx",
         "levels/1.tmx",
         "levels/2.tmx",
@@ -318,8 +335,7 @@
         "levels/8.tmx",
         "levels/9.tmx",
         "levels/10.tmx",
-        "levels/11.tmx",
-        "levels/3.tmx"
+        "levels/11.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.spacing": 4

@@ -20,6 +20,7 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     // Select
     { Grasslands, "grasslands" },
     { Factory, "factory" },
+    { LostLevels, "lost levels" },
     { Locked, "locked" },
 
     // Options

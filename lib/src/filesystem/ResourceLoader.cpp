@@ -5,7 +5,7 @@
 #include "misc/Compatibility.hpp"
 #include "misc/Playlist.hpp"
 #include <TGUI/Backend/SFML-Graphics.hpp>
-#include <TGUI/Tgui.hpp>
+#include <TGUI/TGUI.hpp>
 #include <expected>
 
 static std::expected<tgui::Texture, dgm::Error>

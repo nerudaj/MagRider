@@ -3,13 +3,13 @@
     "commands": [
         {
             "arguments": "",
-            "command": "C:/Users/merickova/Documents/GitHub/MagRider/_build/Compiled/Debug/MagRider-d.exe",
+            "command": "/home/doomista/Documents/GitHub/MagRider/_build/Compiled/MagRider",
             "enabled": true,
             "name": "Playtest",
             "saveBeforeExecute": true,
-            "shortcut": "F5",
+            "shortcut": "Ctrl+Shift+F5",
             "showOutput": true,
-            "workingDirectory": "C:/Users/merickova/Documents/GitHub/MagRider/_build"
+            "workingDirectory": "/home/doomista/Documents/GitHub/MagRider/_build"
         }
     ],
     "compatibilityVersion": 1100,

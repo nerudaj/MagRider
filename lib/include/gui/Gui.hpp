@@ -2,7 +2,7 @@
 
 #include <DGM/dgm.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
-#include <TGUI/Tgui.hpp>
+#include <TGUI/TGUI.hpp>
 #include <memory>
 #include <set>
 #include <string>

@@ -12,12 +12,12 @@
 /// <summary>
 /// Remaps levels based on their perceived difficulty
 /// </summary>
-constexpr const std::array<size_t, 30> DIFFICULTY_REMAPPER = {
+constexpr const std::array<size_t, 31> DIFFICULTY_REMAPPER = {
     11, 1,  /*4,*/ 16, 2,  3,  12, /*7,*/ /*6,*/ 13,
     10, 15, 8,         9,  5,  17, 14,
     18, 19, 20,        21, 22, 23, 24,
     33, 26, 27,        25, 32, 30, 31,
-    29, 28
+    29, 28, 34,
 };
 
 AppStateLevelSelect::AppStateLevelSelect(
@@ -74,6 +74,10 @@ void AppStateLevelSelect::onTabClicked(const tgui::String& tabName)
     {
         buildContentFactory();
     }
+    else if (tabName == dic.strings.getString(StringId::LostLevels))
+    {
+        buildContentLostLevels();
+    }
     else
     {
         throw std::runtime_error(
@@ -98,7 +102,8 @@ void AppStateLevelSelect::buildLayout()
                 NavbarLayoutBuilder()
                     .withNavbarWidget(WidgetBuilder::createTabbedContent(
                         { dic.strings.getString(StringId::Grasslands),
-                          dic.strings.getString(StringId::Factory) },
+                          dic.strings.getString(StringId::Factory),
+                          dic.strings.getString(StringId::LostLevels), },
                         [&](const tgui::String& tabName)
                         { onTabClicked(tabName); },
                         WidgetOptions { .id = "LevelSelectTabs" }))
@@ -174,6 +179,15 @@ void AppStateLevelSelect::buildContentFactory() const
     buildLevelCards(15, 5, 3);
 }
 
+void AppStateLevelSelect::buildContentLostLevels() const
+{
+    dic.gui.get<tgui::Panel>("RootContainer")
+        ->getRenderer()
+        ->setTextureBackground(
+            dic.resmgr.get<tgui::Texture>("background-forest.png"));
+    buildLevelCards(30, 5, 3);
+}
+
 tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
     size_t levelIdx,
     bool isUnlocked,
@@ -208,7 +222,7 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
 
     auto onClick = [&, idx = levelIdx]
     {
-        bool useGrass = idx < 15;
+        bool useGrass = idx < 15 || idx >= 30 && idx % 2 == 0;
         bool useDefaultJoe = (rand() % 3) < 2;
         dic.jukebox.playIngameTrack();
         app.pushState<AppStateGameWrapper>(

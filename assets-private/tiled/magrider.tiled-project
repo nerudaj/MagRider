@@ -7,18 +7,16 @@
             "enabled": true,
             "name": "Playtest",
             "saveBeforeExecute": true,
-            "shortcut": "Ctrl+Shift+F5",
+            "shortcut": "F5",
             "showOutput": true,
             "workingDirectory": "/home/doomista/Documents/GitHub/MagRider/_build"
         }
     ],
-    "compatibilityVersion": 1100,
     "extensionsPath": "extensions",
     "folders": [
         "."
     ],
-    "properties": [
-    ],
+    "objectTypesFile": "",
     "propertyTypes": [
     ]
 }

@@ -12,12 +12,12 @@
 /// <summary>
 /// Remaps levels based on their perceived difficulty
 /// </summary>
-constexpr const std::array<size_t, 32> DIFFICULTY_REMAPPER = {
+constexpr const std::array<size_t, 34> DIFFICULTY_REMAPPER = {
     11, 1,  /*4,*/ 16, 2,  3,  12, /*7,*/ /*6,*/ 13,
     10, 15, 8,         9,  5,  17, 14,
     18, 19, 20,        21, 22, 23, 24,
     33, 26, 27,        25, 32, 30, 31,
-    29, 28, 34, 35
+    29, 28, 34, 35, 36, 37
 };
 
 AppStateLevelSelect::AppStateLevelSelect(
@@ -138,7 +138,7 @@ void AppStateLevelSelect::buildLevelCards(
         for (unsigned x = 0; x < columnCount; ++x)
         {
             const auto levelIdx = y * columnCount + x + startIdx;
-            if (levelIdx >= levelIds.size()) break;
+            if (levelIdx >= DIFFICULTY_REMAPPER.size()) break;
 
             bestTimes[levelIdx - startIdx] =
                 Utility::getBestTime(settings.save, levelIdx);

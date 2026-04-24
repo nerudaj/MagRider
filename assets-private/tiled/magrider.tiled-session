@@ -95,14 +95,11 @@
             }
         },
         "levels/034.tmx": {
-            "expandedObjectLayers": [
-                2
-            ],
             "scale": 0.3317,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1243.5936086825445,
-                "y": 607.4766355140187
+                "x": 890.8652396744045,
+                "y": 607.4766355140188
             }
         },
         "levels/035.tmx": {

@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "levels/040.tmx",
+    "activeFile": "levels/042.tmx",
     "expandedProjectPaths": [
         ".",
         "levels"
@@ -99,7 +99,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 545.6738016279771,
-                "y": 480.8561953572506
+                "y": 480.8561953572505
             }
         },
         "levels/035.tmx": {
@@ -107,7 +107,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 785.7672349888807,
-                "y": 594.2673585371881
+                "y": 594.267358537188
             }
         },
         "levels/036.tmx": {
@@ -115,7 +115,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 448.04088586030673,
-                "y": 336.45655877342426
+                "y": 336.4565587734242
             }
         },
         "levels/037.tmx": {
@@ -139,15 +139,31 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 563.7157602223103,
-                "y": 387.0583564906709
+                "y": 387.05835649067103
             }
         },
         "levels/040.tmx": {
             "scale": 0.2556,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1357.5899843505476,
-                "y": 733.5680751173711
+                "x": 962.4413145539905,
+                "y": 960.4851330203444
+            }
+        },
+        "levels/041.tmx": {
+            "scale": 0.1929,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 720.580611715915,
+                "y": 417.3146708138934
+            }
+        },
+        "levels/042.tmx": {
+            "scale": 0.35377604166666665,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 944.1001104159,
+                "y": 962.4733161575268
             }
         },
         "levels/1.tmx": {
@@ -423,7 +439,9 @@
         "levels/037.tmx",
         "levels/038.tmx",
         "levels/039.tmx",
-        "levels/040.tmx"
+        "levels/040.tmx",
+        "levels/041.tmx",
+        "levels/042.tmx"
     ],
     "project": "magrider.tiled-project",
     "recentFiles": [
@@ -435,10 +453,10 @@
         "levels/038.tmx",
         "levels/039.tmx",
         "levels/040.tmx",
+        "levels/041.tmx",
+        "levels/042.tmx",
         "levels/029.tmx",
-        "levels/028.tmx",
-        "levels/027.tmx",
-        "levels/025.tmx"
+        "levels/028.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.spacing": 4

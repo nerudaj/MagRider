@@ -222,6 +222,13 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
 
     auto onClick = [&, idx = levelIdx]
     {
+        const std::array<std::string, 4u> JOES = {
+            "base",
+            "metal",
+            "voltorb",
+            "zombie"
+        };
+
         bool useGrass = idx < 15 || idx >= 30 && idx % 2 == 0;
         bool useDefaultJoe = (rand() % 3) < 2;
         dic.jukebox.playIngameTrack();
@@ -236,7 +243,7 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
                          : idx],
                 .tilesetName =
                     useGrass ? "grass_tileset.png" : "metal_tileset.png",
-                .joeSkinName = useDefaultJoe ? "base" : "metal",
+                .joeSkinName = JOES[rand() % JOES.size()],
                 .backgroundName =
                     useGrass ? "background-forest.png" : "background-city.png",
             });

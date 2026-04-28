@@ -11,50 +11,90 @@
     },
     "states": [
         {
-            "name": "metal_joe_blink",
+            "name": "voltorb_joe_blink",
             "bounds": {
                 "left": 2,
                 "top": 2,
+                "width": 248,
+                "height": 32
+            },
+            "nframes": 7
+        },
+        {
+            "name": "zombie_joe_blink",
+            "bounds": {
+                "left": 2,
+                "top": 38,
+                "width": 248,
+                "height": 32
+            },
+            "nframes": 7
+        },
+        {
+            "name": "metal_joe_blink",
+            "bounds": {
+                "left": 2,
+                "top": 74,
                 "width": 212,
                 "height": 32
             },
             "nframes": 6
         },
         {
-            "name": "base_joe_blink",
+            "name": "voltorb_joe_idle",
             "bounds": {
-                "left": 2,
-                "top": 38,
-                "width": 176,
-                "height": 32
-            },
-            "nframes": 5
-        },
-        {
-            "name": "base_joe_idle",
-            "bounds": {
-                "left": 182,
-                "top": 38,
+                "left": 218,
+                "top": 74,
                 "width": 32,
                 "height": 32
             },
             "nframes": 1
         },
         {
-            "name": "___leave_out",
+            "name": "base_joe_blink",
             "bounds": {
                 "left": 2,
-                "top": 74,
+                "top": 110,
+                "width": 176,
+                "height": 32
+            },
+            "nframes": 5
+        },
+        {
+            "name": "___leave_out",
+            "bounds": {
+                "left": 182,
+                "top": 110,
                 "width": 68,
                 "height": 32
             },
             "nframes": 2
         },
         {
+            "name": "base_joe_idle",
+            "bounds": {
+                "left": 2,
+                "top": 146,
+                "width": 32,
+                "height": 32
+            },
+            "nframes": 1
+        },
+        {
             "name": "metal_joe_idle",
             "bounds": {
+                "left": 38,
+                "top": 146,
+                "width": 32,
+                "height": 32
+            },
+            "nframes": 1
+        },
+        {
+            "name": "zombie_joe_idle",
+            "bounds": {
                 "left": 74,
-                "top": 74,
+                "top": 146,
                 "width": 32,
                 "height": 32
             },

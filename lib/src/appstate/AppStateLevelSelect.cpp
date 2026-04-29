@@ -12,12 +12,12 @@
 /// <summary>
 /// Remaps levels based on their perceived difficulty
 /// </summary>
-constexpr const std::array<size_t, 39> DIFFICULTY_REMAPPER = {
+constexpr const std::array<size_t, 40> DIFFICULTY_REMAPPER = {
     11, 1,  /*4,*/ 16, 2,  3,  12, /*7,*/ /*6,*/ 13,
     10, 15, 8,         9,  5,  17, 14,
     18, 19, 20,        21, 22, 23, 24,
     33, 26, 27,        25, 32, 30, 31,
-    29, 28, 34, 35, 36, 37, 38, 39, 40, 41, 42
+    29, 28, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43
 };
 
 AppStateLevelSelect::AppStateLevelSelect(
@@ -230,7 +230,6 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
         };
 
         bool useGrass = idx < 15 || idx >= 30 && idx % 2 == 0;
-        bool useDefaultJoe = (rand() % 3) < 2;
         dic.jukebox.playIngameTrack();
         app.pushState<AppStateGameWrapper>(
             dic,

@@ -7,5 +7,5 @@ public:
 
     [[nodiscard]] static unsigned getBaseContainerHeight();
 
-    static void setUiScale(float scale) {}
+    static void setUiScale(float scale);
 };

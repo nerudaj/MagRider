@@ -27,6 +27,7 @@ android {
             cmake {
                 arguments.add("-DANDROID_STL=c++_shared")
                 arguments.add("-DSFML_STATIC_LIBRARIES=OFF")
+                arguments.add("-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON")
             }
         }
     }
@@ -53,6 +54,10 @@ android {
     }
 	
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+        }
+
         release {
             // By default, assembleRelease uses RelWithDebInfo build type
             externalNativeBuild {
@@ -70,7 +75,7 @@ android {
     externalNativeBuild {
         cmake {
             path("@PROJECT_SOURCE_DIR@/bin-android/CMakeLists.txt")
-			version = "3.28.1"
+			version = "@CMAKE_MAJOR_VERSION@.@CMAKE_MINOR_VERSION@.@CMAKE_PATCH_VERSION@"
         }
     }
     

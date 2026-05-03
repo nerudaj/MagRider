@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "levels/043.tmx",
+    "activeFile": "levels/044.tmx",
     "expandedProjectPaths": [
-        ".",
-        "levels"
+        "levels",
+        "."
     ],
     "fileStates": {
         "Metal.tsx": {
@@ -107,15 +107,15 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 783.2962688411169,
-                "y": 593.0318754633063
+                "y": 593.0318754633062
             }
         },
         "levels/036.tmx": {
             "scale": 0.587,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 446.3373083475298,
-                "y": 475.2981260647359
+                "x": 447.1890971039183,
+                "y": 476.1499148211244
             }
         },
         "levels/037.tmx": {
@@ -131,7 +131,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 738.3773928896991,
-                "y": 464.9042844120328
+                "y": 464.90428441203267
             }
         },
         "levels/039.tmx": {
@@ -167,11 +167,19 @@
             }
         },
         "levels/043.tmx": {
-            "scale": 0.357734375,
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 624,
+                "y": 624
+            }
+        },
+        "levels/044.tmx": {
+            "scale": 0.434921875,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 742.170779646211,
-                "y": 826.0318846909805
+                "x": 1626.728938386923,
+                "y": 1210.562241781929
             }
         },
         "levels/1.tmx": {
@@ -450,7 +458,8 @@
         "levels/040.tmx",
         "levels/041.tmx",
         "levels/042.tmx",
-        "levels/043.tmx"
+        "levels/043.tmx",
+        "levels/044.tmx"
     ],
     "project": "magrider.tiled-project",
     "recentFiles": [
@@ -465,7 +474,7 @@
         "levels/041.tmx",
         "levels/042.tmx",
         "levels/043.tmx",
-        "levels/029.tmx"
+        "levels/044.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.spacing": 4

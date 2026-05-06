@@ -15,6 +15,7 @@ AppStateGameWrapper::AppStateGameWrapper(
 void AppStateGameWrapper::input()
 {
     app.pushState<AppStateGame>(dic, settings, config);
+    config.canShowHint = false;
 }
 
 void AppStateGameWrapper::update()

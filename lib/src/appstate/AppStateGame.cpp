@@ -1,11 +1,14 @@
 #include "appstate/AppStateGame.hpp"
+#include "appstate/AppStateHint.hpp"
 #include "appstate/AppStateLevelEndTransition.hpp"
 #include "appstate/AppStatePause.hpp"
 #include "appstate/Messaging.hpp"
 #include "filesystem/models/TiledModels.hpp"
 #include "game/SceneBuilder.hpp"
+#include "misc/Compatibility.hpp"
 #include "misc/Utility.hpp"
 #include "types/Overloads.hpp"
+#include <ranges>
 
 AppStateGame::AppStateGame(
     dgm::App& app,
@@ -28,6 +31,14 @@ AppStateGame::AppStateGame(
           config)
 {
     dic.input.reset();
+
+    if (config.canShowHint/* && settings.features.showHints*/)
+    {
+        /*auto&& message = game.scene.texts
+                         | std::views::join_with(std::string_view(" "))
+                         | uniranges::to<std::string>();
+        app.pushState<AppStateHint>(dic, settings, message);*/
+    }
 }
 
 void AppStateGame::input()

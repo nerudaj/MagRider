@@ -10,4 +10,5 @@ struct [[nodiscard]] GameConfig final
     std::string tilesetName;
     std::string joeSkinName;
     std::string backgroundName;
+    bool canShowHint = true;
 };

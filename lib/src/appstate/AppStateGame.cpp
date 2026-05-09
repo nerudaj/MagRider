@@ -32,12 +32,17 @@ AppStateGame::AppStateGame(
 {
     dic.input.reset();
 
-    if (config.canShowHint/* && settings.features.showHints*/)
+    if (config.canShowHint && settings.features.showHints
+        && !game.scene.texts.empty())
     {
-        /*auto&& message = game.scene.texts
-                         | std::views::join_with(std::string_view(" "))
-                         | uniranges::to<std::string>();
-        app.pushState<AppStateHint>(dic, settings, message);*/
+        auto&& message =
+            game.scene.texts
+            | std::views::transform(
+                [&](const auto& text)
+                { return std::string(dic.strings.getString(text.textId)); })
+            | std::views::join_with(std::string_view("\n"))
+            | uniranges::to<std::string>();
+        app.pushState<AppStateHint>(dic, settings, message);
     }
 }
 

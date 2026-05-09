@@ -10,6 +10,7 @@ struct [[nodiscard]] FeatureFlags final
 #else
         false;
 #endif
+    bool showHints = true;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureFlags, showInputSettings);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FeatureFlags, showInputSettings, showHints);

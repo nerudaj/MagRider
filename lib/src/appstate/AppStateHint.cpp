@@ -27,8 +27,10 @@ void AppStateHint::buildLayout()
     auto layout = tgui::Group::create({ "50%", "50%" });
     layout->setPosition({ "50% - width / 2", "50% - height / 2" });
 
-    auto panel = WidgetBuilder::createPanel(
-        { "100%", "100%" }, tgui::Color::COLOR_DARK_GREY);
+    auto panel =
+        WidgetBuilder::createPanel({ "100%", "100%" }, COLOR_DARK_GREY);
+    panel->getRenderer()->setBorderColor(COLOR_WHITE);
+    panel->getRenderer()->setBorders({ 2 });
     layout->add(panel);
     panel->add(buildHintCard());
 
@@ -43,8 +45,8 @@ tgui::Container::Ptr AppStateHint::buildHintCard()
     headingGroup->add(WidgetBuilder::createHeading("hint", HeadingLevel::H2));
     layout->add(headingGroup);
 
-    auto textGroup = tgui::Group::create({ "100%", "60%" });
-    textGroup->setPosition({ "0%", "20%" });
+    auto textGroup = tgui::Group::create({ "90%", "60%" });
+    textGroup->setPosition({ "5%", "20%" });
     textGroup->add(WidgetBuilder::createTextLabel(message));
     layout->add(textGroup);
 
@@ -53,9 +55,8 @@ tgui::Container::Ptr AppStateHint::buildHintCard()
 
     auto buttonGroup = tgui::Group::create({ "100%", "10%" });
     buttonGroup->setPosition({ "0%", "90%" });
-    buttonGroup->add(
-        WidgetBuilder::createButton(
-            dic.strings.getString(StringId::Continue), [&] { onContinue(); }));
+    buttonGroup->add(WidgetBuilder::createButton(
+        dic.strings.getString(StringId::Continue), [&] { onContinue(); }));
     layout->add(buttonGroup);
 
     return layout;

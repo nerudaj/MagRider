@@ -5,17 +5,32 @@
 #ifdef ANDROID
 #include <fmt/core.h>
 #include <range/v3/range.hpp>
+#else
+#include <ranges>
+#include <format>
 #endif
 
 #ifdef ANDROID
-namespace uni = fmt;
 namespace uniranges = ranges;
 #else
-#include <ranges>
-
-namespace uni = std;
 namespace uniranges = std::ranges;
 #endif
+
+namespace uni
+{
+#ifdef ANDROID
+    using namespace fmt;
+    namespace views{
+        using namespace ranges::views;
+    }
+
+    namespace ranges {
+        using namespace ranges;
+    }
+#else
+    using namespace std;
+#endif
+}
 
 template<class Container>
 Container collect(auto&& range)

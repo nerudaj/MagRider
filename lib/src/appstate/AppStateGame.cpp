@@ -10,6 +10,21 @@
 #include "types/Overloads.hpp"
 #include <ranges>
 
+template<class Range>
+static std::string joinWith(const Range& r, const std::string& delimiter)
+{
+    if (std::size(r) == 0) return "";
+
+    return std::accumulate(
+        ++std::begin(r),
+        std::end(r),
+        *std::begin(r),
+        [&](const auto& a, const auto& b)
+        {
+            return a + delimiter + b;
+        });
+}
+
 AppStateGame::AppStateGame(
     dgm::App& app,
     DependencyContainer& dic,
@@ -35,14 +50,12 @@ AppStateGame::AppStateGame(
     if (config.canShowHint && settings.features.showHints
         && !game.scene.texts.empty())
     {
-        auto&& message =
-            game.scene.texts
-            | std::views::transform(
+        auto&& range = game.scene.texts
+            | uni::views::transform(
                 [&](const auto& text)
-                { return std::string(dic.strings.getString(text.textId)); })
-            | std::views::join_with(std::string_view("\n"))
-            | uniranges::to<std::string>();
-        app.pushState<AppStateHint>(dic, settings, message);
+                { return std::string(dic.strings.getString(text.textId)); });
+
+        app.pushState<AppStateHint>(dic, settings, joinWith(range, "\n\n"));
     }
 }
 

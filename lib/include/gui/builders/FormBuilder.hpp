@@ -11,6 +11,7 @@
 struct [[nodiscard]] OptionConfig final
 {
     bool disabled = false;
+    bool justify = false;
     std::optional<std::string> tooltipText = {};
 };
 
@@ -46,7 +47,8 @@ private:
     [[nodiscard]] static tgui::Panel::Ptr createOptionRow(
         const std::string& labelText,
         tgui::Widget::Ptr widgetPtr,
-        std::optional<std::string> widgetId);
+        std::optional<std::string> widgetId,
+        bool justify);
 
     [[nodiscard]] static tgui::Panel::Ptr createOptionRowWithSubmitButton(
         const std::string& labelText,
@@ -57,6 +59,7 @@ private:
     struct RowProps
     {
         bool separator = false;
+        bool justify = false;
         std::string label;
         tgui::Widget::Ptr widget;
         std::optional<std::string> widgetId = {};

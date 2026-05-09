@@ -7,9 +7,11 @@ FormBuilder& FormBuilder::addOption(
     const std::string& labelText, tgui::Widget::Ptr widget, OptionConfig config)
 {
     widget->setEnabled(!config.disabled);
-    rowsToBuild.push_back({ .label = labelText,
-                            .widget = widget,
-                            .tooltipText = config.tooltipText });
+    rowsToBuild.push_back(
+        { .justify = config.justify,
+          .label = labelText,
+          .widget = widget,
+          .tooltipText = config.tooltipText });
     return *this;
 }
 
@@ -51,7 +53,8 @@ tgui::Container::Ptr FormBuilder::build()
             : props.submitBtn
                 ? createOptionRowWithSubmitButton(
                       props.label, props.widget, props.submitBtn.value())
-                : createOptionRow(props.label, props.widget, props.widgetId);
+                : createOptionRow(
+                      props.label, props.widget, props.widgetId, props.justify);
 
         if (props.separator)
         {
@@ -72,10 +75,11 @@ tgui::Container::Ptr FormBuilder::build()
 tgui::Panel::Ptr FormBuilder::createOptionRow(
     const std::string& labelText,
     tgui::Widget::Ptr widgetPtr,
-    std::optional<std::string> widgetId)
+    std::optional<std::string> widgetId,
+    bool justify)
 {
     auto&& row = WidgetBuilder::createRow();
-    row->add(WidgetBuilder::createTextLabel(labelText));
+    row->add(WidgetBuilder::createTextLabel(labelText, justify));
 
     auto&& widgetPanel = tgui::Panel::create({ "40%", "100%" });
     widgetPanel->setPosition("60%", "0%");

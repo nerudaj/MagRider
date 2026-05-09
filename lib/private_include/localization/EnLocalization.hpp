@@ -16,6 +16,7 @@ const std::map<StringId, StringViewType> EN_LOCALIZATION = {
     { Continue, "continue" },
     { Retry, "retry" },
     { Apply, "apply" },
+    { ShowHints, "show hints" },
 
     // Select
     { Grasslands, "grasslands" },

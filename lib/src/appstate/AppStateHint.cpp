@@ -52,11 +52,24 @@ tgui::Container::Ptr AppStateHint::buildHintCard()
 
     auto checkboxGroup = tgui::Group::create({ "100%", "10%" });
     checkboxGroup->setPosition({ "0%", "80%" });
+    checkboxGroup->add(
+        FormBuilder()
+            .addOption(
+                dic.strings.getString(StringId::ShowHints),
+                WidgetBuilder::createCheckbox(
+                    settings.features.showHints,
+                    [&](bool value) { settings.features.showHints = value; }),
+                OptionConfig {
+                    .justify = true,
+                })
+            .build());
+    layout->add(checkboxGroup);
 
     auto buttonGroup = tgui::Group::create({ "100%", "10%" });
     buttonGroup->setPosition({ "0%", "90%" });
-    buttonGroup->add(WidgetBuilder::createButton(
-        dic.strings.getString(StringId::Continue), [&] { onContinue(); }));
+    buttonGroup->add(
+        WidgetBuilder::createButton(
+            dic.strings.getString(StringId::Continue), [&] { onContinue(); }));
     layout->add(buttonGroup);
 
     return layout;

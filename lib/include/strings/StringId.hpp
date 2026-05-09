@@ -14,6 +14,7 @@ enum class [[nodiscard]] StringId
     Continue,
     Retry,
     Apply,
+    ShowHints,
 
     // Select
     Grasslands,

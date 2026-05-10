@@ -4,7 +4,7 @@
 
 #ifdef ANDROID
 #include <fmt/core.h>
-#include <range/v3/range.hpp>
+#include <range/v3/all.hpp>
 #else
 #include <ranges>
 #include <format>
@@ -20,12 +20,12 @@ namespace uni
 {
 #ifdef ANDROID
     using namespace fmt;
-    namespace views{
+    namespace views {
         using namespace ranges::views;
     }
 
     namespace ranges {
-        using namespace ranges;
+        using namespace ::ranges;
     }
 #else
     using namespace std;

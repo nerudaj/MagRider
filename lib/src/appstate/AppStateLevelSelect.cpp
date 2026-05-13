@@ -12,12 +12,10 @@
 /// <summary>
 /// Remaps levels based on their perceived difficulty
 /// </summary>
-constexpr const std::array<size_t, 42> DIFFICULTY_REMAPPER = {
-    11, 1,  /*4,*/ 16, 2,  3,  12, /*7,*/ /*6,*/ 13,
-    10, 15, 8,         9,  5,  17, 14,
-    18, 19, 20,        21, 22, 23, 24,
-    33, 26, 27,        25, 32, 30, 31,
-    29, 28, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45
+constexpr const std::array<size_t, 43> DIFFICULTY_REMAPPER = {
+    11, 1,  16, 2,  3,  8, 13, 10, 15, 12,  9,  5,  17, 14,
+    18, 19, 20, 21, 22, 23, 24, 33, 26, 27, 25, 32, 30, 31,
+    29, 28, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46
 };
 
 AppStateLevelSelect::AppStateLevelSelect(

@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "levels/046.tmx",
+    "activeFile": "levels/048.tmx",
     "expandedProjectPaths": [
-        ".",
-        "levels"
+        "levels",
+        "."
     ],
     "fileStates": {
         "Metal.tsx": {
@@ -99,39 +99,39 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 545.6738016279771,
-                "y": 480.85619535725044
+                "y": 482.36358154959305
             }
         },
         "levels/035.tmx": {
             "scale": 0.4047,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 785.7672349888807,
-                "y": 594.2673585371881
+                "x": 783.2962688411169,
+                "y": 593.0318754633063
             }
         },
         "levels/036.tmx": {
             "scale": 0.587,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 448.04088586030673,
-                "y": 336.4565587734242
+                "x": 446.3373083475298,
+                "y": 475.2981260647359
             }
         },
         "levels/037.tmx": {
             "scale": 0.6662,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 465.3257280096067,
-                "y": 320.4743320324227
+                "x": 463.8246772740918,
+                "y": 321.2248574001801
             }
         },
         "levels/038.tmx": {
             "scale": 0.2194,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 738.3773928896992,
-                "y": 467.18322698268
+                "x": 738.3773928896991,
+                "y": 464.9042844120328
             }
         },
         "levels/039.tmx": {
@@ -139,15 +139,15 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 563.7157602223103,
-                "y": 387.0583564906708
+                "y": 385.07344184200076
             }
         },
         "levels/040.tmx": {
             "scale": 0.2556,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 962.4413145539905,
-                "y": 960.4851330203443
+                "x": 958.5289514866979,
+                "y": 958.528951486698
             }
         },
         "levels/041.tmx": {
@@ -155,7 +155,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 720.580611715915,
-                "y": 417.31467081389314
+                "y": 419.90668740279943
             }
         },
         "levels/042.tmx": {
@@ -163,7 +163,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 961.4206981016534,
-                "y": 964.4825474586651
+                "y": 961.4206981016534
             }
         },
         "levels/043.tmx": {
@@ -171,15 +171,15 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 624,
-                "y": 623
+                "y": 624
             }
         },
         "levels/044.tmx": {
             "scale": 0.8648,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 959.759481961147,
-                "y": 959.1813135985199
+                "x": 959.7594819611472,
+                "y": 959.7594819611471
             }
         },
         "levels/045.tmx": {
@@ -187,15 +187,31 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 959.9395313681027,
-                "y": 959.3096497858403
+                "y": 959.9395313681028
             }
         },
         "levels/046.tmx": {
             "scale": 0.2138,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 839.5696913002807,
-                "y": 460.71094480823194
+                "x": 818.5219831618335,
+                "y": 804.490177736202
+            }
+        },
+        "levels/047.tmx": {
+            "scale": 0.8185,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 350.0305436774587,
+                "y": 420.89187538179596
+            }
+        },
+        "levels/048.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1646.969696969697,
+                "y": 556.060606060606
             }
         },
         "levels/1.tmx": {
@@ -459,10 +475,10 @@
     "last.exportedFilePath": "/home/doomista/Documents/GitHub/MagRider/assets/levels",
     "last.imagePath": "C:/Users/merickova/Documents/GitHub/MagRider/assets/graphics",
     "last.workingDirectory": "/home/doomista/Documents/GitHub/MagRider/_build",
-    "map.height": 60,
+    "map.height": 120,
     "map.lastUsedExportFilter": "All Files (*)",
     "map.lastUsedFormat": "tmx",
-    "map.width": 60,
+    "map.width": 120,
     "openFiles": [
         "Metal.tsx",
         "levels/036.tmx",
@@ -477,7 +493,9 @@
         "levels/043.tmx",
         "levels/044.tmx",
         "levels/045.tmx",
-        "levels/046.tmx"
+        "levels/046.tmx",
+        "levels/047.tmx",
+        "levels/048.tmx"
     ],
     "project": "magrider.tiled-project",
     "recentFiles": [

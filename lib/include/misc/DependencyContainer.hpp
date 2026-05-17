@@ -38,7 +38,7 @@ struct [[nodiscard]] DependencyContainer final
         , jukebox(resmgr, rootDir)
     {
         Sizers::setUiScale(settings.video.uiScale);
-        gui.setFont(resmgr.get<tgui::Font>("pico-8.ttf"));
+        gui.setFont(resmgr.get<tgui::Font>("pico-8-tgui.ttf"));
         // NOTE: You can create your own theme file and use it here
         gui.setTheme(resmgr.get<tgui::Theme::Ptr>("Pico8.txt"));
         jukebox.setVolume(settings.audio.musicVolume);

@@ -41,17 +41,17 @@ tgui::Container::Ptr AppStateHint::buildHintCard()
 {
     auto layout = tgui::Group::create();
 
-    auto headingGroup = tgui::Group::create({ "100%", "20%" });
+    auto headingGroup = tgui::Group::create({ "100%", Sizers::getBaseContainerHeight() * 1.5 });
     headingGroup->add(WidgetBuilder::createHeading("hint", HeadingLevel::H2));
     layout->add(headingGroup);
 
-    auto textGroup = tgui::Group::create({ "90%", "60%" });
-    textGroup->setPosition({ "5%", "20%" });
+    auto textGroup = tgui::Group::create({ "90%", uni::format("parent.height - 4 * {}", Sizers::getBaseContainerHeight()).c_str() });
+    textGroup->setPosition({ "5%", Sizers::getBaseContainerHeight() * 1.5 });
     textGroup->add(WidgetBuilder::createTextLabel(message));
     layout->add(textGroup);
 
-    auto checkboxGroup = tgui::Group::create({ "100%", "10%" });
-    checkboxGroup->setPosition({ "0%", "80%" });
+    auto checkboxGroup = tgui::Group::create({ "100%", 1.5 * Sizers::getBaseContainerHeight() });
+    checkboxGroup->setPosition({ "0%", "parent.height - 2.5 * height" });
     checkboxGroup->add(
         FormBuilder()
             .addOption(
@@ -65,8 +65,8 @@ tgui::Container::Ptr AppStateHint::buildHintCard()
             .build());
     layout->add(checkboxGroup);
 
-    auto buttonGroup = tgui::Group::create({ "100%", "10%" });
-    buttonGroup->setPosition({ "0%", "90%" });
+    auto buttonGroup = tgui::Group::create({ "100%", Sizers::getBaseContainerHeight() });
+    buttonGroup->setPosition({ "0%", "parent.height - height" });
     buttonGroup->add(
         WidgetBuilder::createButton(
             dic.strings.getString(StringId::Continue), [&] { onContinue(); }));

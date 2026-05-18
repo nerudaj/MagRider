@@ -43,34 +43,35 @@ tgui::Container::Ptr AppStateHint::buildHintCard()
 
     auto headingGroup = tgui::Group::create({ "100%", Sizers::getBaseContainerHeight() * 1.5 });
     headingGroup->add(WidgetBuilder::createHeading("hint", HeadingLevel::H2));
-    layout->add(headingGroup);
-
-    auto textGroup = tgui::Group::create({ "90%", uni::format("parent.height - 4 * {}", Sizers::getBaseContainerHeight()).c_str() });
-    textGroup->setPosition({ "5%", Sizers::getBaseContainerHeight() * 1.5 });
-    textGroup->add(WidgetBuilder::createTextLabel(message));
-    layout->add(textGroup);
-
-    auto checkboxGroup = tgui::Group::create({ "100%", 1.5 * Sizers::getBaseContainerHeight() });
-    checkboxGroup->setPosition({ "0%", "parent.height - 2.5 * height" });
-    checkboxGroup->add(
-        FormBuilder()
-            .addOption(
-                dic.strings.getString(StringId::ShowHints),
-                WidgetBuilder::createCheckbox(
-                    settings.features.showHints,
-                    [&](bool value) { settings.features.showHints = value; }),
-                OptionConfig {
-                    .justify = true,
-                })
-            .build());
-    layout->add(checkboxGroup);
+    layout->add(headingGroup, "HintHeading");
 
     auto buttonGroup = tgui::Group::create({ "100%", Sizers::getBaseContainerHeight() });
     buttonGroup->setPosition({ "0%", "parent.height - height" });
     buttonGroup->add(
         WidgetBuilder::createButton(
             dic.strings.getString(StringId::Continue), [&] { onContinue(); }));
-    layout->add(buttonGroup);
+    layout->add(buttonGroup, "HintSubmit");
+
+    auto checkboxGroup = tgui::HorizontalLayout::create({ "100%", Sizers::getBaseContainerHeight() });
+    checkboxGroup->setPosition({ "0%", "parent.height - height - HintSubmit.height" });
+    checkboxGroup->add(
+        WidgetBuilder::createTextLabel(
+        dic.strings.getString(StringId::ShowHints), "justify"_true));
+
+    auto&& checkboxWrap = tgui::Group::create();
+    auto&& checkbox = WidgetBuilder::createCheckbox(
+        settings.features.showHints,
+        [&](bool value) { settings.features.showHints = value; });
+    checkbox->setSize({ Sizers::getBaseContainerHeight(), Sizers::getBaseContainerHeight() });
+    checkbox->setPosition({ "parent.width / 2 - width / 2", "0%" });
+    checkboxWrap->add(checkbox);
+    checkboxGroup->add(checkboxWrap);
+    layout->add(checkboxGroup, "HintCheckbox");
+
+    auto textGroup = tgui::Group::create({ "90%", "parent.height - HintHeading.height - HintSubmit.height - HintCheckbox.height" });
+    textGroup->setPosition({ "5%", "HintHeading.height" });
+    textGroup->add(WidgetBuilder::createTextLabel(message, "justify"_true));
+    layout->add(textGroup);    
 
     return layout;
 }

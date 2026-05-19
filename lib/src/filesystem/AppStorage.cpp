@@ -4,19 +4,23 @@
 #include <filesystem>
 #include <fstream>
 
+#define LINUX 1
+
 #ifdef ANDROID
 #include <jni/Jni.hpp>
+#elif LINUX
 #else
 #include <Windows.h>
 #include <codecvt>
 #include <shlobj.h>
-#include <shlobj_core.h>
 #endif
 
 std::filesystem::path getAppdataPath()
 {
 #ifdef ANDROID
     return std::filesystem::path(sf::getNativeActivity()->externalDataPath);
+#elif LINUX
+    return "./";
 #else
     PWSTR raw;
     std::wstring result;

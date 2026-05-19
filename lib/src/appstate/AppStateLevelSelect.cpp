@@ -24,7 +24,7 @@ AppStateLevelSelect::AppStateLevelSelect(
     , dic(dic)
     , settings(settings)
     , levelIds(dic.resmgr.getLoadedResourceIds<tiled::FiniteMapModel>().value())
-    , lastSelectedTab(dic.strings.getString(StringId::Grasslands))
+    , lastSelectedTab(dic.strings.getString(StringId::LostLevels))
 {
     std::ranges::sort(levelIds);
     content = WidgetBuilder::createPanel();
@@ -98,19 +98,24 @@ void AppStateLevelSelect::buildLayout()
 #endif
             .withContent(
                 NavbarLayoutBuilder()
-                    .withNavbarWidget(WidgetBuilder::createTabbedContent(
-                        { dic.strings.getString(StringId::Grasslands),
-                          dic.strings.getString(StringId::Factory),
-                          dic.strings.getString(StringId::LostLevels), },
-                        [&](const tgui::String& tabName)
-                        { onTabClicked(tabName); },
-                        WidgetOptions { .id = "LevelSelectTabs" }))
+                    .withNavbarWidget(
+                        WidgetBuilder::createTabbedContent(
+                            {
+                                dic.strings.getString(StringId::Grasslands),
+                                dic.strings.getString(StringId::Factory),
+                                dic.strings.getString(StringId::LostLevels),
+                            },
+                            [&](const tgui::String& tabName)
+                            { onTabClicked(tabName); },
+                            WidgetOptions { .id = "LevelSelectTabs" }))
                     .withContent(content)
                     .build())
             .withNoTopLeftButton()
             .withNoTopRightButton()
-            .withBottomLeftButton(WidgetBuilder::createButton(
-                dic.strings.getString(StringId::Back), [&] { app.popState(); }))
+            .withBottomLeftButton(
+                WidgetBuilder::createButton(
+                    dic.strings.getString(StringId::Back),
+                    [&] { app.popState(); }))
             .withNoBottomRightButton()
             .build());
 
@@ -221,10 +226,7 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
     auto onClick = [&, idx = levelIdx]
     {
         const std::array<std::string, 4u> JOES = {
-            "base",
-            "metal",
-            "voltorb",
-            "zombie"
+            "base", "metal", "voltorb", "zombie"
         };
 
         bool useGrass = idx < 15 || idx >= 30 && idx % 2 == 0;
@@ -248,8 +250,9 @@ tgui::Container::Ptr AppStateLevelSelect::buildLevelCard(
 
     headerPanel->add(createLabel(std::to_string(levelIdx + 1)));
     timePanel->add(createLabel(timeText));
-    buttonPanel->add(WidgetBuilder::createButton(
-        dic.strings.getString(StringId::PlayButton), onClick));
+    buttonPanel->add(
+        WidgetBuilder::createButton(
+            dic.strings.getString(StringId::PlayButton), onClick));
 
     if (isUnlocked) card->onClick(onClick);
 

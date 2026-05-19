@@ -1,7 +1,8 @@
 #include "gui/Sizers.hpp"
 
 constexpr float CONTAINER_PADDING_MULTIPLIER = 2.55f;
-static inline float UI_SCALE = 1.f;
+
+#define LINUX 1
 
 #ifdef ANDROID
 
@@ -49,43 +50,101 @@ public:
 private:
     static unsigned spToPx(unsigned sp, float density)
     {
-        return static_cast<unsigned>(sp * density * UI_SCALE);
+        return static_cast<unsigned>(sp * density);
     }
 
 private:
     float pixelDensity = 0.f;
 };
-
-unsigned Sizers::getBaseContainerHeight()
-{
-    return BaseSizeProviderSingleton::getInstance().getBaseContainerHeight();
-}
-
-unsigned Sizers::getBaseFontSize()
-{
-    return BaseSizeProviderSingleton::getInstance().getBaseFontSize();
-}
+#elif LINUX
 #else
 #include <Windows.h>
+#include <iostream>
+
+using DllPtr =
+    std::unique_ptr<std::remove_pointer_t<HMODULE>, decltype(&FreeLibrary)>;
+
+static DllPtr loadWindowsDLL(const char* dllPath)
+{
+    HMODULE dll = LoadLibraryA(dllPath);
+    if (!dll)
+    {
+        std::cerr << dllPath << " not found. UI scaling may be incorrect."
+                  << std::endl;
+        return DllPtr(nullptr, FreeLibrary);
+    }
+    return DllPtr(dll, FreeLibrary);
+}
+#endif
+
+#if !defined(ANDROID) && !defined(GetDpiForSystem) && !defined(LINUX)
+
+unsigned GetDpiForSystem()
+{
+    auto dll = loadWindowsDLL("C:\\Windows\\System32\\User32.dll");
+    if (!dll) return 96; // fallback
+
+    auto getDpiForSystem = reinterpret_cast<UINT(WINAPI*)()>(
+        GetProcAddress(dll.get(), "GetDpiForSystem"));
+
+    if (!getDpiForSystem)
+    {
+        std::cerr << "GetDpiForSystem not found. UI scaling may be incorrect."
+                  << std::endl;
+        return 96; // fallback
+    }
+
+    return getDpiForSystem();
+}
+
+#endif
+
+#if !defined(ANDROID) && !defined(GetSystemMetricsForDpi) && !defined(LINUX)
+
+unsigned GetSystemMetricsForDpi(DWORD nIndex, UINT dpi)
+{
+    auto dll = loadWindowsDLL("C:\\Windows\\System32\\User32.dll");
+    if (!dll) return 96; // Fallback to default DPI
+
+    auto getSystemMetricsForDpi = reinterpret_cast<int(WINAPI*)(DWORD, UINT)>(
+        GetProcAddress(dll.get(), "GetSystemMetricsForDpi"));
+    if (!getSystemMetricsForDpi)
+    {
+        std::cerr
+            << "GetSystemMetricsForDpi not found. UI scaling may be incorrect."
+            << std::endl;
+        return 96; // Fallback to default DPI
+    }
+
+    return getSystemMetricsForDpi(nIndex, dpi);
+}
+
+#endif
 
 unsigned Sizers::getBaseContainerHeight()
 {
+#ifdef ANDROID
+    return BaseSizeProviderSingleton::getInstance().getBaseContainerHeight()
+           * settings.uiScale;
+#elif LINUX
+    return 22u;
+#else
     const unsigned dpi = GetDpiForSystem();
     return static_cast<unsigned>(
         (GetSystemMetricsForDpi(SM_CYCAPTION, dpi)
          + GetSystemMetricsForDpi(SM_CYSIZEFRAME, dpi)
          + GetSystemMetricsForDpi(SM_CYEDGE, dpi) * 2)
-        * UI_SCALE);
+        * settings.uiScale);
+#endif
 }
 
 unsigned Sizers::getBaseFontSize()
 {
+#ifdef ANDROID
+    return BaseSizeProviderSingleton::getInstance().getBaseFontSize()
+           * settings.uiScale;
+#else
     return static_cast<unsigned>(
-        getBaseContainerHeight() / CONTAINER_PADDING_MULTIPLIER * UI_SCALE);
-}
+        getBaseContainerHeight() / CONTAINER_PADDING_MULTIPLIER);
 #endif
-
-void Sizers::setUiScale(float scale)
-{
-    UI_SCALE = scale;
 }

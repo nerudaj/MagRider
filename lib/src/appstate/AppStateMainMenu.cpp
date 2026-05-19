@@ -26,7 +26,9 @@ void AppStateMainMenu::input()
         });
 }
 
-void AppStateMainMenu::update() {}
+void AppStateMainMenu::update() {
+    onPlay();
+}
 
 void AppStateMainMenu::draw()
 {

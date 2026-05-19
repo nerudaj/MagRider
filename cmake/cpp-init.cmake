@@ -43,7 +43,7 @@ endfunction ()
 # Description: Sets the CMake generator platform to x64 and configures the C++ standard to C++23, ensuring that it is required.
 # Arguments: None
 macro ( set_cpp23_x64 )
-    set ( CMAKE_GENERATOR_PLATFORM     x64 )
+    #set ( CMAKE_GENERATOR_PLATFORM     x64 )
     set ( CMAKE_CXX_STANDARD		   23 )
     set ( CMAKE_CXX_STANDARD_REQUIRED  ON )
 endmacro () 

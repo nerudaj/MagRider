@@ -21,8 +21,8 @@ namespace priv
 
         auto&& panel = WidgetBuilder::createPanel(
             isTexturedButton
-                ? tgui::Layout2d { props.cornerButtonDimension,
-                                   props.cornerButtonDimension }
+                ? tgui::Layout2d { props.baseHeight,
+                                   props.baseHeight }
                 : tgui::Layout2d { props.cornerButtonDimension * 2,
                                    props.cornerButtonDimension * 0.6f });
         panel->setPosition({

@@ -73,6 +73,9 @@ void AppStateOptions::buildLayout()
     content->removeAllWidgets();
     content->add(
         FormBuilder()
+            .addOption(dic.strings.getString(StringId::ShowHints), WidgetBuilder::createCheckbox(
+                settings.features.showHints,
+                [&](bool value) { settings.features.showHints = value; }))
 #ifndef ANDROID
             .addOption(
                 dic.strings.getString(StringId::EnableFullscreen),

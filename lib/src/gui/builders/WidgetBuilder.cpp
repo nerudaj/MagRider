@@ -161,7 +161,8 @@ tgui::CheckBox::Ptr WidgetBuilder::createCheckbox(
 {
     auto&& checkbox = tgui::CheckBox::create();
     auto&& size = checkbox->getSizeLayout();
-    checkbox->setPosition(("100%" - size.x) / 2, ("100%" - size.y) / 2);
+    checkbox->setSize({ "height", "parent.height" });
+    checkbox->setPosition({"parent.width / 2 - width / 2", "0%"});
     checkbox->setChecked(checked);
     checkbox->onChange(onChange);
 
